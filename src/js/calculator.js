@@ -3,7 +3,11 @@
 // que se quede commission fija a voltio y a el manager
 // al momento de cambiar el precio en e.ppw
 // por ejemplo estabamos con el plan de reducir en la cantidades programadas asi como esta el google sheets pero hoy hicimos el cambio de nuevo donde no se le reduce a el manager ni a voltio
-let systemPriceText = document.getElementById('systemPriceText')
+
+
+
+export function calculations(tot) {
+  let systemPriceText = document.getElementById('systemPriceText')
 let systemSizeText = document.getElementById('systemSizeText')
 let finalVoltioComisionText = document.getElementById('finalVoltioComisionText')
 let epcPayoutText = document.getElementById('epcPayoutText')
@@ -20,6 +24,7 @@ let targetCommission = document.getElementById('targetCommission')
 let projectCmsMod = document.getElementById('projectCmsMod')
 let projectCost = document.getElementById('projectCost')
 let totalAdders = document.getElementById('totalAdders').value
+let projectCustomerCashBack = document.getElementById('ProjectCustomerCashBack').value
 
 let A = document.getElementById('projectUsage') // 7500)
 let B // SYSTEM PRICE, NO SE UTILIZA EN OTRAS FORMULAS
@@ -85,7 +90,7 @@ let BI = document.getElementById('projectMPUPrice') //3000
 let BJ = document.getElementById('projectRoofCost') //1000
 let BK
 let BL
-let BM = document.getElementById('ProjectCustomerCashBack').value === '' ? 0 : document.getElementById('ProjectCustomerCashBack').value
+let BM =  projectCustomerCashBack === '' ? 0 : projectCustomerCashBack
 let BN
 let BO
 let BP
@@ -152,8 +157,6 @@ let DX
 let DY
 let DZ
 
-
-export function calculations(tot) {
     let sumOfAdders = !tot ? 0 : tot
     console.log(A.value);
     BC = Math.floor((parseFloat(A.value)/parseFloat(AZ.value)) + parseFloat(BA.value))
@@ -197,8 +200,7 @@ export function calculations(tot) {
     BL = C < 4 ? 1000 : 0
     BK = AK.value === '1' ? 1000 : 0
     console.log('AK= ' + AK.value);
-    console.log(BK);
-    console.log(BL);
+    console.log('BM, CASH BACK: ' + BM);
     let sumForCE = parseFloat(BG.value)+parseFloat(BH.value)+parseFloat(BI.value)+parseFloat(BJ.value)+parseFloat(BK)+parseFloat(BL)+parseFloat(BM)+ sumOfAdders
     console.log('sum of adders: ' + sumOfAdders);
     console.log('sum of tot: ' + tot);

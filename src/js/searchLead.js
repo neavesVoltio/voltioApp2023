@@ -385,7 +385,6 @@ designArea.addEventListener('change', async function (e) {
 
 proyectInstaller.addEventListener('change', function (e) {
   installer = e.target.value
-  console.log(installer);
   getAddersByInstaller()
 });
 
@@ -413,6 +412,7 @@ async function getAddersByInstaller(){
 // function to create new adder row
 function addNewAdderRow(adderNameData, qtyData){
   let mainContainer = document.getElementById("addersContainers")
+  mainContainer.innerHTML = ''
   let addersTitleContainer = document.createElement("tr");
   
    let adderTableRow = document.createElement("tr");
@@ -487,7 +487,7 @@ function sumOfAddersfunction(){
   totalAdders.value = sumOfAdders
   totalAdders.innerHTML = sumOfAdders.toLocaleString('en-US', {style: 'currency', currency: 'USD',})
   console.log('total: '+ sumOfAdders);
-  calculations(tot)
+  calculations(tot) 
 }
 
 function createAdderButton(newName, newValue){
@@ -514,7 +514,7 @@ function removeButton(){
   });
 }
 
-ProjectCustomerCashBack.addEventListener('input', function (e) {
+ProjectCustomerCashBack.addEventListener('blur', function (e) {
   sumOfAddersfunction()
   console.log(document.getElementById('ProjectCustomerCashBack').value);
 });
