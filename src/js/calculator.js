@@ -158,7 +158,10 @@ let DY
 let DZ
 
     let sumOfAdders = !tot ? 0 : tot
+
     console.log(A.value);
+    console.log('redline: ' + CI.value);
+    console.log('mpu: ' + BI.value);
     BC = Math.floor((parseFloat(A.value)/parseFloat(AZ.value)) + parseFloat(BA.value))
     console.log('BC=' + BC)
     C = parseFloat(BC*parseFloat(AY.value)) //.toFixed(2)
@@ -200,6 +203,7 @@ let DZ
     BL = C < 4 ? 1000 : 0
     BK = AK.value === '1' ? 1000 : 0
     console.log('AK= ' + AK.value);
+    console.log('BK (Add On sistem: ' + BK);
     console.log('BM, CASH BACK: ' + BM);
     let sumForCE = parseFloat(BG.value)+parseFloat(BH.value)+parseFloat(BI.value)+parseFloat(BJ.value)+parseFloat(BK)+parseFloat(BL)+parseFloat(BM)+ sumOfAdders
     console.log('sum of adders: ' + sumOfAdders);
