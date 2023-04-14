@@ -7,7 +7,7 @@
 
 
 export function calculations(tot) {
-  let systemPriceText = document.getElementById('systemPriceText')
+let systemPriceText = document.getElementById('systemPriceText')
 let systemSizeText = document.getElementById('systemSizeText')
 let finalVoltioComisionText = document.getElementById('finalVoltioComisionText')
 let epcPayoutText = document.getElementById('epcPayoutText')

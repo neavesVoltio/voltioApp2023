@@ -11,6 +11,7 @@ let solarPanelLocation
 let roofConditionData
 let data = []  
 let addersData = []
+let addersDataBd = [] 
 let projectRedline
 let mpu
 let inputBox = document.getElementById('searchLeadInput')
@@ -450,7 +451,6 @@ async function getAddersByInstaller(){
     let addersArray = []
     let addersList = docSnap.data().adders
     addersList.forEach(function(item) {
-      console.log(item);
       let adderNameData = item.adderNameData
       let qtyData = item.qtyData
       addersArray.push([adderNameData, qtyData])
@@ -595,6 +595,7 @@ function setRedlineAndMPU(){
 
 // SAVE PROJECT
 function getAddersDataToSaveOnDataBase(){
+  addersData = []
   let addersDataButtons = document.querySelectorAll('.qtyButton');
   addersDataButtons.forEach(function(item) {
     let newValue = item.dataset.value
@@ -610,26 +611,22 @@ proposalViewsAccordionItem.addEventListener('blur', function (e) {
 });
 
 saveCurrentProjectButton.addEventListener('click', async function (e) {
-  console.log(projectUsage.value)
-  console.log(totalYearlyPayment.value)
-  console.log(designArea.value)
-  console.log(proyectInstaller.value)
-  console.log(projectPanelsNumber.value)
-  console.log(projectAddOnSystem.value)
-  console.log(ProjectCustomerCashBack.value)
-  console.log(projectCmsModInput.value);
-  console.log(solarPanelLocation)
-  console.log(roofCondition.value)
-  console.log(roofingMaterial.value)
-  console.log(projectElectricPanelBrand.value)
+  
   getAddersDataToSaveOnDataBase()
-  console.log(addersData);
-  let addersDataBd = [] 
+  addersDataBd = []
   addersData.forEach(function(item) {
     let rowData = {}
-    rowData.qtyData = parseFloat(item[0])
-    rowData.adderNameData = item[1]
+    rowData.qtyData = parseFloat(item[1])
+    rowData.adderNameData = item[0]
     addersDataBd.push(rowData)
+  });
+  const projectRef = doc(db, 'projectDetails', voltioId);
+  await updateDoc(projectRef, { addersData: null })
+  .then(() => {
+    console.log('El campo addersData ha sido borrado exitosamente');
+  })
+  .catch((error) => {
+    console.error('Error borrando el campo addersData: ', error);
   });
   await setDoc(doc(db, "projectDetails", voltioId), {
     projectUsage: projectUsage.value,
@@ -651,7 +648,6 @@ saveCurrentProjectButton.addEventListener('click', async function (e) {
 
 let formControl = document.querySelectorAll('.form-control');
 formControl.forEach(function(item) {
-  console.log(item.id);
   item.addEventListener('focus', function (e) {
     e.target.classList.add('border-info')
   });
@@ -693,10 +689,22 @@ function setProjectDetailsToForm(data){
   roofCondition.value = data.roofCondition
   roofingMaterial.value = data.roofingMaterial
   projectElectricPanelBrand.value = data.projectElectricPanelBrand
-  //designAreaOnChange(data.designArea)
   designAreaOnChangeWithPromise(data.designArea, data.proyectInstaller)
-  // proyectInstaller.value = data.proyectInstaller
-  // addersDataBd = addersData
+  installer = data.proyectInstaller
+  addersDataBd = data.addersData
+  console.log('setProjectDetailsToForm');
+  getAddersByInstaller()
+  addersDataBd.forEach(function(item) {
+      console.log(item);
+      let newName = item.adderNameData
+      let newValue = item.qtyData
+      console.log(newName + ' ' + newValue);
+      createAdderButton(newName, newValue)
+  });
+
+  panelLocationClass.forEach((e)=>{ e.classList.remove('border-info')})
+  document.getElementById(data.solarPanelLocation).classList.toggle('border-info');
+  
 }
 
 async function designAreaOnChangeWithPromise(designArea, installer) {
@@ -706,13 +714,13 @@ async function designAreaOnChangeWithPromise(designArea, installer) {
   }).then(() => {
     console.log(installer);
     proyectInstaller
-    .innerHTML = installer;
+    .value = installer;
     console.log(proyectInstaller);
-    calculations()
+    
   });
 }
 
-async function designAreaOnChange(region){
+async function designAreaOnChange(region, installer){
   console.log('change design area');
   const docRef = doc(db, "coverageArea", region);
   const docSnap = await getDoc(docRef);
@@ -730,6 +738,7 @@ async function designAreaOnChange(region){
       option.value = item
       proyectInstaller.append(option)
     });
+    proyectInstaller.value = installer;
 
 
   } else {
@@ -740,7 +749,6 @@ async function designAreaOnChange(region){
 
   let url = "https://script.google.com/macros/s/AKfycbxXIJUh1IuSUsuaktTU4m6zd82FTMJXpK7H1D7x5EdRhD0CchBon0OvkoY_nDuQt_10/exec"
   let file =  document.querySelector('#customerFilesUpload');
-  let img = document.querySelector('#customerFilesUploadPreview');
 
   file.addEventListener('change', function (e) {
     console.log('file change');
@@ -749,13 +757,13 @@ async function designAreaOnChange(region){
     fr.addEventListener('loadend', function (e) {
       
       let res = fr.result
-      img.src = res
+      
       let spt = res.split('base64,')[1]
       console.log(file.files[0].type);
       let obj = {
         base64:spt,
         type:file.files[0].type,
-        name:file.files[0].name
+        name:voltioId
       }
       console.log(obj);
       let response =  fetch(url, {
@@ -767,7 +775,9 @@ async function designAreaOnChange(region){
         console.log(data);
         try {
           const response = JSON.parse(data);
-          console.log(response);
+          console.log(response.link);
+          
+          saveToUtilityBillCollection(response.link)
         } catch (e) {
           console.error("Error al analizar la respuesta JSON: ", e);
         }
@@ -779,6 +789,96 @@ async function designAreaOnChange(region){
     fr.readAsDataURL(file.files[0])
   });
 
+  async function saveToUtilityBillCollection(link) {
+    try {
+
+      const docRef = await addDoc(collection(db, 'utilityBill'), {
+        voltioId: voltioId,
+        link: link,
+        timestamp: new Date().toISOString()
+      }).then(getImagesFromUtilityBillCollection())
+
+    } catch (error) {
+      console.error('Error al guardar los datos:', error);
+    }
+  }
+  
+  let viewCustomersImageButton = document.getElementById('viewCustomersImageButton');
+  viewCustomersImageButton.addEventListener('click', function (e) {
+    getImagesFromUtilityBillCollection()
+  });
+
+  async function getImagesFromUtilityBillCollection(){
+    const billsCol = collection(db, 'utilityBill');
+    const q = query(billsCol, where('voltioId', '==', voltioId));
+    const querySnapshot = await getDocs(q);
+    const bills = querySnapshot.docs.map((doc) => doc.data());
+    console.log(bills);
+    //generateUtilityBillImagesHTML(bills)
+    const thumbnailElements = bills.map((thumbnail) => generateThumbnail(thumbnail.link, thumbnail.voltioId));
+    insertThumbnails(thumbnailElements);
+    
+  }
+
+  function generateUtilityBillImagesHTML(array) {
+    const container = document.getElementById('utilityBillImagesContainer');
+    container.innerHTML = ""
+    array.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'col-sm-6 col-md-3';
+      
+      const thumbnail = document.createElement('div');
+      thumbnail.className = 'thumbnail';
+      
+      const img = document.createElement('img');
+      img.src = item.link;
+      img.alt = item.voltioId;
+      img.className = 'img-thumbnail mb-2';
+      img.addEventListener("click", () => {
+        window.open(item.link);
+      });
+      thumbnail.appendChild(img);
+      div.appendChild(thumbnail);
+      
+      container.appendChild(div);
+    });
+  }
+
+  function generateThumbnail(link, voltioId) {
+    const thumbnailDiv = document.createElement('div');
+    thumbnailDiv.classList.add('col-sm-6', 'col-md-3');
+  
+    const thumbnail = document.createElement('div');
+    thumbnail.classList.add('thumbnail');
+  
+    const image = document.createElement('img');
+    image.classList.add('img-thumbnail', 'mb-2');
+    image.src = link;
+    image.alt = voltioId;
+  
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('close');
+    closeButton.innerHTML = '&times;';
+    closeButton.addEventListener('click', () => thumbnailDiv.remove());
+  
+    thumbnail.appendChild(image);
+    //thumbnail.appendChild(closeButton);
+    thumbnailDiv.appendChild(thumbnail);
+  
+    image.addEventListener('click', () => window.open(link, '_blank'));
+  
+    return thumbnailDiv;
+  }
+  
+  function insertThumbnails(thumbnails) {
+    const container = document.getElementById('utilityBillImagesContainer');
+    const customerFilesUpload = document.getElementById('customerFilesUpload');
+    customerFilesUpload.value = ''
+    container.innerHTML = ''
+    thumbnails.forEach((thumbnail) => container.appendChild(thumbnail));
+  }
+  
+  
 /*testing git hub*/
 /*
 <button type="button" class="btn btn-primary position-relative"> ........................................................ btnAdderName
