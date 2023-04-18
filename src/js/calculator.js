@@ -1,3 +1,4 @@
+
 // ya vez la deduccion que se hace a los managers y a voltio mientras el precio se reduce
 // me gustaria tener un botton o switch para apagar eso
 // que se quede commission fija a voltio y a el manager
@@ -322,4 +323,11 @@ let DZ
   projectCmsMod.addEventListener('change', (e) => {
     calculations()
   })
-  
+
+// ya vez la deduccion que se hace a los managers y a voltio mientras el precio se reduce
+// me gustaria tener un botton o switch para apagar eso
+// que se quede commission fija a voltio y a el manager
+// al momento de cambiar el precio en e.ppw
+// por ejemplo estabamos con el plan de reducir en la cantidades programadas asi como esta el google sheets pero hoy hicimos el cambio de nuevo donde no se le reduce a el manager ni a voltio
+
+
