@@ -283,7 +283,7 @@ let DZ
       style: 'currency',
       currency: 'USD',
     });
-    offsetText.innerHTML = BB.toFixed(2) * 100 + '%'
+    offsetText.innerHTML = (BB.toFixed(2) * 100).toFixed(2) + '%'
     panelNumberText.innerHTML = + BC
     genKwH.innerHTML = BD.toFixed(2) + ' kWh'
     KwhKw.innerHTML = isNaN( BE.toFixed(2)) ? 0 + ' kWh' : BE.toFixed(2) + ' kWh'
