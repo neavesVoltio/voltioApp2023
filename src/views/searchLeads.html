@@ -556,7 +556,6 @@ License: For each use you must have a valid license purchased only from above li
                                     </div>
                                   </div>
                                   <div class="mb-3">
-                                    <button type="button" class="btn btn-outline-info me-2 mb-2 " id="uploadCustomerImageButton">Add File</button>
                                     <button type="button" class="btn btn-outline-light me-2 mb-2 " id="viewCustomersImageButton">View uploaded Images</button>
                                     <div class="messageCustomerFiles mb-3"></div>
                                   </div>
@@ -822,7 +821,7 @@ License: For each use you must have a valid license purchased only from above li
                             <input class="form-control" name="upFileCustomer" type="file" id="projectImagesInput"> <!-- multiple -->
                           </div>
                           <button type="button" class="btn btn-outline-light mb-3" id="getProjectImagesButton">Get Images</button>
-                          <div class="row clearInputs" id="imageCustomerGallery">
+                          <div class="row clearInputs" id="imageProjectGallery">
                             
                           </div>
                         </div>
@@ -1013,7 +1012,7 @@ License: For each use you must have a valid license purchased only from above li
                             <label for="apptDate" class="form-label">AAPT DATE</label>
                             <input type="date" class="form-control bg-dark opacity-75 text-white shadow text-end" id="apptDate" aria-describedby="apptDate">
                           </div>
-                          <div class="mb-3">
+                          <div class="mb-3" style="display: none;">
                             <div class="btn-group p-2 d-flex flex-row-reverse" role="group" aria-label="Basic checkbox toggle button group">
                               <input type="checkbox" class="btn-check rounded-pill p-2" id="ss" autocomplete="off">
                               <label class="btn btn-outline-secondary" for="ss">SS</label>
@@ -1136,27 +1135,29 @@ License: For each use you must have a valid license purchased only from above li
                     <div class="accordion-item" id="runCreditView">  <!--RUN CREDIT -->
                       <h2 class="accordion-header" id="flush-headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-runCredit" aria-expanded="false" aria-controls="flush-runCredit">
-                          <strong>Run Credit</strong>
+                          <strong>Credit Info</strong>
                         </button>
                       </h2>
                       <div id="flush-runCredit" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                           <div class="container shadow p-2">
-                            <div class="mb-3">
-                              <label for="leadDob" class="form-label">DOB</label>
-                              <input type="date" class="form-control  text-start" id="leadDob" aria-describedby="leadDob">
-                            </div>
-                            <div class="mb-3">
-                              <label for="leadJobOcupation" class="form-label">Job/Occupation</label>
-                              <input type="text" class="form-control  text-start" id="leadJobOcupation" aria-describedby="leadJobOcupation">
-                            </div>
-                            <div class="mb-3">
-                              <label for="leadSSN" class="form-label">SSN</label>
-                              <input type="number" class="form-control  text-start" id="leadSSN" aria-describedby="leadSSN">
-                            </div>
-                            <div class="mb-3">
-                              <label for="leadAnnualIncome" class="form-label">Annual Income</label>
-                              <input type="number" class="form-control  text-start" id="leadAnnualIncome" aria-describedby="leadAnnualIncome">
+                            <div id="runCreditDataView">
+                              <div class="mb-3">
+                                <label for="leadDob" class="form-label">DOB</label>
+                                <input type="date" class="form-control  text-start" id="leadDob" aria-describedby="leadDob">
+                              </div>
+                              <div class="mb-3">
+                                <label for="leadJobOcupation" class="form-label">Job/Occupation</label>
+                                <input type="text" class="form-control  text-start" id="leadJobOcupation" aria-describedby="leadJobOcupation">
+                              </div>
+                              <div class="mb-3">
+                                <label for="leadSSN" class="form-label">SSN</label>
+                                <input type="number" class="form-control  text-start" id="leadSSN" aria-describedby="leadSSN">
+                              </div>
+                              <div class="mb-3">
+                                <label for="leadAnnualIncome" class="form-label">Annual Income</label>
+                                <input type="number" class="form-control  text-start" id="leadAnnualIncome" aria-describedby="leadAnnualIncome">
+                              </div>
                             </div>
                             <div class="mb-3"> <!-- start upload images -->
                           <label for="creditFilesUpload" class="form-label">Upload Files</label>
@@ -1172,7 +1173,7 @@ License: For each use you must have a valid license purchased only from above li
                             <div class="messageCreditFiles mb-3"></div>
                           </div>
                           <div class="messageCredit mb-3"></div>
-                          <div id="previewCreditFiles"></div> <!-- end upload images -->
+                          <div class="row" id="previewCreditFiles"></div> <!-- end upload images -->
                             <div class="row justify-content-center">
                             <div class="container mb-4">
                             <!-- Button trigger modal -->
@@ -1196,7 +1197,11 @@ License: For each use you must have a valid license purchased only from above li
                                     </div>
                                     
                                     <div class="alert alert-success invisible" id= "save-success-message-signature" role="alert"></div>
-                                    <div class="container shadow-sm mb-4" id="imageViewerSignature"></div>
+                                    <div class="container">
+                                      <div class="container-fluid">
+                                        <div class="row" id="imageViewerSignature"></div>
+                                      </div>
+                                    </div>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-primary me-2 mb-2 " id="saveSignature">Save Signature</button>
@@ -1210,7 +1215,8 @@ License: For each use you must have a valid license purchased only from above li
                             </div>
                           </div>
                           <div class="row justify-content-center p-4">
-                            <button type="button" class="btn btn-primary me-2 mb-2 text-white" id="saveCreditInfoButton">Save Credit Info</button>
+                            <button type="button" class="btn btn-outline-info me-2 mb-3 text-white" id="saveCreditInfoButton">Save Credit Info</button>
+                            <button type="button" class="btn btn-outline-info me-2 mb-2 text-white" id="approvedByAdminBtn">Approved by Admin</button>
                           </div>
                         </div>
                       </div>
