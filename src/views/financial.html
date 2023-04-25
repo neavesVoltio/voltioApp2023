@@ -45,31 +45,49 @@
                     <div class="card-body">
                       <form id="addFinancialForm">
                         <div class="mb-3">
-                          <label for="epcName" class="form-label text-light">FINANCIAL NAME</label>
-                          <input type="text" class="form-control bg-dark border-info text-light" id="financialName" aria-describedby="epc name">
+                          <label for="loanName" class="form-label text-light">LOAN</label>
+                          <input type="text" class="form-control bg-dark border-info text-light" id="loanName" aria-describedby="loanName">
                         </div>
                         <div class="mb-3">
-                          <label for="epcRedline" class="form-label text-light">REDLINE</label>
-                          <input type="number" class="form-control bg-dark border-info text-light" id="epcRedline" aria-describedby="redline">
+                          <label for="loanRedline" class="form-label text-light">REDLINE</label>
+                          <input type="number" class="form-control bg-dark border-info text-light" id="loanRedline" aria-describedby="loanRedline">
                         </div>
                         <div class="mb-3">
-                          <label for="epcMPU" class="form-label text-light">MPU $</label>
-                          <input type="number" class="form-control bg-dark border-info text-light" id="epcMPU" aria-describedby="epcMPU">
+                          <label for="loanTerm" class="form-label text-light">TERM</label>
+                          <input type="number" class="form-control bg-dark border-info text-light" id="loanTerm" aria-describedby="loanTerm">
                         </div>
-                        <div class="mb-3" id="statusSelectContainer">
-
+                        <div class="mb-3">
+                          <label for="loanApr" class="form-label text-light">APR</label>
+                          <input type="number" class="form-control bg-dark border-info text-light" id="loanApr" aria-describedby="loanApr">
+                        </div>
+                        <div class="mb-3">
+                          <label for="loanMonthly" class="form-label text-light">Monthly</label>
+                          <input type="number" class="form-control bg-dark border-info text-light" id="loanMonthly" aria-describedby="loanMonthly">
+                        </div>
+                        <div class="mb-3">
+                          <label for="loanNoItc" class="form-label text-light">No ITC</label>
+                          <input type="number" class="form-control bg-dark border-info text-light" id="loanNoItc" aria-describedby="loanNoItc">
+                        </div>
+                        <div class="mb-3">
+                          <label for="loanDealerFee" class="form-label text-light">Dealer Fee</label>
+                          <input type="number" class="form-control bg-dark border-info text-light" id="loanDealerFee" aria-describedby="loanDealerFee">
                         </div>
                         <div class="row container mx-auto">
-                          <a class="btn btn-outline-info me-2 mb-2 text-white" id="addFinancialButtonToServer">Submit</a>
+                          <a class="btn btn-outline-info me-2 mb-2 text-white" id="addLoabButtonToServer">Submit</a>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
+                <div class="col-12 col-md-6 grid grid-margin mx-auto overflow-hidden text-center">
+                  <div class="row  " id="loanCardsContainer">
+                    
+                  </div>
+                </div>
               </div>
             </div>
           </section>
-          <section id="viewFinancialListSection">
+          <section id="viewLoanListSection">
 
           </section>
 			</div>
