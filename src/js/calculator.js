@@ -8,6 +8,8 @@
 
 
 export function calculations(tot) {
+
+
 let systemPriceText = document.getElementById('systemPriceText')
 let systemSizeText = document.getElementById('systemSizeText')
 let finalVoltioComisionText = document.getElementById('finalVoltioComisionText')
@@ -26,7 +28,8 @@ let projectCmsMod = document.getElementById('projectCmsMod')
 let projectCost = document.getElementById('projectCost')
 let totalAdders = document.getElementById('totalAdders').value
 let projectCustomerCashBack = document.getElementById('ProjectCustomerCashBack').value
-
+utilityAverageMonthly.value = (projectUsage.value / 12 ).toFixed(0)
+averageMonthlyPayment.value = (totalYearlyPayment.value / 12).toFixed(0)
 let A = document.getElementById('projectUsage') // 7500)
 let B // SYSTEM PRICE, NO SE UTILIZA EN OTRAS FORMULAS
 let C
@@ -158,8 +161,8 @@ let DX
 let DY
 let DZ
 
-    let sumOfAdders = !tot ? 0 : tot
-
+    let sumOfAdders = !tot ? totalAdders : tot
+    console.log('sum of adders: '+ sumOfAdders);
     console.log(A.value);
     console.log('redline: ' + CI.value);
     console.log('mpu: ' + BI.value);
@@ -296,6 +299,7 @@ let DZ
       style: 'currency',
       currency: 'USD',
     });
+    
   
   }
 
@@ -306,6 +310,7 @@ let DZ
       return
     } else {
       utilityAverageMonthly.value = (projectUsage.value / 12 ).toFixed(0)
+      
       calculations()
     }
     

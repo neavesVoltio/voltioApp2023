@@ -108,6 +108,7 @@ navProposalsMenu.addEventListener('click', function (e) {
   }
 });
 
+
 onAuthStateChanged(auth, async(user) => {
     if(user){
       console.log(user.email);
@@ -118,6 +119,7 @@ onAuthStateChanged(auth, async(user) => {
           viewProjectsButton.dataset.status = 'lead'
           viewProjectsButton.innerHTML = 'VIEW LEADS'
           inputBox.value = ''
+          viewProjectsButton.value = ''
           
         } else {
           viewProjectsButton.dataset.status = 'Project'
@@ -125,6 +127,7 @@ onAuthStateChanged(auth, async(user) => {
           getLeadOrProjectData()
           viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           inputBox.value = ''
+          viewProjectsButton.value = ''
         }
         
       })
@@ -191,7 +194,7 @@ onAuthStateChanged(auth, async(user) => {
           document.querySelector('#addNewLeadSection').style.display = 'none'
           document.querySelector('#searchProjectSection').style.display = 'block'
           document.querySelector('#profileViewSection').style.display = 'none'
-          document.getElementById('imageCustomerGallery').innerHTML = ''
+          //document.getElementById('imageCustomerGallery').innerHTML = ''
           document.getElementById('customerFilesUpload').value = ''
           const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'));
           const querySnapshoot = await getDocs(projectInfo)
@@ -371,15 +374,16 @@ async function setDataToProfileView(voltioId){
       ['Job completed', '100%']]
       let cons = progressValues.map( r => r[0])
       const posIndex = cons.indexOf(docSnap.data().progress)
-      console.log(posIndex);
       const value = progressValues[posIndex][1]
-      console.log(value);
       progressBar.style.width = value
       // THIS FUNCTIONS AREA USED TO COMPLETE DATA ON SOME SECTIONS
       // LIKE COMMENTS, CALCULATOR DATA AND CREDIT INFO, JUST IS PENDING CREDIT LINKS
       getComments()
       getDataFromProjectDetails()
       getCreditInfo()
+      console.log('start calculation on load');
+      
+
     } else {
       // doc.data() will be undefined in this case
      console.log("No such document!");
@@ -760,21 +764,22 @@ function setProjectDetailsToForm(data){
       console.log(item);
       // NO ES POSIBLE SUMAR DESDE AQUI LOS ADDERS AL MENOS QUE SE PUEDA MODIFICAR LA VARIABLE AL CAMBIAR ADDERS EN EL DROPDOWN
       // revisar por que no se han agregado los adders al lead
+      console.log(item.adderNameData);
       console.log('sum of adds by array');
-      console.log(item[i][1]);
-      sum += item[i][1]
+      
+      sum += item.qtyData
       console.log(sum);
       let newName = item.adderNameData
       let newValue = item.qtyData
       console.log(newName + ' ' + newValue);
       createAdderButton(newName, newValue)
+      calculations()
   });
 
   panelLocationClass.forEach((e)=>{ e.classList.remove('border-info')})
   document.getElementById(data.solarPanelLocation).classList.toggle('border-info');
   utilityAverageMonthly.value = (projectUsage.value / 12 ).toFixed(0)
   averageMonthlyPayment.value = (totalYearlyPayment.value / 12).toFixed(0)
-  
 }
 
 async function designAreaOnChangeWithPromise(designArea, installer) {
@@ -813,7 +818,7 @@ async function designAreaOnChange(designArea, installer){
       proyectInstaller.append(option)
     });
     proyectInstaller.value = installer;
-
+    calculations()
 
   } else {
     // doc.data() will be undefined in this case
@@ -1451,3 +1456,4 @@ container.innerHTML = ''
 thumbnails.forEach((thumbnail) => container.appendChild(thumbnail));
 }
 // END OF UPLOAD PROJECT IMAGE SECTION
+

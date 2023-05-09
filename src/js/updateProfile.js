@@ -3,10 +3,8 @@ import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
 const db = getFirestore(app) 
 
-
-
 let updateProfileButton = document.querySelector('#updateProfileButton')
-let docId
+let profileCountry = document.getElementById('profileCountry');
 onAuthStateChanged(auth, async(user) => {
     document.getElementById('profileName').value = user.displayName
     const profileBd = query(collection(db, 'userProfile'), where('userId', '==', user.uid));
@@ -34,8 +32,31 @@ onAuthStateChanged(auth, async(user) => {
             document.getElementById('profileFranchise').value = !doc.data().profileFranchise ? '' : doc.data().profileFranchise
             document.getElementById('profileFranchiseOwner').value = !doc.data().profileFranchiseOwner ? '' : doc.data().profileFranchiseOwner
             document.getElementById('profileTeam').value = !doc.data().profileTeam ? '' : doc.data().profileTeam
+
+            document.getElementById('profileCountry').value =       !doc.data().profileCountry ? '' : doc.data().profileCountry
+            document.getElementById('profileCardNumber').value =    !doc.data().profileCardNumber ? '' : doc.data().profileCardNumber
+            document.getElementById('profileClabe').value =         !doc.data().profileClabe ? '' : doc.data().profileClabe
+            document.getElementById('inputMxState').value =         !doc.data().inputMxState ? '' : doc.data().inputMxState
+            country()
+            
         }
     })
+    
+profileCountry.addEventListener('change', function (e) {
+    country()
+});
+   
+function country(){
+      
+      if(profileCountry.value === 'USA'){
+        console.log(profileCountry.value);
+        document.getElementById('usaSection').style.display = 'block';
+        document.getElementById('mxSection').style.display = 'none';
+      } else if (profileCountry.value === 'MX') {
+        document.getElementById('usaSection').style.display = 'none';
+        document.getElementById('mxSection').style.display = 'block';
+      }
+   }
 })
 
 updateProfileButton.addEventListener('click', (e) =>{
@@ -64,6 +85,12 @@ updateProfileButton.addEventListener('click', (e) =>{
             userData.profileFranchise = document.getElementById('profileFranchise').value
             userData.profileFranchiseOwner = document.getElementById('profileFranchiseOwner').value
             userData.profileTeam = document.getElementById('profileTeam').value
+            userData.profileCountry = document.getElementById('profileCountry').value
+            userData.profileCardNumber = document.getElementById('profileCardNumber').value
+            userData.profileClabe = document.getElementById('profileClabe').value
+            userData.inputMxState = document.getElementById('inputMxState').value     
+
+            
             //console.log(user.uid);
             const profileBd = query(collection(db, 'userProfile'), where('userId', '==', user.uid));
             const querySnapshot = await getDocs(profileBd);
@@ -73,8 +100,8 @@ updateProfileButton.addEventListener('click', (e) =>{
                 
                 updateProfileData(userData)
             })
+
             async function updateProfileData(userData){
-                console.log(userData);
                 const docRef = doc(db, 'userProfile', userData.docId)
                     await updateDoc((docRef),{
                         userEmail: userData.userEmail,
@@ -92,12 +119,23 @@ updateProfileButton.addEventListener('click', (e) =>{
                         profileFranchise: userData.profileFranchise,
                         profileFranchiseOwner: userData.profileFranchiseOwner,
                         profileTeam: userData.profileTeam,
+                        profileCountry: userData.profileCountry,
+                        profileCardNumber: userData.profileCardNumber,
+                        profileClabe: userData.profileClabe,
+                        inputMxState: userData.inputMxState,
                         updated: 'done',
                     }).then( async () => {
                         const docRefRol = doc(db, "userRol", user.email);
                         const docSnapRol = await getDoc(docRefRol);
 
                         if (docSnapRol.exists()) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Your data has been saved',
+                                showConfirmButton: false,
+                                timer: 1500
+                              })
                             return
                         } else {
                             // doc.data() will be undefined in this case
@@ -106,6 +144,13 @@ updateProfileButton.addEventListener('click', (e) =>{
                                 name: user.email,
                                 accessLevel: 'rep',
                             });
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Your data has been saved',
+                                showConfirmButton: false,
+                                timer: 1500
+                              })
                         }
                         Swal.fire({
                             position: 'top-end',
@@ -135,3 +180,5 @@ updateProfileButton.addEventListener('click', (e) =>{
     })
 })
 
+
+  

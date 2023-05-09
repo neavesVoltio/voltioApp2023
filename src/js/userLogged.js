@@ -15,6 +15,7 @@ onAuthStateChanged(auth, async(user) => {
             btn.style.display = 'block'
         })
     } else{
+        document.getElementById("app").innerHTML='<object type="text/html" data="src/views/login.html" width="100%" height="100%" ></object>';
         console.log('no user logged xxx');
         document.getElementById('navbar').style.display = 'none'
         document.getElementById('navbar').style.display = 'none'
@@ -24,7 +25,7 @@ onAuthStateChanged(auth, async(user) => {
         userLogged.forEach( btn => {
             btn.style.display = 'none'
         })
-        document.getElementById("app").innerHTML='<object type="text/html" data="src/views/login.html" width="100%" height="100%" ></object>';
+        
     }
 })
 
