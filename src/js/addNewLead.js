@@ -6,11 +6,16 @@ const db = getFirestore(app)
 let saveLeadButton = document.querySelector('#updateProfileButton')
 
 let leadData
-let addNewLeadViewSection =document.querySelectorAll('.addNewLeadViewSection')        
+let addNewLeadViewSection = document.querySelectorAll('.addNewLeadViewSection')
 let customerPhoneNumber = document.getElementById('customerPhoneNumber')
+let profileCloser = document.getElementById('profileCloser');
+let profileSetter = document.getElementById('profileSetter');
+let leadSetter = document.getElementById('leadSetter'); 
+let leadCloser = document.getElementById('leadCloser');
 
 addNewLeadViewSection.forEach((e) =>{
  e.addEventListener('click', (b) => {
+    getRepDropdown()
     document.querySelector('#addNewLeadSection').style.display = 'block'
     document.querySelector('#searchProjectSection').style.display = 'none'
     document.querySelector('#profileViewSection').style.display = 'none'
@@ -91,6 +96,8 @@ saveLeadButton.addEventListener('click', (e) =>{
                     customerNotes: customerNotes,
                     profileBirth: profileBirth,
                     repName: rep,
+                    closer: profileCloser.value,
+                    setter: profileSetter.value,
                     voltioIdKey: 'V-'+newVoltioId,
                     status: 'lead',
                     creationDate: new Date()
@@ -118,6 +125,8 @@ saveLeadButton.addEventListener('click', (e) =>{
                     document.getElementById('inputZip').value = ''
                     document.getElementById('customerNotes').value = ''
                     document.getElementById('profileBirth').value = ''
+                    profileCloser.value = ''
+                    profileSetter.value = ''
                     
                 }).catch((error) => {
                     console.log(error);
@@ -148,6 +157,8 @@ async function setDataToProfileView(voltioId){
             document.getElementById('stateDropdown').value = doc.data().inputState.toUpperCase()
             document.getElementById('leadZip').value = doc.data().inputZip
             document.getElementById('leadEmail').value = doc.data().customerEmail
+            profileCloser.value = doc.data().profileCloser
+            profileSetter.value = doc.data().profileSetter
             docId = doc.id
         })
     
@@ -171,3 +182,37 @@ async function setDataToProfileView(voltioId){
         
 }
 
+// GET CLOSER AND SETTER TO ADD NEW LEAD SECTION
+// profileCloser
+// profileSetter
+
+async function getRepDropdown() {
+    const db = getFirestore();
+  
+    // const userProfileCollection = collection(db, 'userProfile');
+  
+    // const userProfileSnapshot = await getDocs(userProfileCollection);
+    let userEmails = [];
+    const q = query(collection(db, "userProfile"), where("accessLevel", "!=", "Admin"));
+    const querySnapshot = await getDocs(q);
+    userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
+    
+    /*
+    userProfileSnapshot.forEach((doc) => {
+      userEmails.push(doc.data().userEmail)
+    });
+    */
+    userEmails.forEach(function(item) {
+        let el = document.createElement('option');
+        el.innerHTML = item
+        profileCloser.appendChild(el)
+    });
+    userEmails.forEach(function(item) {
+        let el = document.createElement('option');
+        el.innerHTML = item
+        profileSetter.appendChild(el)
+    });
+
+    return userEmails;
+  }
+  
