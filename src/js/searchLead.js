@@ -26,6 +26,7 @@ let projectUsage = document.getElementById('projectUsage');
 let totalYearlyPayment = document.getElementById('totalYearlyPayment');
 let designArea = document.getElementById('designArea');
 let proyectInstaller = document.getElementById('proyectInstaller');
+let proyectFinancial = document.getElementById('proyectFinancial');
 let projectPanelsNumber = document.getElementById('projectPanelsNumber');
 let projectAddOnSystem = document.getElementById('projectAddOnSystem');
 let ProjectCustomerCashBack = document.getElementById('ProjectCustomerCashBack');
@@ -63,6 +64,10 @@ let progressFilter
 let runCreditView = document.getElementById('runCreditView');
 let upFileCustomer = document.getElementById('upFileCustomer');
 let getProjectImagesButton = document.getElementById('getProjectImagesButton');
+let creditLinksName = document.getElementById('creditLinksName');
+let creditLinks = document.getElementById('creditLinks');
+
+
 
 navProposalsMenu.addEventListener('click', function (e) {
   console.log(e.target.id);
@@ -120,6 +125,7 @@ onAuthStateChanged(auth, async(user) => {
           viewProjectsButton.innerHTML = 'VIEW LEADS'
           inputBox.value = ''
           viewProjectsButton.value = ''
+          statusFilter.value = ''
           
         } else {
           viewProjectsButton.dataset.status = 'Project'
@@ -128,9 +134,11 @@ onAuthStateChanged(auth, async(user) => {
           viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           inputBox.value = ''
           viewProjectsButton.value = ''
+          statusFilter.value = ''
         }
         
       })
+
 
       //getFirestoreDataToPagination()
       getLeadOrProjectData()
@@ -284,8 +292,10 @@ inputBox.addEventListener('input', () => {
 */
   viewProfileButton.forEach( btn => {
     btn.addEventListener('click', async (e) => {
+      
         voltioId = e.target.dataset.leadVoltioId
         setDataToProfileView(voltioId) 
+        
     })
   })
 
@@ -300,6 +310,8 @@ let docId
 
 // FUNCTION TO READ ALL LEAD INFO FROM DB AND SET ON EACH FIELD
 async function setDataToProfileView(voltioId){
+    getRepDropdown()
+    getFinancialDropdown()
     document.getElementById('titleOfEditLeadView').innerHTML = 'Lead'
     document.getElementById('searchProjectSection').style.display = 'none'
     document.getElementById('profileViewSection').style.display = 'block'
@@ -318,6 +330,8 @@ async function setDataToProfileView(voltioId){
             document.getElementById('stateDropdown').value = doc.data().inputState.toUpperCase()
             document.getElementById('leadZip').value = doc.data().inputZip
             document.getElementById('leadEmail').value = doc.data().customerEmail
+            document.getElementById('leadCloser').value = doc.data().profileCloser
+            document.getElementById('leadSetter').value = doc.data().profileSetter
             docId = doc.id
         })
     // WE USE LEAD STATUS TO SET DATA ON STATUS VIEW SECTION
@@ -408,6 +422,8 @@ editLeadButtonToServer.addEventListener('click', async (e) => {
                     inputState: document.getElementById('stateDropdown').value,
                     inputZip: document.getElementById('leadZip').value,
                     customerEmail: document.getElementById('leadEmail').value,
+                    profileCloser: document.getElementById('leadCloser').value,
+                    profileSetter: document.getElementById('leadSetter').value,
                   }).then( () => {
                     Swal.fire({
                         position: 'top-end',
@@ -503,6 +519,23 @@ proyectInstaller.addEventListener('change', function (e) {
   
 });
 
+proyectFinancial.addEventListener('change', async function (e) {
+
+  console.log(proyectFinancial.value);
+  let documentId = proyectFinancial.value
+  const documentRef = doc(db, 'loanData', documentId);
+  const documentSnapshot = await getDoc(documentRef);
+
+  if (documentSnapshot.exists()) {
+    const data = documentSnapshot.data();
+    projectRedline = parseFloat(data.loanRedline)
+    document.getElementById('projectRedline').value = projectRedline
+  } else {
+    console.log("El documento no existe.");
+  }
+
+});
+
 async function getAddersByInstaller(){
   console.log('getAddersByInstaller');
   console.log(installer);
@@ -510,7 +543,7 @@ async function getAddersByInstaller(){
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    projectRedline = docSnap.data().installerRedline
+    // projectRedline = docSnap.data().installerRedline
     mpu = docSnap.data().epcMPU
     let addersArray = []
     let addersList = docSnap.data().adders
@@ -650,11 +683,7 @@ panelLocationClass.forEach(function(item) {
 });
 
 function setRedlineAndMPU(){
-  document.getElementById('projectRedline').value = projectRedline
   document.getElementById('projectMPUPrice').value = mpu
-  console.log('redline: ' + projectRedline);
-  console.log('mpu: ' + mpu);
-  //calculations()
 }
 
 // SAVE PROJECT
@@ -1234,9 +1263,9 @@ async function getImagesFromSignaturePadCollection(){
   });
   // approve credit by Admin
   let approvedByAdminBtn = document.getElementById('approvedByAdminBtn');
+
   approvedByAdminBtn.addEventListener('click', async function (e) {
     const creditInfoRef = doc(collection(db, "creditInfo"), voltioId);
-
     try {
       // Se guarda el elemento en Firestore
       await setDoc(creditInfoRef, {approved: 'Yes'}, { merge: true });
@@ -1457,3 +1486,48 @@ thumbnails.forEach((thumbnail) => container.appendChild(thumbnail));
 }
 // END OF UPLOAD PROJECT IMAGE SECTION
 
+
+async function getRepDropdown() {
+  const db = getFirestore();
+
+  // const userProfileCollection = collection(db, 'userProfile');
+
+  // const userProfileSnapshot = await getDocs(userProfileCollection);
+  let userEmails = [];
+  const q = query(collection(db, "userProfile"), where("accessLevel", "!=", "Admin"));
+  const querySnapshot = await getDocs(q);
+  userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
+          
+  userEmails.forEach(function(item) {
+      let el = document.createElement('option');
+      el.innerHTML = item
+      leadSetter.appendChild(el)
+  });
+
+  userEmails.forEach(function(item) {
+      let el = document.createElement('option');
+      el.innerHTML = item
+      leadCloser.appendChild(el)
+  });
+
+  return userEmails;
+}
+
+async function getFinancialDropdown(){
+  const db = getFirestore();
+
+  // const userProfileCollection = collection(db, 'userProfile');
+
+  // const userProfileSnapshot = await getDocs(userProfileCollection);
+  let loanName = [];
+  const q = query(collection(db, "loanData"));
+  const querySnapshot = await getDocs(q);
+  loanName = querySnapshot.docs.map((doc) => doc.id);
+          
+  loanName.forEach(function(item) {
+      let el = document.createElement('option');
+      el.innerHTML = item
+      proyectFinancial.appendChild(el)
+  });
+
+}
