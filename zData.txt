@@ -13,10 +13,6 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-19. Crear la funcion para agregar los credit links y que los traiga al abrir el proyecto
-20. Guardar el financial y su redline en la base de datos
-21. Hacer el calculo al cambiar el financial dropdown
-22. Traer el financial al abrir el proyecto y ejecutar la calculadora, tambien se debe obtener el redline.
 
 15. ProjectInfo debe ser solo vista por el administrador general
 */    revisar por que no se han agregado los adders al lead
@@ -36,4 +32,8 @@ Sig pasos:
 */ 16. Drop down del closer y setter al agregar un nuevo lead
 */ 17. Drop down del closer y setter al editar lead
 */ 18. Al actualizar el installer se deb tomar sus valores de redline y ver donde se incluye esta opcion
+*/ 19. Crear la funcion para agregar los credit links y que los traiga al abrir el proyecto
+*/ 20. Guardar el financial y su redline en la base de datos
+*/ 21. Hacer el calculo al cambiar el financial dropdown
+*/ 22. Traer el financial al abrir el proyecto y ejecutar la calculadora, tambien se debe obtener el redline.
 

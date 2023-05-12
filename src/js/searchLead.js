@@ -49,7 +49,7 @@ let navTabUtility = document.getElementById('navTabUtility');
 let navTabDesign = document.getElementById('navTabDesign');
 let navTabPricing = document.getElementById('navTabPricing');
 let navTabDetails = document.getElementById('navTabDetails');
-
+let projectRedlineEl = document.getElementById('projectRedline');
 let navTabUtilityContainer = document.getElementById('navTabUtilityContainer');
 let navTabDesignContainer = document.getElementById('navTabDesignContainer');
 let navTabPricingContainer = document.getElementById('navTabPricingContainer');
@@ -520,8 +520,6 @@ proyectInstaller.addEventListener('change', function (e) {
 });
 
 proyectFinancial.addEventListener('change', async function (e) {
-
-  console.log(proyectFinancial.value);
   let documentId = proyectFinancial.value
   const documentRef = doc(db, 'loanData', documentId);
   const documentSnapshot = await getDoc(documentRef);
@@ -530,6 +528,7 @@ proyectFinancial.addEventListener('change', async function (e) {
     const data = documentSnapshot.data();
     projectRedline = parseFloat(data.loanRedline)
     document.getElementById('projectRedline').value = projectRedline
+    sumOfAddersfunction()
   } else {
     console.log("El documento no existe.");
   }
@@ -606,8 +605,6 @@ function addNewAdderRow(adderNameData, qtyData){
     let stateNameDropdown = document.querySelectorAll('.stateNameDropdown');
     stateNameDropdown.forEach(function(item) {
       item.addEventListener('change', function (e) {
-        console.log('change');
-        console.log();
         let value = e.target.value
         let name = value.split(',')
         let newName = name[1]
@@ -735,6 +732,8 @@ saveCurrentProjectButton.addEventListener('click', async function (e) {
     roofingMaterial: roofingMaterial.value,
     projectElectricPanelBrand: projectElectricPanelBrand.value,
     addersData: addersDataBd,
+    proyectFinancial: proyectFinancial.value,
+    projectRedlineEl: projectRedlineEl.value
   });
 
 });
@@ -773,7 +772,6 @@ function setProjectDetailsToForm(data){
   projectUsage.value = data.projectUsage
   totalYearlyPayment.value = data.totalYearlyPayment
   designArea.value = data.designArea
-  
   projectPanelsNumber.value = data.projectPanelsNumber
   projectAddOnSystem.value = data.projectAddOnSystem
   ProjectCustomerCashBack.value = data.ProjectCustomerCashBack
@@ -785,9 +783,9 @@ function setProjectDetailsToForm(data){
   designAreaOnChangeWithPromise(data.designArea, data.proyectInstaller)
   installer = data.proyectInstaller
   addersDataBd = data.addersData
-  console.log('setProjectDetailsToForm');
   getAddersByInstaller()
-  console.log(addersDataBd);
+  proyectFinancial.value = data.proyectFinancial
+  projectRedlineEl.value = data.projectRedlineEl
   let sum = 0 // LET USED TO SUM ADDS
   addersDataBd.forEach(function(item) {
       console.log(item);
@@ -1033,6 +1031,8 @@ async function designAreaOnChange(designArea, installer){
     averageMonthlyPayment.value = 0
     targetCommission.innerHTML = ''
     projectCost.innerHTML = ''
+    proyectFinancial.innerHTML = ''
+    projectRedlineEl.value = 0
   }
 
   // START CREDIT INFO SECTION
@@ -1523,7 +1523,7 @@ async function getFinancialDropdown(){
   const q = query(collection(db, "loanData"));
   const querySnapshot = await getDocs(q);
   loanName = querySnapshot.docs.map((doc) => doc.id);
-          
+  proyectFinancial.appendChild(document.createElement('option'))       
   loanName.forEach(function(item) {
       let el = document.createElement('option');
       el.innerHTML = item
