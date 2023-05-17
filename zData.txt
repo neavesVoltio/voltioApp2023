@@ -14,7 +14,10 @@ projectElectricPanelBrand
 
 Sig pasos:
 
-15. ProjectInfo debe ser solo vista por el administrador general
+
+
+
+*/ 15. ProjectInfo debe ser solo vista por el administrador general
 */    revisar por que no se han agregado los adders al lead
 */ 1. Habilitar el boton para que guarde la calculadora y que se pueda elegir la principal y las secundarias.
 */ 2. Habilitar la sección para subir fotos a Drive y poder traerlas al abrir el proyecto.
@@ -36,4 +39,6 @@ Sig pasos:
 */ 20. Guardar el financial y su redline en la base de datos
 */ 21. Hacer el calculo al cambiar el financial dropdown
 */ 22. Traer el financial al abrir el proyecto y ejecutar la calculadora, tambien se debe obtener el redline.
+*/ 23. spiner al cargar los datos de los leads 
+*/ 24. agregar closer y setter a la tabla 
 

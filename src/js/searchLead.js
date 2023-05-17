@@ -66,7 +66,18 @@ let upFileCustomer = document.getElementById('upFileCustomer');
 let getProjectImagesButton = document.getElementById('getProjectImagesButton');
 let creditLinksName = document.getElementById('creditLinksName');
 let creditLinks = document.getElementById('creditLinks');
+let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
+let loading = document.getElementById('loading');
 
+startLoading()
+
+function startLoading(){
+  loading.classList.remove("invisible");
+}
+
+function endLoading(){
+  loading.classList.add("invisible");
+}
 
 
 navProposalsMenu.addEventListener('click', function (e) {
@@ -116,7 +127,6 @@ navProposalsMenu.addEventListener('click', function (e) {
 
 onAuthStateChanged(auth, async(user) => {
     if(user){
-      console.log(user.email);
       viewProjectsButton.addEventListener('click', (e) => {
         if(viewProjectsButton.dataset.status === 'Project'){
           status = 'Project'
@@ -157,14 +167,20 @@ onAuthStateChanged(auth, async(user) => {
           querySnapshoot = await getDocs(projectInfo)
 
           const allData = querySnapshoot.forEach( async(doc) => {
-              data.push([
+            let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+            let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+            let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+                data.push([
                   doc.data().voltioIdKey,
                   doc.data().customerName,
                   doc.data().progress,
-                  doc.data().status,
                   doc.data().projectStatus,
-                  
-              ])
+                  profileCloser,
+                  profileSetter,
+                  systemSize,
+                  doc.data().creationDate,
+  
+                ])
           })
         
           searchLeadByInput()
@@ -179,14 +195,20 @@ onAuthStateChanged(auth, async(user) => {
           }  
 
           const allData = querySnapshoot.forEach( async(doc) => {
-              data.push([
+            let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+            let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+            let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+                data.push([
                   doc.data().voltioIdKey,
                   doc.data().customerName,
                   doc.data().progress,
-                  doc.data().status,
                   doc.data().projectStatus,
-                  
-              ])
+                  profileCloser,
+                  profileSetter,
+                  systemSize,
+                  doc.data().creationDate,
+  
+                ])
           })
         
           searchLeadByInput()
@@ -202,18 +224,26 @@ onAuthStateChanged(auth, async(user) => {
           document.querySelector('#addNewLeadSection').style.display = 'none'
           document.querySelector('#searchProjectSection').style.display = 'block'
           document.querySelector('#profileViewSection').style.display = 'none'
+          viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           //document.getElementById('imageCustomerGallery').innerHTML = ''
           document.getElementById('customerFilesUpload').value = ''
           const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'));
           const querySnapshoot = await getDocs(projectInfo)
           const allData = querySnapshoot.forEach( async(doc) => {
-              data.push([
-                doc.data().voltioIdKey,
-                doc.data().customerName,
-                doc.data().progress,
-                doc.data().status,
-                doc.data().projectStatus,
-              ])
+            let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+            let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+            let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+                data.push([
+                  doc.data().voltioIdKey,
+                  doc.data().customerName,
+                  doc.data().progress,
+                  doc.data().projectStatus,
+                  profileCloser,
+                  profileSetter,
+                  systemSize,
+                  doc.data().creationDate,
+  
+                ])
           })
           clearProjectInfo()
           searchLeadByInput()
@@ -230,76 +260,65 @@ onAuthStateChanged(auth, async(user) => {
 inputBox.addEventListener('input', () => {
   searchLeadByInput()})
 
-  function searchLeadByInput(){
-  
-    let searchInput = document.getElementById("searchLeadInput").value.toString().toLowerCase().trim()
-    let searchWords = searchInput.split(/\w^/)
-  
-    let resultsArray = searchInput === "" ? data : data.filter(function(r){
-      return searchWords.every(function(word){
-        return [1].some(function(colIndex){
-          return r[colIndex].toString().toLowerCase().indexOf(word) !== -1
-        })
+function searchLeadByInput(){
+
+  let searchInput = document.getElementById("searchLeadInput").value.toString().toLowerCase().trim()
+  let searchWords = searchInput.split(/\w^/)
+
+  let resultsArray = searchInput === "" ? data : data.filter(function(r){
+    return searchWords.every(function(word){
+      return [1].some(function(colIndex){
+        return r[colIndex].toString().toLowerCase().indexOf(word) !== -1
       })
-  })
-  
-    let searchResultsBox = document.getElementById("searchResults")
-    let templateBox = document.getElementById("rowTemplate")
-    let template = templateBox.content
-  
-    searchResultsBox.innerHTML = ""
-    resultsArray.forEach(function(r){
-      let tr = template.cloneNode(true)
-      let leadId = tr.querySelector(".leadId");
-      let leadProgress = tr.querySelector(".leadProgress");
-      let leadStage = tr.querySelector(".leadStage");
-      let editButton = tr.querySelector(".editLeadButton"); // BUTTON THAT CONTAINS CUSTOMER NAME
-      let leadSetter = tr.querySelector('leadSetter');
-      let leadSistemSize = tr.querySelector('leadSistemSize');
-      let leadCreatedDate = tr.querySelector('leadCreatedDate');
-      
-      leadId.textContent = r[0]
-      editButton.textContent = r[1]
-      leadProgress.textContent = r[2]
-      leadStage.textContent = r[4]
-      
-      editButton.dataset.leadVoltioId = r[0]; 
-      
-      searchResultsBox.appendChild(tr)
-      
-    })
-
-    let viewProfileButton = document.querySelectorAll('.editLeadButton')
-
-  /* USAR ESTA FUNCION AL CAMBIAR EL ESTATUS A PROJECTO 
-  statusButtonChange.forEach( btn => {
-    btn.addEventListener('click', async (e) => {
-      // document.getElementById("app").innerHTML='<object type="text/html" data="../views/leadProfile.html" width="100%" height="100%" ></object>';
-      voltioId = e.target.dataset.voltioId
-             const voltioIds = query(collection(db, 'leadData'), where('voltioIdKey', '==', voltioId))
-                const voltioIdsSnapshot = await getDocs(voltioIds)
-                voltioIdsSnapshot.forEach( async(e) => {
-                  const docRef = doc(db, 'leadData', e.id)
-                  await updateDoc(docRef, {
-                    status: 'Project',
-                    projectDate: new Date()
-                  })
-                })
-                setDataToProfileView(voltioId)          
-      e.target.closest(".result-box").remove();
     })
   })
-*/
+
+  let searchResultsBox = document.getElementById("searchResults")
+  let templateBox = document.getElementById("rowTemplate")
+  let template = templateBox.content
+
+  searchResultsBox.innerHTML = ""
+  console.log(resultsArray);
+  resultsArray.forEach(function(r){
+    let tr = template.cloneNode(true)
+    let leadId = tr.querySelector(".leadId");
+    let leadProgress = tr.querySelector(".leadProgress");
+    let leadStage = tr.querySelector(".leadStage");
+    let editButton = tr.querySelector(".editLeadButton"); // BUTTON THAT CONTAINS CUSTOMER NAME
+    let profileSetter = tr.querySelector('.profileSetter');
+    let profileCloser = tr.querySelector('.profileCloser');
+    let systemSize = tr.querySelector('.systemSize');
+    let leadCreatedDate = tr.querySelector('.leadCreatedDate');
+    const timestamp =  r[7] ;
+    const dateNew = new Date(timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000));
+    const date = new Date (r[7] * 1000)    
+    let month = dateNew.getMonth() < 10 ? '0'+ (dateNew.getMonth() + 1): (dateNew.getMonth()+ 1)
+    let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
+    const formattedDate = `${month}/${day}/${dateNew.getFullYear()}`;
+
+    leadId.textContent = r[0]
+    editButton.textContent = r[1]
+    leadProgress.textContent = r[2]
+    leadStage.textContent = r[3]
+    profileSetter.textContent = r[5]
+    profileCloser.textContent = r[4]
+    systemSize.textContent = r[6]
+    leadCreatedDate.textContent = formattedDate
+    
+    editButton.dataset.leadVoltioId = r[0]; 
+    
+    searchResultsBox.appendChild(tr)
+    
+  })
+  let viewProfileButton = document.querySelectorAll('.editLeadButton')
   viewProfileButton.forEach( btn => {
     btn.addEventListener('click', async (e) => {
-      
         voltioId = e.target.dataset.leadVoltioId
+        clearInputs()
         setDataToProfileView(voltioId) 
-        
     })
   })
-
-  
+  endLoading()
 }
 
 projectAddOnSystem.addEventListener('change', function (e) {
@@ -320,7 +339,7 @@ async function setDataToProfileView(voltioId){
     const projectInfo = query(collection(db, 'leadData'), where('voltioIdKey', '==', voltioId));
         const querySnapshoot = await getDocs(projectInfo)
         const allData = querySnapshoot.forEach( async(doc) => {
-            customerNameOnTop.innerHTML = doc.data().customerName.toUpperCase()
+            customerNameOnTop.innerHTML = doc.data().voltioIdKey.toUpperCase() + ' - ' + doc.data().customerName.toUpperCase()
             document.getElementById('leadVoltioId').value = doc.data().voltioIdKey.toUpperCase()
             document.getElementById('leadName').value = doc.data().customerName.toUpperCase()
             document.getElementById('leadPhone').value = doc.data().customerPhoneNumber
@@ -332,6 +351,7 @@ async function setDataToProfileView(voltioId){
             document.getElementById('leadEmail').value = doc.data().customerEmail
             document.getElementById('leadCloser').value = doc.data().profileCloser
             document.getElementById('leadSetter').value = doc.data().profileSetter
+            document.getElementById('leadBirth').value = doc.data().profileBirth
             docId = doc.id
         })
     // WE USE LEAD STATUS TO SET DATA ON STATUS VIEW SECTION
@@ -411,31 +431,37 @@ projectPanelsNumber.addEventListener('blur', function (e) {
 
 let editLeadButtonToServer = document.getElementById('editLeadButtonToServer')
 
-editLeadButtonToServer.addEventListener('click', async (e) => {
-    const docRef = doc(db, 'leadData', docId)
-                  await updateDoc(docRef, {
-                    customerName: document.getElementById('leadName').value,
-                    customerPhoneNumber: document.getElementById('leadPhone').value,
-                    customerAddress: document.getElementById('leadAddress').value,
-                    customerLanguage: document.getElementById('leadLanguage').value,
-                    inputCity: document.getElementById('leadCity').value,
-                    inputState: document.getElementById('stateDropdown').value,
-                    inputZip: document.getElementById('leadZip').value,
-                    customerEmail: document.getElementById('leadEmail').value,
-                    profileCloser: document.getElementById('leadCloser').value,
-                    profileSetter: document.getElementById('leadSetter').value,
-                  }).then( () => {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Your data has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                      })
-                }).catch( (error) => {
-                    console.log(error);
-                })
+editLeadButtonToServer.addEventListener('click', (e) => {
+  saveLeadToServer()
 })
+
+async function saveLeadToServer(){
+  const docRef = doc(db, 'leadData', docId)
+    await updateDoc(docRef, {
+      customerName: document.getElementById('leadName').value,
+      customerPhoneNumber: document.getElementById('leadPhone').value,
+      customerAddress: document.getElementById('leadAddress').value,
+      customerLanguage: document.getElementById('leadLanguage').value,
+      inputCity: document.getElementById('leadCity').value,
+      inputState: document.getElementById('stateDropdown').value,
+      inputZip: document.getElementById('leadZip').value,
+      customerEmail: document.getElementById('leadEmail').value,
+      profileCloser: document.getElementById('leadCloser').value,
+      profileSetter: document.getElementById('leadSetter').value,
+      systemSize: document.getElementById('systemSizeText').innerHTML,
+      profileBirth: document.getElementById('leadBirth').value
+    }).then( () => {
+      Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your data has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
+  }).catch( (error) => {
+      console.log(error);
+  })
+}
 
 function clearInputs(){
   clearInputsElement.forEach((e) => {
@@ -701,7 +727,7 @@ proposalViewsAccordionItem.addEventListener('blur', function (e) {
 });
 
 saveCurrentProjectButton.addEventListener('click', async function (e) {
-  
+  startLoading()
   getAddersDataToSaveOnDataBase()
   addersDataBd = []
   addersData.forEach(function(item) {
@@ -734,6 +760,24 @@ saveCurrentProjectButton.addEventListener('click', async function (e) {
     addersData: addersDataBd,
     proyectFinancial: proyectFinancial.value,
     projectRedlineEl: projectRedlineEl.value
+  }).then(() => {
+    saveLeadToServer()
+    endLoading()
+    Swal.fire({
+      icon: 'success',
+      title: 'Proposal saved',
+      text: `The proposal has been saved successfully`,
+      confirmButtonText: 'OK'
+    });
+  })
+  .catch((error) => {
+    endLoading()
+    Swal.fire({
+      icon: 'error',
+      title: 'Error ocurred',
+      text: `Please try again.`,
+      confirmButtonText: 'OK'
+    });
   });
 
 });
@@ -1007,6 +1051,111 @@ async function designAreaOnChange(designArea, installer){
     thumbnails.forEach((thumbnail) => container.appendChild(thumbnail));
   }
 // END OF UPLOAD IMAGE SECTION
+
+// START SECTION TO UPLOAD IMAGES DESIGN PHOTOS
+
+let designFilesUpload =  document.querySelector('#designFilesUpload');
+  
+designFilesUpload.addEventListener('change', function (e) {
+  // Inicia el sweet alert 
+  const progressAlert = Swal.fire({
+    title: 'loading file...',
+    html: '<div class="progress"><div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>',
+    showCancelButton: false,
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    allowEnterKey: false
+  });
+  // termina el sweet alert
+
+  console.log('customer files upload chganged');
+  let url = "https://script.google.com/macros/s/AKfycbwdETh-O86DI8AdAh7_mRjVuOqF2Fq99nyA0WfPrbJa9wL4HvKdoa_Vlvzj3HfQcbF9/exec"
+  console.log('file change');
+  let fr = new FileReader()
+  fr.addEventListener('loadend', function (e) {
+    let res = fr.result
+    
+    let spt = res.split('base64,')[1]
+    console.log(designFilesUpload.files[0].type);
+    let obj = {
+      base64:spt,
+      type:designFilesUpload.files[0].type,
+      name:voltioId
+    }
+    console.log(obj);
+    let response =  fetch(url, {
+        method:'POST',
+        body: JSON.stringify(obj),
+      })
+    .then(r=>r.text())
+    .then(data => {
+      console.log(data);
+      try {
+        const response = JSON.parse(data);
+        console.log(response.link);
+        
+        saveToDesignImagesCollection(response.link)
+        // Cerrar el Sweet Alert
+        progressAlert.close();
+        // Mostrar una alerta de éxito
+        Swal.fire({
+          icon: 'success',
+          title: 'File loaded',
+          text: `The file has been loaded`,
+          confirmButtonText: 'OK'
+        });
+      } catch (e) {
+        console.error("Error al analizar la respuesta JSON: ", e);
+      }
+    })
+    .catch(err => {
+      console.error("Error en la solicitud POST: ", err);
+    });
+  });
+  fr.readAsDataURL(designFilesUpload.files[0])
+});
+
+async function saveToDesignImagesCollection(link) {
+  try {
+
+    const docRef = await addDoc(collection(db, 'designImages'), {
+      voltioId: voltioId,
+      link: link,
+      timestamp: new Date().toISOString()
+    }).then(getImagesFromDesignImagesCollection())
+
+  } catch (error) {
+    console.error('Error al guardar los datos:', error);
+  }
+}
+
+let viewDesignImageButton = document.getElementById('viewDesignImageButton');
+
+viewDesignImageButton.addEventListener('click', function (e) {
+  getImagesFromDesignImagesCollection()
+});
+
+async function getImagesFromDesignImagesCollection(){
+  const billsCol = collection(db, 'designImages');
+  const q = query(billsCol, where('voltioId', '==', voltioId));
+  const querySnapshot = await getDocs(q);
+  const bills = querySnapshot.docs.map((doc) => doc.data());
+  const thumbnailElements = bills.map((thumbnail) => generateThumbnail(thumbnail.link, thumbnail.voltioId));
+  insertThumbnailsDesign(thumbnailElements);
+  
+}
+
+function insertThumbnailsDesign(thumbnails) {
+  const container = document.getElementById('designFilesImagesContainer');
+  const designFilesUpload = document.getElementById('designFilesUpload');
+  designFilesUpload.value = ''
+  container.innerHTML = ''
+  thumbnails.forEach((thumbnail) => container.appendChild(thumbnail));
+}
+// END OF UPLOAD IMAGE SECTION
+
+
 // FUNCTION TO CLEAR PROJECT ITS USED TO RESET PROJECT VIEW
   function clearProjectInfo(){
     projectUsage.value = 0
@@ -1531,3 +1680,56 @@ async function getFinancialDropdown(){
   });
 
 }
+
+saveCreditLinksButton.addEventListener('click', function (e) {
+  saveCreditLinks()
+});
+
+function saveCreditLinks() {
+  const creditLinksCollection = collection(db, "creditLinks");
+  
+  const creditLinksName = document.getElementById("creditLinksName").value;
+  const creditLinks = document.getElementById("creditLinks").value;
+  let linkRule = creditLinks.substring(0,4) === 'http'|| creditLinks.substring(0,4) === 'https' ? 1 : 0
+  if (linkRule === 1) {
+    // El valor cumple con el patrón
+    console.log("El valor es válido:", creditLinks);
+    
+    const creditLinkData = {
+      name: creditLinksName,
+      link: creditLinks
+    };
+
+    addDoc(creditLinksCollection, creditLinkData)
+          .then( () => {
+            creditLinksName = ''
+            creditLinks = ''
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your data has been saved',
+                showConfirmButton: false,
+                timer: 1500
+              })
+        }).catch( (error) => {
+            console.log(error);
+        })
+    // Aquí puedes realizar las operaciones adicionales que desees
+  } else {
+    // El valor no cumple con el patrón
+    console.log("El valor no es válido");
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: 'Please confirm your data',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    // Puedes mostrar un mensaje de error o tomar alguna acción apropiada
+  }
+
+  
+
+}
+
+
