@@ -1686,24 +1686,26 @@ saveCreditLinksButton.addEventListener('click', function (e) {
 });
 
 function saveCreditLinks() {
-  const creditLinksCollection = collection(db, "creditLinks");
+  let creditLinksCollection = collection(db, "creditLinks");
   
-  const creditLinksName = document.getElementById("creditLinksName").value;
-  const creditLinks = document.getElementById("creditLinks").value;
-  let linkRule = creditLinks.substring(0,4) === 'http'|| creditLinks.substring(0,4) === 'https' ? 1 : 0
+  let creditLinksName = document.getElementById("creditLinksName").value;
+  let creditLinks = document.getElementById("creditLinks").value;
+
+  let linkRule = creditLinks.slice(0,4) === 'http'|| creditLinks.slice(0,5) === 'https' ? 1 : 0
   if (linkRule === 1) {
     // El valor cumple con el patrón
     console.log("El valor es válido:", creditLinks);
     
-    const creditLinkData = {
+    let creditLinkData = {
       name: creditLinksName,
-      link: creditLinks
+      link: creditLinks,
+      voltioId: voltioId
     };
 
     addDoc(creditLinksCollection, creditLinkData)
           .then( () => {
-            creditLinksName = ''
-            creditLinks = ''
+            document.getElementById("creditLinksName").value = ''
+            document.getElementById("creditLinks").value = ''
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
