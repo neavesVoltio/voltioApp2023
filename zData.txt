@@ -15,7 +15,7 @@ projectElectricPanelBrand
 Sig pasos:
 
 
-
+26. credit links, muestra los links al dar refresh, se debe ver como tarjetas, debe tener un link para ir a la pagina
 
 */ 15. ProjectInfo debe ser solo vista por el administrador general
 */    revisar por que no se han agregado los adders al lead
@@ -41,4 +41,5 @@ Sig pasos:
 */ 22. Traer el financial al abrir el proyecto y ejecutar la calculadora, tambien se debe obtener el redline.
 */ 23. spiner al cargar los datos de los leads 
 */ 24. agregar closer y setter a la tabla 
+*/ 25. Agregar systemSize a la tabla de leads
 

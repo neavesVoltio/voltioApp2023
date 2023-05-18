@@ -66,6 +66,7 @@ let upFileCustomer = document.getElementById('upFileCustomer');
 let getProjectImagesButton = document.getElementById('getProjectImagesButton');
 let creditLinksName = document.getElementById('creditLinksName');
 let creditLinks = document.getElementById('creditLinks');
+let refreshCreditLinksButton = document.getElementById('refreshCreditLinksButton');
 let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
 let loading = document.getElementById('loading');
 
@@ -1706,6 +1707,7 @@ function saveCreditLinks() {
           .then( () => {
             document.getElementById("creditLinksName").value = ''
             document.getElementById("creditLinks").value = ''
+            getCreditLinks()
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -1733,5 +1735,86 @@ function saveCreditLinks() {
   
 
 }
+
+refreshCreditLinksButton.addEventListener('click', function (e) {
+  getCreditLinks()
+});
+
+async function getCreditLinks(){
+  const creditLinksCol = collection(db, "creditLinks");
+  const q = query(creditLinksCol, where("voltioId", "==", voltioId));
+  const creditLinksArray = [];
+
+  try {
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // Obtener los datos del documento y agregarlos al array
+      const creditLinkData = doc.data();
+      let creditLinkId = doc.id
+      creditLinksArray.unshift({
+        id: creditLinkId,
+        ...creditLinkData
+      });
+    });
+
+    // Hacer algo con el array de creditLinks
+    const divPrincipal = document.getElementById("linkPreviews");
+    divPrincipal.innerHTML = ''
+
+    creditLinksArray.forEach(link => {
+      console.log(link);
+      let linkData = link.link
+      let linkName = link.name
+      let linkId = link.id
+
+      var divCol = document.createElement("div");
+      divCol.className = "col-lg-4 col-sm-12 mb-4";
+
+      var divCard = document.createElement("div");
+      divCard.className = "card h-100";
+
+      var iframe = document.createElement("iframe");
+      iframe.src = linkData;
+      iframe.className = "col-sm-6 col-md-12";
+
+      var divCardBody = document.createElement("div");
+      divCardBody.className = "card-body";
+
+      var h5 = document.createElement("h5");
+      h5.className = "card-title";
+      h5.textContent = linkName;
+
+      var link = document.createElement("a");
+      link.href = linkData;
+      link.dataset.id = linkId
+      link.target = "_blank";
+      link.className = "btn btn-primary";
+      link.textContent = "Ir al enlace";
+
+      divCardBody.appendChild(h5);
+      divCardBody.appendChild(link);
+
+      divCard.appendChild(iframe);
+      divCard.appendChild(divCardBody);
+
+      divCol.appendChild(divCard);
+
+      divPrincipal.appendChild(divCol);
+      });
+  } catch (error) {
+    console.log("Error obteniendo los creditLinks:", error);
+  }
+}
+
+// Función para generar el código HTML
+function generarTarjetas(linkData, linkName) {
+    
+    var iframeSrc = linkData;
+    var h5Text = linkName;
+    var linkHref = linkData;
+
+                          
+}
+
 
 
