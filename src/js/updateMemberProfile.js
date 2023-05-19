@@ -6,6 +6,8 @@ let searchByEmailBtn = document.getElementById('searchByEmailBtn');
 let searchByEmail = document.getElementById('searchByEmail');
 let updateProfileButton = document.querySelector('#updateProfileButton')
 let profileCountry = document.getElementById('profileCountry');
+let getUsersModalBtn = document.getElementById('getUsersModalBtn');
+
 
 onAuthStateChanged(auth, async(user) => {
     
@@ -156,6 +158,66 @@ updateProfileButton.addEventListener('click', (e) =>{
         }
     })
 })
+
+getUsersModalBtn.addEventListener('click', function (e) {
+    cargarUsuariosEnTabla()
+});
+
+function cargarUsuariosEnTabla() {
+    const tablaUsuarios = document.querySelector("#myModal table tbody");
+  
+    // Limpiar la tabla
+    tablaUsuarios.innerHTML = "";
+  
+    // Leer la colección "userProfile" de Firestore
+    const usuariosRef = collection(db, "userProfile");
+    getDocs(usuariosRef)
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const usuario = doc.data();
+          const displayName = usuario.displayName;
+          const userEmail = usuario.userEmail;
+          const manager = usuario.manager;
+  
+          // Crear una nueva fila en la tabla con los datos del usuario
+          const fila = document.createElement("tr");
+          const celdaNombre = document.createElement("td");
+          const celdaEmail = document.createElement("td");
+          const celdaManager = document.createElement("td");
+          const celdaBoton = document.createElement("td");
+          const boton = document.createElement("button");
+  
+          celdaNombre.textContent = displayName;
+          celdaEmail.textContent = userEmail;
+          celdaManager.textContent = manager; 
+          boton.className = "btn btn-outlined-primary editUser";
+          boton.innerHTML = '<i class="bi bi-arrow-right-circle-fill"></i>';
+          boton.dataset.id = doc.id;
+  
+          celdaBoton.appendChild(boton);
+          fila.appendChild(celdaNombre);
+          fila.appendChild(celdaEmail);
+          fila.appendChild(celdaManager);
+          fila.appendChild(celdaBoton);
+  
+          tablaUsuarios.appendChild(fila);
+        });
+
+        let editUser = document.querySelectorAll('.editUser');
+        editUser.forEach(function(item) {
+            item.addEventListener('click', function (e) {
+                let id = e.target.dataset.id
+                searchByEmail.value = id
+                const modal = document.querySelector("#myModal");
+                const modalBootstrap = bootstrap.Modal.getInstance(modal);
+                modalBootstrap.hide();
+            });
+        });  
+      })
+      .catch((error) => {
+        console.log("Error al cargar los usuarios: ", error);
+      });
+  }
 
 
   
