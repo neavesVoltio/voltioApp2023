@@ -148,8 +148,9 @@ onAuthStateChanged(auth, async(user) => {
             const celdaBoton = document.createElement("td");
             const boton = document.createElement("button");
             const icon = document.createElement("i");
-    
             celdaNombre.textContent = displayName;
+            celdaNombre.className = 'editUser'
+            celdaNombre.dataset.id = userEmail
             celdaEmail.textContent = userEmail;
             celdaManager.textContent = manager; 
             boton.className = "btn btn-outlined-primary editUser";
