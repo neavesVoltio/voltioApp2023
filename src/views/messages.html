@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Voltio dashboard">
+  <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../resources/sweetAlert.css">
+	<title>Voltio Dashboard</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <!-- End fonts -->
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 48
+    }
+
+    .senderName {
+      color:#1daaca; /* Color de texto azul celeste */
+      text-align: left;
+      margin-bottom: 15px;
+    }
+    
+    .receiverName {
+      color:#869de2; /* Color de texto azul celeste */
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .text-box {
+      display: inline-block;
+      background-color: #0A4B73;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    .senderMessage,
+    .receiverMessage {
+      color: #54BFBF;
+      font-size: 1em; /* Aumenta un poco el tamaño del texto */
+      max-width: fit-content; /* Evita que sea mayor al senderName */
+      margin-bottom: 15px;
+    }
+
+    .senderDate,
+    .receiverDate {
+      text-align: right; /* Alinea a la derecha */
+      color: #00c3ff; /* Color de texto gris oscuro */
+    }
+
+    .taller-input {
+      height: 60px;
+    }
+
+    .custom-button {
+      background-color: #0A4B73;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .custom-button:hover {
+      background-color: #062d46;
+    }
+
+    .circle {
+      background-color: #002841;
+      color: #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .messagePreview {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    </style>
+</head>
+<body>
+	<div class="main-wrapper bg-dark">
+
+
+		<!-- partial -->
+	
+    <div class="page-wrapper bg-dark">
+      <div class="page-content">
+          <section id="chatSection">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-4 d-block d-sm-none personas">
+                  <!-- Columna de personas -->
+                  <!-- Inicia Mensaje -->
+                  <div class="container messageRow" data-id="12345">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row align-items-center border-bottom py-2 custom-button" >
+                          <div class="col-2">
+                            <div class="circle">JN</div>
+                          </div>
+                          <div class="col-10">
+                            <h4>Javier Neaves</h4>
+                            <p class="messagePreview">Último mensaje escrito es mayor a 5 palabras y no caben mas de esas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Termina Mensaje -->
+                  <!-- Inicia Mensaje -->
+                  <div class="container messageRow" data-id="12346">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row align-items-center border-bottom py-2 custom-button" >
+                          <div class="col-2">
+                            <div class="circle">JN</div>
+                          </div>
+                          <div class="col-10">
+                            <h4>Javier Neaves</h4>
+                            <p class="messagePreview">Último mensaje escrito</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Termina Mensaje -->
+                  <!-- Inicia Mensaje -->
+                  <div class="container messageRow" data-id="12347">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row align-items-center border-bottom py-2 custom-button" >
+                          <div class="col-2">
+                            <div class="circle">JN</div>
+                          </div>
+                          <div class="col-10">
+                            <h4>Javier Neaves</h4>
+                            <p class="messagePreview">Último mensaje escrito</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Termina Mensaje -->
+                  <!-- Inicia Mensaje -->
+                  <div class="container messageRow" data-id="12348">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row align-items-center border-bottom py-2 custom-button" >
+                          <div class="col-2">
+                            <div class="circle">JN</div>
+                          </div>
+                          <div class="col-10">
+                            <h4>Javier Neaves</h4>
+                            <p class="messagePreview">Último mensaje escrito</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Termina Mensaje -->
+                  <!-- Inicia Mensaje -->
+                  <div class="container messageRow" data-id="12349">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row align-items-center border-bottom py-2 custom-button" >
+                          <div class="col-2">
+                            <div class="circle">JN</div>
+                          </div>
+                          <div class="col-10">
+                            <h4>Javier Neaves</h4>
+                            <p class="messagePreview">Último mensaje escrito</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Termina Mensaje -->
+                  <!-- Inicia Mensaje -->
+                  <div class="container messageRow" data-id="123410">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row align-items-center border-bottom py-2 custom-button" >
+                          <div class="col-2">
+                            <div class="circle">JN</div>
+                          </div>
+                          <div class="col-10">
+                            <h4>Javier Neaves</h4>
+                            <p class="messagePreview">Último mensaje escrito</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Termina Mensaje -->
+
+                </div>
+                <div class="col-8 mensajes">
+                  <!-- Columna de mensajes -->
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="input-section mb-5">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <i class="emoji-icon"></i>
+                            </div>
+                            <div class="col">
+                              <input type="text" class="form-control taller-input border-info" placeholder="Senda a message.">
+                            </div>
+                            <div class="col-auto">
+                              <i class="send-icon"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="container mb-2 receiverMessageBox">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="text-box">
+                            <h3 class="receiverName">Javier Neaves</h3>
+                            <p class="receiverMessage">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p class="receiverDate">01/01/2023 18:50</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="container mb-2 senderMessageBox">
+                      <div class="row">
+                        <div class="col-6 offset-6">
+                          <div class="text-box">
+                            <h3 class="senderName">Hector</h3>
+                            <p class="senderMessage">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea quos odio cum quo in omnis animi deleniti asperiores assumenda molestias modi sit nostrum, ab consequuntur excepturi, autem aliquid dolore ipsam.</p>
+                            <p class="senderDate">01/01/2023 19:50</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="container mb-2 receiverMessageBox">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="text-box">
+                            <h3 class="receiverName">Javier Neaves</h3>
+                            <p class="receiverMessage">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p class="receiverDate">01/01/2023 19:51</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="container mb-2 receiverMessageBox">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="text-box">
+                            <h3 class="receiverName">Javier Neaves</h3>
+                            <p class="receiverMessage">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p class="receiverDate">01/01/2023 18:50</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </section>
+			</div>
+
+			<!-- partial:../../partials/_footer.html -->
+			<footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between px-4 py-3 border-top small bg-dark text-light">
+				<p class="text-muted mb-1 mb-md-0">Copyright © 2022 <a target="_blank">Voltio</a>.</p>
+			</footer>
+			<!-- partial -->
+	
+		</div>
+	</div>
+
+	<!-- Custom js for this page -->
+  <script src="../js/bootstrap.js"></script>
+  <script type="module" src="../js/messages.js"></script>
+  <script src="../resources/sweetAlert.js"></script>
+	<!-- End custom js for this page -->
+
+</body>
+</html>
+
