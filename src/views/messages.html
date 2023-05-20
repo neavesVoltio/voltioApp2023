@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   <!-- End fonts -->
   <style>
     .material-symbols-outlined {
@@ -25,7 +26,7 @@
     }
 
     .senderName {
-      color:#1daaca; /* Color de texto azul celeste */
+      color:#0f2eda; /* Color de texto azul celeste */
       text-align: left;
       margin-bottom: 15px;
     }
@@ -36,17 +37,25 @@
       margin-bottom: 15px;
     }
 
-    .text-box {
+    .receiverMessageBox {
       display: inline-block;
       background-color: #0A4B73;
-      padding: 10px;
-      border-radius: 5px;
+      padding: 20px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px 10px 50px 10px;
+    }
+
+    .senderMessageBox {
+      display: inline-block;
+      background-color: #02994d;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px 10px 10px 50px;
     }
   
     .senderMessage,
     .receiverMessage {
-      color: #54BFBF;
+      color: #c8dbdb;
       font-size: 1em; /* Aumenta un poco el tamaño del texto */
       max-width: fit-content; /* Evita que sea mayor al senderName */
       margin-bottom: 15px;
@@ -55,7 +64,7 @@
     .senderDate,
     .receiverDate {
       text-align: right; /* Alinea a la derecha */
-      color: #00c3ff; /* Color de texto gris oscuro */
+      color: #ccd3d3; /* Color de texto gris oscuro */
     }
 
     .taller-input {
@@ -69,7 +78,16 @@
       transition: background-color 0.3s ease;
     }
 
-    .custom-button:hover {
+    .newChat-button {
+      background-color: #384f5e;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      height: 60px;
+      border-radius: 10px 20px 20px 20px;
+    }
+
+    .custom-button:hover, .newChat-button:hover {
       background-color: #062d46;
     }
 
@@ -103,20 +121,18 @@
           <section id="chatSection">
             <div class="container-fluid">
               <div class="row">
-                <div class="col-4 d-block d-sm-none personas">
+                <div class="col-4 d-none d-sm-block personas">
                   <!-- Columna de personas -->
+
                   <!-- Inicia Mensaje -->
-                  <div class="container messageRow" data-id="12345">
+                  <div class="container mb-2" id="newChatButton">
                     <div class="row">
                       <div class="col-12">
-                        <div class="row align-items-center border-bottom py-2 custom-button" >
-                          <div class="col-2">
-                            <div class="circle">JN</div>
-                          </div>
-                          <div class="col-10">
-                            <h4>Javier Neaves</h4>
-                            <p class="messagePreview">Último mensaje escrito es mayor a 5 palabras y no caben mas de esas</p>
-                          </div>
+                        <div class="row align-items-center border-bottom py-2 newChat-button" >
+                          <span class="material-symbols-outlined col-2">
+                            add
+                          </span>
+                          <h3 class="col-10">New chat</h3>
                         </div>
                       </div>
                     </div>
@@ -209,30 +225,30 @@
                   <!-- Termina Mensaje -->
 
                 </div>
-                <div class="col-8 mensajes">
+                <div class="col-12 col-sm-8 col-md-8 col-lg-8 mensajes">
                   <!-- Columna de mensajes -->
                   <div class="container">
                     <div class="row">
                       <div class="col-12">
                         <div class="input-section mb-5">
                           <div class="row align-items-center">
-                            <div class="col-auto">
-                              <i class="emoji-icon"></i>
-                            </div>
-                            <div class="col">
+                            <div class="col-10">
                               <input type="text" class="form-control taller-input border-info" placeholder="Senda a message.">
                             </div>
-                            <div class="col-auto">
-                              <i class="send-icon"></i>
-                            </div>
+                            <button class="btn btn-outline-info col-2 btn-lg">
+                              <span class="material-symbols-outlined ">
+                                send
+                              </span>
+                            </button>
+                            
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="container mb-2 receiverMessageBox">
+                    <div class="container mb-2 receiverMessageBox text-box col-10">
                       <div class="row">
-                        <div class="col-6">
-                          <div class="text-box">
+                        <div class="col-12">
+                          <div class="">
                             <h3 class="receiverName">Javier Neaves</h3>
                             <p class="receiverMessage">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             <p class="receiverDate">01/01/2023 18:50</p>
@@ -240,9 +256,9 @@
                         </div>
                       </div>
                     </div>
-                    <div class="container mb-2 senderMessageBox">
+                    <div class="container mb-2 senderMessageBox col-10 offset-2">
                       <div class="row">
-                        <div class="col-6 offset-6">
+                        <div class="">
                           <div class="text-box">
                             <h3 class="senderName">Hector</h3>
                             <p class="senderMessage">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea quos odio cum quo in omnis animi deleniti asperiores assumenda molestias modi sit nostrum, ab consequuntur excepturi, autem aliquid dolore ipsam.</p>
@@ -251,7 +267,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="container mb-2 receiverMessageBox">
+                    <div class="container mb-2 receiverMessageBox col-10">
                       <div class="row">
                         <div class="col-6">
                           <div class="text-box">
@@ -262,7 +278,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="container mb-2 receiverMessageBox">
+                    <div class="container mb-2 receiverMessageBox col-10">
                       <div class="row">
                         <div class="col-6">
                           <div class="text-box">
@@ -294,6 +310,7 @@
   <script src="../js/bootstrap.js"></script>
   <script type="module" src="../js/messages.js"></script>
   <script src="../resources/sweetAlert.js"></script>
+  
 	<!-- End custom js for this page -->
 
 </body>
