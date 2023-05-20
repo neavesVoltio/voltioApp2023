@@ -15,9 +15,10 @@ projectElectricPanelBrand
 Sig pasos:
 
 
-26. credit links, muestra los links al dar refresh, se debe ver como tarjetas, debe tener un link para ir a la pagina
+27. Crear el template de los mensajes
+28. Un boton para crear nuevo chat, 
 
-*/ 15. ProjectInfo debe ser solo vista por el administrador general
+
 */    revisar por que no se han agregado los adders al lead
 */ 1. Habilitar el boton para que guarde la calculadora y que se pueda elegir la principal y las secundarias.
 */ 2. Habilitar la sección para subir fotos a Drive y poder traerlas al abrir el proyecto.
@@ -32,6 +33,7 @@ Sig pasos:
 */ 11. hacer que las imagenes se guarden con el voltioId en firebase junto con el link en una collection llamada 
 */ 12. asignar un dataset al boton borrar imagen para que al darle click, elimine esa imagen de firebase(*No se podra borrar desde el sistema)
 */ 13. Al cargar los datos de la caluladora no se estan sumando los adders
+*/ 15. ProjectInfo debe ser solo vista por el administrador general
 */ 16. Drop down del closer y setter al agregar un nuevo lead
 */ 17. Drop down del closer y setter al editar lead
 */ 18. Al actualizar el installer se deb tomar sus valores de redline y ver donde se incluye esta opcion
@@ -42,4 +44,5 @@ Sig pasos:
 */ 23. spiner al cargar los datos de los leads 
 */ 24. agregar closer y setter a la tabla 
 */ 25. Agregar systemSize a la tabla de leads
+*/ 26. credit links, muestra los links al dar refresh, se debe ver como tarjetas, debe tener un link para ir a la pagina
 
