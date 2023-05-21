@@ -16,27 +16,31 @@ onAuthStateChanged(auth, async(user) => {
         accordionFlushExample.addEventListener('click', (e) => {
             if(e.target.matches('#saveCustomerCommentButton')){
                 let textBox = document.getElementById("customerComment").value
+                let leadName = document.getElementById('leadName').value;
                 let commentsBd = 'listOfCommentsCustomer'
                 let box = 'customerComment'
-                addCustomerCommentButton(textBox, commentsBd, box)
+                addCustomerCommentButton(textBox, commentsBd, box, leadName)
             }
             if(e.target.matches('#saveAdminCommentButton')){
                 let textBox = document.getElementById("adminComment").value
+                let leadName = document.getElementById('leadName').value;
                 let commentsBd = 'listOfCommentsAdmin'
                 let box = 'adminComment'
-                addCustomerCommentButton(textBox, commentsBd, box)
+                addCustomerCommentButton(textBox, commentsBd, box, leadName)
             }
             if(e.target.matches('#saveInternalNotesButton')){
                 let textBox = document.getElementById("internalNotes").value
+                let leadName = document.getElementById('leadName').value;
                 let commentsBd = 'listOfInternalNotes'
                 let box = 'internalNotes'
-                addCustomerCommentButton(textBox, commentsBd, box)
+                addCustomerCommentButton(textBox, commentsBd, box, leadName)
             }
             if(e.target.matches('#saveleadNotesButton')){
                 let textBox = document.getElementById("leadNotes").value
+                let leadName = document.getElementById('leadName').value;
                 let commentsBd = 'listOfleadNotes'
                 let box = 'leadNotes'
-                addCustomerCommentButton(textBox, commentsBd, box)
+                addCustomerCommentButton(textBox, commentsBd, box, leadName)
             }
         })
         
@@ -63,7 +67,7 @@ onAuthStateChanged(auth, async(user) => {
             }
         })
 
-        async function addCustomerCommentButton(textBox, commentsBd, box){
+        async function addCustomerCommentButton(textBox, commentsBd, box, leadName){
             
             let voltioId = document.getElementById("leadVoltioId").value
             console.log(voltioId);
@@ -80,9 +84,10 @@ onAuthStateChanged(auth, async(user) => {
                 await addDoc(collection(db, commentsBd), {
                     voltioId: voltioId,
                     customerComment: textBox,
-                    date: currentDate,
+                    date: date,
                     userName: name,
-                    userId: user.uid
+                    userId: user.uid,
+                    leadName: leadName
                 }).then( async() => {
                     createCustomerCommentsList(textBox, commentsBd)
                     Swal.fire({

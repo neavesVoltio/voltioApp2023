@@ -46,3 +46,11 @@ Sig pasos:
 */ 25. Agregar systemSize a la tabla de leads
 */ 26. credit links, muestra los links al dar refresh, se debe ver como tarjetas, debe tener un link para ir a la pagina
 
+*/ formatted date:
+    const timestamp =  r[7] ;
+    const dateNew = new Date(timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000));
+    const date = new Date (r[7] * 1000)    
+    let month = dateNew.getMonth() < 10 ? '0'+ (dateNew.getMonth() + 1): (dateNew.getMonth()+ 1)
+    let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
+    const formattedDate = `${month}/${day}/${dateNew.getFullYear()}`;
+                

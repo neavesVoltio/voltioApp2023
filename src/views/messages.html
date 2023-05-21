@@ -95,8 +95,8 @@
       background-color: #002841;
       color: #fff;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -107,7 +107,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-
+    
     </style>
 </head>
 <body>
@@ -121,10 +121,11 @@
           <section id="chatSection">
             <div class="container-fluid">
               <div class="row">
-                <div class="col-4 d-none d-sm-block personas">
+                <!-- Contenido del primer div -->
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 d-none d-sm-block personas sliding-div-personas" id="listMessagesSection">
                   <!-- Columna de personas -->
 
-                  <!-- Inicia Mensaje -->
+                  <!-- Inicia botom de chat -->
                   <div class="container mb-2" id="newChatButton">
                     <div class="row">
                       <div class="col-12">
@@ -137,8 +138,23 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Termina Mensaje -->
-                  <!-- Inicia Mensaje -->
+                  <div class="container mb-2" id="searchChatButton">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row align-items-center border-bottom py-2">
+                          <div class="col-2">
+                            <span class="material-symbols-outlined">search</span>
+                          </div>
+                          <div class="col-10">
+                            <input type="text" class="form-control taller-input border-info" placeholder="Search..." id="searchLeadText">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Termina Boton de chat -->
+                  <div id="messagesListContainer"></div>
+                  <!-- Inicia Mensaje 
                   <div class="container messageRow" data-id="12346">
                     <div class="row">
                       <div class="col-12">
@@ -147,111 +163,68 @@
                             <div class="circle">JN</div>
                           </div>
                           <div class="col-10">
-                            <h4>Javier Neaves</h4>
+                            <h4 class="userName">Javier Neaves</h4>
                             <p class="messagePreview">Último mensaje escrito</p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- Termina Mensaje -->
-                  <!-- Inicia Mensaje -->
-                  <div class="container messageRow" data-id="12347">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="row align-items-center border-bottom py-2 custom-button" >
-                          <div class="col-2">
-                            <div class="circle">JN</div>
-                          </div>
-                          <div class="col-10">
-                            <h4>Javier Neaves</h4>
-                            <p class="messagePreview">Último mensaje escrito</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Termina Mensaje -->
-                  <!-- Inicia Mensaje -->
-                  <div class="container messageRow" data-id="12348">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="row align-items-center border-bottom py-2 custom-button" >
-                          <div class="col-2">
-                            <div class="circle">JN</div>
-                          </div>
-                          <div class="col-10">
-                            <h4>Javier Neaves</h4>
-                            <p class="messagePreview">Último mensaje escrito</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Termina Mensaje -->
-                  <!-- Inicia Mensaje -->
-                  <div class="container messageRow" data-id="12349">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="row align-items-center border-bottom py-2 custom-button" >
-                          <div class="col-2">
-                            <div class="circle">JN</div>
-                          </div>
-                          <div class="col-10">
-                            <h4>Javier Neaves</h4>
-                            <p class="messagePreview">Último mensaje escrito</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Termina Mensaje -->
-                  <!-- Inicia Mensaje -->
-                  <div class="container messageRow" data-id="123410">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="row align-items-center border-bottom py-2 custom-button" >
-                          <div class="col-2">
-                            <div class="circle">JN</div>
-                          </div>
-                          <div class="col-10">
-                            <h4>Javier Neaves</h4>
-                            <p class="messagePreview">Último mensaje escrito</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Termina Mensaje -->
-
+                  Termina Mensaje -->
+                  
                 </div>
-                <div class="col-12 col-sm-8 col-md-8 col-lg-8 mensajes">
+                <!-- Contenido del segundo div -->
+                <div class="col-12 col-sm-8 col-md-8 col-lg-8 mensajes sliding-div" id="detailedMessagesSection" style="display: none;">
                   <!-- Columna de mensajes -->
                   <div class="container">
+                    <div class="row">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="row align-items-center border-bottom py-2 mb-4 custom-button" >
+                            <div class="col-2">
+                              <div class="">
+                                <button class="btn btn-outline-info border-0" id="backToMessagesListBtn">
+                                  <span class="material-symbols-outlined">
+                                    arrow_back_ios
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="col-2">
+                              <div class="circle" id="chatTitleVoltioId"></div>
+                            </div>
+                            <div class="col-8">
+                              <h4 id="chatTitleLeadname"></h4>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="row">
                       <div class="col-12">
                         <div class="input-section mb-5">
                           <div class="row align-items-center">
                             <div class="col-10">
-                              <input type="text" class="form-control taller-input border-info" placeholder="Senda a message.">
+                              <input type="text" class="form-control taller-input border-info" placeholder="Senda a message." id="textBox">
                             </div>
-                            <button class="btn btn-outline-info col-2 btn-lg">
+                            <button class="btn btn-outline-info col-2 btn-lg" id="sendMessageBotton">
                               <span class="material-symbols-outlined ">
                                 send
                               </span>
                             </button>
-                            
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="container mb-2 receiverMessageBox text-box col-10">
+                    <div id="messagesDetailContainer"></div>
+                    <!-- Ejemplos de mensajes 
+                    <div class="container mb-2 receiverMessageBox text-box col-10 chat">
                       <div class="row">
                         <div class="col-12">
                           <div class="">
-                            <h3 class="receiverName">Javier Neaves</h3>
-                            <p class="receiverMessage">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <p class="receiverDate">01/01/2023 18:50</p>
+                            <h3 class="chat-title">Javier Neaves</h3>
+                            <p class="chat-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p class="chat-date">01/01/2023 18:50</p>
                           </div>
                         </div>
                       </div>
@@ -311,6 +284,7 @@
                         </div>
                       </div>
                     </div>
+                    -->
                   </div>
                   
                 </div>
@@ -327,7 +301,16 @@
 	
 		</div>
 	</div>
-
+  <style>
+    #loading {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  </style>
+  <div id="loading" class="d-flex justify-content-center align-items-center invisible">
+    <div class="spinner-border text-white" style="width: 3rem; height: 3rem;" role="status">
+       <span class="sr-only"></span>
+    </div>
+  </div>
 	<!-- Custom js for this page -->
   <script src="../js/bootstrap.js"></script>
   <script type="module" src="../js/messages.js"></script>
