@@ -48,7 +48,6 @@ saveLeadButton.addEventListener('click', (e) =>{
     let inputState= document.getElementById('inputState').value
     let customerName= document.getElementById('customerName').value
     let inputZip= document.getElementById('inputZip').value
-    let customerNotes=  document.getElementById('customerNotes').value
     let profileBirth= document.getElementById('profileBirth').value
 
 
@@ -93,7 +92,6 @@ saveLeadButton.addEventListener('click', (e) =>{
                     inputState: inputState.toUpperCase(),
                     customerName: customerName.toUpperCase(),
                     inputZip: inputZip,
-                    customerNotes: customerNotes,
                     profileBirth: profileBirth,
                     repName: rep,
                     closer: profileCloser.value,
@@ -123,7 +121,6 @@ saveLeadButton.addEventListener('click', (e) =>{
                     document.getElementById('inputCity').value = ''
                     document.getElementById('inputState').value = ''
                     document.getElementById('inputZip').value = ''
-                    document.getElementById('customerNotes').value = ''
                     document.getElementById('profileBirth').value = ''
                     profileCloser.value = ''
                     profileSetter.value = ''
