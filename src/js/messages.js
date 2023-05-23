@@ -16,7 +16,7 @@ let loading = document.getElementById('loading');
 let userId
 let latestLeadNotesArray
 
-startLoading()
+// startLoading()
 
 function startLoading(){
   loading.classList.remove("invisible");
@@ -75,7 +75,7 @@ function createListOfMessages(latestLeadNotesArray){
                     <div class="circle">${item.voltioIdKey}</div>
                 </div>
                 <div class="col-10">
-                    <h4 class="customerName">${item.customerName}</h4>
+                    <p class="customerName">${item.customerName}</p>
                 </div>
                 </div>
             </div>
@@ -148,14 +148,14 @@ async function getDetailMessages(){
     if (userName !== currentUserName) {
         contentElement.classList.add('receiverMessageBox', 'chat', 'text-box', 'col-10', 'mb-2');
         contentElement.innerHTML = `
-        <h3 class="chat-title receiverName">${userName}</h3>
+        <h5 class="chat-title receiverName">${userName}</h5>
         <p class="chat-message receiverMessage">${customerComment}</p>
         <p class="chat-date receiverDate">${formattedDate}</p>
         `;
     } else {
         contentElement.classList.add('senderMessageBox', 'chat', 'col-10', 'offset-2', 'mb-2');
         contentElement.innerHTML = `
-        <h3 class="chat-title senderName">${userName}</h3>
+        <h5 class="chat-title senderName">${userName}</h5>
         <p class="chat-message senderMessage">${customerComment}</p>
         <p class="chat-date senderDate">${formattedDate}</p>
         `;
