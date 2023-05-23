@@ -189,7 +189,7 @@ onAuthStateChanged(auth, async(user) => {
 										addersAccordeon.style.display = 'block'
 										locationAccordeon.style.display = 'block'
 										getAddersByInstaller (installer)
-										deleteRow(e)
+										deleteRow(el)
 								})
 								
 						})

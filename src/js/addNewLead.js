@@ -110,6 +110,11 @@ saveLeadButton.addEventListener('click', (e) =>{
                       await addDoc(collection(db, 'voltioId'), {
                         voltioId: newVoltioId,
                       })
+                      // las siguientes 3 lineas se usan para crear un nuevo proyecto en blanco, esto para que se le puedan agregar datos en el futuro
+                      const collectionRef = collection(db, 'projectDetails');
+                      const documentRef = doc(collectionRef, 'V-'+newVoltioId);
+                      await setDoc(documentRef, {});
+                      
                       setDataToProfileView('V-'+newVoltioId)
                     document.querySelector('#addNewLeadSection').style.display = 'none'
                     document.querySelector('#searchProjectSection').style.display = 'none'

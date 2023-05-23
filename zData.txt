@@ -14,7 +14,8 @@ projectElectricPanelBrand
 
 Sig pasos:
 
-
+29. Error al actualizar la propuesta, cuando no se ha guardado el proyecto, hay que crear el proyecto en la collection projectDetails
+para poder editarlo despues.
 27. Crear el template de los mensajes
 28. Un boton para crear nuevo chat, 
 

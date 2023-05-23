@@ -82,7 +82,6 @@ function endLoading(){
 
 
 navProposalsMenu.addEventListener('click', function (e) {
-  console.log(e.target.id);
   if(e.target.id === 'navTabUtility'){
     navTabUtilityContainer.style.display = 'block'
     navTabDesignContainer.style.display = 'none'
@@ -156,7 +155,6 @@ onAuthStateChanged(auth, async(user) => {
 
       statusFilter.addEventListener('change', function (e) {
         statusFilterData = e.target.value
-        console.log(statusFilterData);
         getLeadOrProjectData(statusFilterData)
       });
 
@@ -254,7 +252,6 @@ onAuthStateChanged(auth, async(user) => {
       })
         
     } else {
-        console.log('no user logged');
     }
 })
 
@@ -279,7 +276,6 @@ function searchLeadByInput(){
   let template = templateBox.content
 
   searchResultsBox.innerHTML = ""
-  console.log(resultsArray);
   resultsArray.forEach(function(r){
     let tr = template.cloneNode(true)
     let leadId = tr.querySelector(".leadId");
@@ -416,12 +412,10 @@ async function setDataToProfileView(voltioId){
       getComments()
       getDataFromProjectDetails()
       getCreditInfo()
-      console.log('start calculation on load');
       
 
     } else {
       // doc.data() will be undefined in this case
-     console.log("No such document!");
     }
         
 }
@@ -466,7 +460,6 @@ async function saveLeadToServer(){
 
 function clearInputs(){
   clearInputsElement.forEach((e) => {
-    console.log(e);
     e.innerHTML = ''
   })
 }
@@ -475,7 +468,6 @@ async function getComments(){
   let commentsBd = ['listOfCommentsCustomer', 'listOfCommentsAdmin', 'listOfInternalNotes', 'listOfleadNotes']
   let voltioId = document.getElementById("leadVoltioId").value
   for(var n = 0; n <=commentsBd.length -1 ; n++){
-    console.log(commentsBd[n]);
     let dataNotes = []
   const voltioIds = query(collection(db, commentsBd[n]), where('voltioId', '==', voltioId), orderBy("date", 'desc'))
       const voltioIdsSnapshot = await getDocs(voltioIds)
@@ -524,7 +516,6 @@ projectCmsModInput.addEventListener('change', (e) => {
 })
 
 projectMPU.addEventListener('change', () => {
-  console.log('mpu change');
   if(projectMPU.value === 'YES'){
     document.getElementById('projectMPUPrice').value = 3000
   } else {
@@ -535,8 +526,8 @@ projectMPU.addEventListener('change', () => {
 })
 
 designArea.addEventListener('change', async function (e) {
-  
-  // designAreaOnChange()
+  let designAreaValue = designArea.value
+   designAreaOnChange(designAreaValue)
   
 });
 
@@ -563,8 +554,6 @@ proyectFinancial.addEventListener('change', async function (e) {
 });
 
 async function getAddersByInstaller(){
-  console.log('getAddersByInstaller');
-  console.log(installer);
   const docRef = doc(db, "installerList", installer);
   const docSnap = await getDoc(docRef);
 
@@ -578,7 +567,6 @@ async function getAddersByInstaller(){
       let qtyData = item.qtyData
       addersArray.push([adderNameData, qtyData])
     })
-      console.log(addersArray);
       addNewAdderRow(addersArray)
       setRedlineAndMPU()
   } else {
@@ -660,8 +648,6 @@ function sumOfAddersfunction(){
   
   totalAdders.value = sumOfAdders
   totalAdders.innerHTML = sumOfAdders.toLocaleString('en-US', {style: 'currency', currency: 'USD',})
-  console.log('total: '+ sumOfAdders);
-  console.log('sumOfadders before total');
   calculations(tot) 
 }
 
@@ -692,13 +678,11 @@ function removeButton(){
 
 ProjectCustomerCashBack.addEventListener('blur', function (e) {
   sumOfAddersfunction()
-  console.log(document.getElementById('ProjectCustomerCashBack').value);
 });
 
 panelLocationClass.forEach(function(item) {
   item.addEventListener('click', function (e) {
     // body
-    console.log(item);
     panelLocationClass.forEach((e)=>{ e.classList.remove('border-info')})
     e.target.classList.toggle('border-info')
     solarPanelLocation = e.target.id
@@ -744,6 +728,13 @@ saveCurrentProjectButton.addEventListener('click', async function (e) {
   })
   .catch((error) => {
     console.error('Error borrando el campo addersData: ', error);
+    endLoading()
+    Swal.fire({
+      icon: 'error',
+      title: 'An error has been occurred',
+      text: `Please contact system admin`,
+      confirmButtonText: 'OK'
+    });
   });
   await setDoc(doc(db, "projectDetails", voltioId), {
     projectUsage: projectUsage.value,
@@ -754,7 +745,7 @@ saveCurrentProjectButton.addEventListener('click', async function (e) {
     projectAddOnSystem: projectAddOnSystem.value,
     ProjectCustomerCashBack: ProjectCustomerCashBack.value,
     projectCmsModInput: projectCmsModInput.value,
-    solarPanelLocation: solarPanelLocation,
+    solarPanelLocation: !solarPanelLocation ? '' : solarPanelLocation,
     roofCondition: roofCondition.value,
     roofingMaterial: roofingMaterial.value,
     projectElectricPanelBrand: projectElectricPanelBrand.value,
@@ -813,7 +804,6 @@ function getDataFromProjectDetails(){
 }
 
 function setProjectDetailsToForm(data){
-  console.log(data);
   projectUsage.value = data.projectUsage
   totalYearlyPayment.value = data.totalYearlyPayment
   designArea.value = data.designArea
@@ -833,17 +823,12 @@ function setProjectDetailsToForm(data){
   projectRedlineEl.value = data.projectRedlineEl
   let sum = 0 // LET USED TO SUM ADDS
   addersDataBd.forEach(function(item) {
-      console.log(item);
       // NO ES POSIBLE SUMAR DESDE AQUI LOS ADDERS AL MENOS QUE SE PUEDA MODIFICAR LA VARIABLE AL CAMBIAR ADDERS EN EL DROPDOWN
       // revisar por que no se han agregado los adders al lead
-      console.log(item.adderNameData);
-      console.log('sum of adds by array');
       
       sum += item.qtyData
-      console.log(sum);
       let newName = item.adderNameData
       let newValue = item.qtyData
-      console.log(newName + ' ' + newValue);
       createAdderButton(newName, newValue)
       calculations()
   });
@@ -857,28 +842,22 @@ function setProjectDetailsToForm(data){
 async function designAreaOnChangeWithPromise(designArea, installer) {
   
   return new Promise((resolve) => {
-    console.log(installer);
-  console.log(designArea);
     designAreaOnChange(designArea, installer);
     resolve();
   }).then(() => {
-    console.log(installer);
     proyectInstaller
     .value = installer;
-    console.log(proyectInstaller);
     
   });
 }
 
 async function designAreaOnChange(designArea, installer){
-  console.log('change design area');
-  
+  console.log(designArea, installer);
   const docRef = doc(db, "coverageArea", designArea);
   const docSnap = await getDoc(docRef);
   let proyectInstaller = document.getElementById('proyectInstaller');
   proyectInstaller.innerHTML = ''
   if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
     let installers = docSnap.data().installer
     let emptyOption = document.createElement('option');
     emptyOption.innerHTML = ''
@@ -987,7 +966,6 @@ async function designAreaOnChange(designArea, installer){
     const q = query(billsCol, where('voltioId', '==', voltioId));
     const querySnapshot = await getDocs(q);
     const bills = querySnapshot.docs.map((doc) => doc.data());
-    console.log(bills);
     //generateUtilityBillImagesHTML(bills)
     const thumbnailElements = bills.map((thumbnail) => generateThumbnail(thumbnail.link, thumbnail.voltioId));
     insertThumbnails(thumbnailElements);
@@ -1070,31 +1048,25 @@ designFilesUpload.addEventListener('change', function (e) {
   });
   // termina el sweet alert
 
-  console.log('customer files upload chganged');
   let url = "https://script.google.com/macros/s/AKfycbwdETh-O86DI8AdAh7_mRjVuOqF2Fq99nyA0WfPrbJa9wL4HvKdoa_Vlvzj3HfQcbF9/exec"
-  console.log('file change');
   let fr = new FileReader()
   fr.addEventListener('loadend', function (e) {
     let res = fr.result
     
     let spt = res.split('base64,')[1]
-    console.log(designFilesUpload.files[0].type);
     let obj = {
       base64:spt,
       type:designFilesUpload.files[0].type,
       name:voltioId
     }
-    console.log(obj);
     let response =  fetch(url, {
         method:'POST',
         body: JSON.stringify(obj),
       })
     .then(r=>r.text())
     .then(data => {
-      console.log(data);
       try {
         const response = JSON.parse(data);
-        console.log(response.link);
         
         saveToDesignImagesCollection(response.link)
         // Cerrar el Sweet Alert
@@ -1189,7 +1161,6 @@ function insertThumbnailsDesign(thumbnails) {
 let runCreditDataView = document.getElementById('runCreditDataView');
 
 runCreditDataView.addEventListener('change', function (e) {
-    console.log(e.target.id)
     let dob = document.getElementById('leadDob').value;
     let job = document.getElementById('leadJobOcupation').value;
     let ssn = document.getElementById('leadSSN').value;
@@ -1250,7 +1221,6 @@ async function getCreditInfo() {
         document.getElementById('leadSSN').value = voltioData.ssn
         document.getElementById('leadAnnualIncome').value = voltioData.annualIncome
         // Devolver el objeto con los datos de Voltio
-        console.log(voltioData.dob);
       
     } else {
       console.log('El documento no existe');
@@ -1317,17 +1287,14 @@ function savePadSignatureOnDrive(dataUrl){
       type:'image/png',
       name:voltioId
     }
-    console.log(obj);
     let response =  fetch(url, {
         method:'POST',
         body: JSON.stringify(obj),
       })
     .then(r=>r.text())
     .then(data => {
-      console.log(data);
       try {
         const response = JSON.parse(data);
-        console.log(response.link);
         
         saveToSignaturePadCollection(response.link)
       } catch (e) {
@@ -1356,8 +1323,6 @@ async function getImagesFromSignaturePadCollection(){
     const q = query(billsCol, where('voltioId', '==', voltioId));
     const querySnapshot = await getDocs(q);
     const bills = querySnapshot.docs.map((doc) => doc.data());
-    console.log(bills);
-    //generateUtilityBillImagesHTML(bills)
     const thumbnailElements = bills.map((thumbnail) => generateThumbnailSignature(thumbnail.link, thumbnail.voltioId));
     insertThumbnailsSignature(thumbnailElements);
   }
@@ -1443,31 +1408,25 @@ async function getImagesFromSignaturePadCollection(){
     });
     // termina el sweet alert
 
-    console.log('customer files upload chganged');
     let url = "https://script.google.com/macros/s/AKfycbweLOiqVU501vGESJXZ1iZo0Z-lJQaIbZef1PRazpHtZe_BxAh_KPrkSeLwOe-7yhsL/exec"
-    console.log('file change');
     let fr = new FileReader()
     fr.addEventListener('loadend', function (e) {
       let res = fr.result
       
       let spt = res.split('base64,')[1]
-      console.log(creditFilesUpload.files[0].type);
       let obj = {
         base64:spt,
         type:creditFilesUpload.files[0].type,
         name:voltioId
       }
-      console.log(obj);
       let response =  fetch(url, {
           method:'POST',
           body: JSON.stringify(obj),
         })
       .then(r=>r.text())
       .then(data => {
-        console.log(data);
         try {
           const response = JSON.parse(data);
-          console.log(response.link);
           
           saveToCreditInfoImagesCollection(response.link)
           // Cerrar el Sweet Alert
@@ -1505,9 +1464,7 @@ async function saveToCreditInfoImagesCollection(link) {
 }
 
 let viewCreditImageButton = document.getElementById('viewCreditImageButton');
-console.log(viewCreditImageButton);
 viewCreditImageButton.addEventListener('click', function (e) {
-  console.log('click credit button');
   getImagesFromcreditInfoImagesCollection()
 });
 
@@ -1516,8 +1473,6 @@ async function getImagesFromcreditInfoImagesCollection(){
   const q = query(billsCol, where('voltioId', '==', voltioId));
   const querySnapshot = await getDocs(q);
   const bills = querySnapshot.docs.map((doc) => doc.data());
-  console.log(bills);
-  //generateUtilityBillImagesHTML(bills)
   const thumbnailElements = bills.map((thumbnail) => generateThumbnail(thumbnail.link, thumbnail.voltioId));
   insertThumbnailsCredit(thumbnailElements);
   
@@ -1551,31 +1506,25 @@ projectImagesInput.addEventListener('change', function (e) {
   });
   // termina el sweet alert
 
-  console.log('project files upload chganged');
   let url = "https://script.google.com/macros/s/AKfycbypzkBqI-Hl-8b-J_Pz7u7-nzHuE69moHyUJD6ufU1s0Qrl-oZGeDvF6gdtwwDT7buEZg/exec"
-  console.log('file change');
   let fr = new FileReader()
   fr.addEventListener('loadend', function (e) {
     let res = fr.result
     
     let spt = res.split('base64,')[1]
-    console.log(projectImagesInput.files[0].type);
     let obj = {
       base64:spt,
       type:projectImagesInput.files[0].type,
       name:voltioId
     }
-    console.log(obj);
     let response =  fetch(url, {
         method:'POST',
         body: JSON.stringify(obj),
       })
     .then(r=>r.text())
     .then(data => {
-      console.log(data);
       try {
         const response = JSON.parse(data);
-        console.log(response.link);
         
         saveToProjectImagesCollection(response.link)
         // Cerrar el Sweet Alert
@@ -1613,7 +1562,6 @@ try {
 }
 
 getProjectImagesButton.addEventListener('click', function (e) {
-console.log('click project button');
 getImagesFromProjectImagesCollection()
 });
 
@@ -1695,8 +1643,6 @@ function saveCreditLinks() {
   let linkRule = creditLinks.slice(0,4) === 'http'|| creditLinks.slice(0,5) === 'https' ? 1 : 0
   if (linkRule === 1) {
     // El valor cumple con el patrón
-    console.log("El valor es válido:", creditLinks);
-    
     let creditLinkData = {
       name: creditLinksName,
       link: creditLinks,
@@ -1721,7 +1667,6 @@ function saveCreditLinks() {
     // Aquí puedes realizar las operaciones adicionales que desees
   } else {
     // El valor no cumple con el patrón
-    console.log("El valor no es válido");
     Swal.fire({
       position: 'top-end',
       icon: 'error',
@@ -1762,7 +1707,6 @@ async function getCreditLinks(){
     divPrincipal.innerHTML = ''
 
     creditLinksArray.forEach(link => {
-      console.log(link);
       let linkData = link.link
       let linkName = link.name
       let linkId = link.id
