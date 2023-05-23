@@ -193,16 +193,38 @@ backToMessagesListBtn.addEventListener('click', function (e) {
     detailedMessagesSection.style.display = 'none'     
 });
 
+let isFunctionRunning = false;
+
 let sendMessageBotton = document.getElementById('sendMessageBotton');
 
 sendMessageBotton.addEventListener('click', function (e) {
-    sendComment()
+    if (!isFunctionRunning){
+        isFunctionRunning = true;
+        sendComment()
+        setTimeout(function() {
+            isFunctionRunning = false;
+          }, 500);
+    }
+});
+
+
+
+textBox.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter'){
+        if (!isFunctionRunning){
+            isFunctionRunning = true;
+            sendComment()
+            setTimeout(function() {
+                isFunctionRunning = false;
+              }, 500);
+        }
+    }
 });
 
 async function sendComment(){
     let date = new Date() 
     let textBox = document.getElementById('textBox'); 
-    if(textBox != ""){
+    if(textBox.value != ""){
         await addDoc(collection(db, 'listOfleadNotes'), {
             voltioId: voltioId,
             customerComment: textBox.value,
