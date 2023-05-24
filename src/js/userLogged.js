@@ -6,7 +6,7 @@ onAuthStateChanged(auth, async(user) => {
     if(user){
        
         document.getElementById("app").innerHTML='<object type="text/html" data="src/views/dashboard.html" width="100%" height="100%" ></object>';
-        document.getElementById('usernameOnMenu').innerHTML = 'Welcome ' + user.displayName
+        document.getElementById('usernameOnMenu').innerHTML = user.displayName
         document.getElementById('navbar').style.display = 'block'
         document.getElementById('navbar-container').style.display = 'block'
         document.getElementById('sidebar').style.display = 'block'
