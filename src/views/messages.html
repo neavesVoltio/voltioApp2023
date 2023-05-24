@@ -24,17 +24,22 @@
       'GRAD' 0,
       'opsz' 48
     }
+    .customerName, .circle, .chatTitleText {
+      user-select: none;
+    }
 
     .senderName {
       color:#0f2eda; /* Color de texto azul celeste */
       text-align: left;
       margin-bottom: 15px;
+      user-select: none;
     }
     
     .receiverName {
       color:#869de2; /* Color de texto azul celeste */
       text-align: left;
       margin-bottom: 15px;
+      user-select: none;
     }
 
     .receiverMessageBox {
@@ -140,7 +145,7 @@
                   <!-- Columna de personas -->
 
                   <!-- Inicia botom de chat -->
-                  <div class="container mb-2" id="newChatButton" style="display: block;">
+                  <div class="container mb-2" id="newChatButton" style="display: none;">
                     <div class="row">
                       <div class="col-12">
                         <div class="row align-items-center border-bottom py-2 newChat-button" >
@@ -152,7 +157,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="container mb-2" id="searchChatButton" style="display: none;">
+                  <div class="container mb-2" id="searchChatButton" >
                     <div class="row">
                       <div class="col-12">
                         <div class="row align-items-center border-bottom py-2">
