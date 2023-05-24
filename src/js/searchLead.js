@@ -736,6 +736,7 @@ saveCurrentProjectButton.addEventListener('click', async function (e) {
       confirmButtonText: 'OK'
     });
   });
+  
   await setDoc(doc(db, "projectDetails", voltioId), {
     projectUsage: projectUsage.value,
     totalYearlyPayment: totalYearlyPayment.value,
