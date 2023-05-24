@@ -16,7 +16,7 @@ let loading = document.getElementById('loading');
 let userId
 let latestLeadNotesArray
 
-startLoading()
+// startLoading()
 
 function startLoading(){
   loading.classList.remove("invisible");
@@ -157,7 +157,7 @@ async function getDetailMessages(){
     } else {
         contentElement.classList.add('senderMessageBox', 'chat', 'col-10', 'offset-2', 'mb-2');
         contentElement.innerHTML = `
-        <h3 class="chat-title senderName">${userName}</h3>
+        <h5 class="chat-title senderName">${userName}</h5>
         <p class="chat-message senderMessage">${customerComment}</p>
         <p class="chat-date senderDate">${formattedDate}</p>
         `;
