@@ -1,7 +1,9 @@
 import { getFirestore, doc, getDoc, collection, getDocs, query, where, deleteDoc, orderBy, updateDoc, setDoc, limit, addDoc  } from '../firebase/firebaseJs.js'
 import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
+
 const db = getFirestore(app) 
+
 getMessagesList()
 // Crear un array para almacenar los últimos registros por voltioId
 const latestLeadNotes = [];
@@ -15,7 +17,7 @@ let currentUserName
 let loading = document.getElementById('loading');
 let userId
 let latestLeadNotesArray
-
+let subscriptionJson
 // startLoading()
 
 function startLoading(){
@@ -38,7 +40,63 @@ onAuthStateChanged(auth, async(user) => {
 })
 
 async function getMessagesList(){
-   
+    // Registro del Service Worker
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("../service-worker.js")
+        .then((registration) => {
+            console.log("Service Worker registrado exitosamente:", registration);
+        })
+        .catch((error) => {
+            console.error("Error al registrar el Service Worker:", error);
+        });
+    }
+    
+    // Configuración de las opciones de las notificaciones push
+    const pushOptions = {
+        userVisibleOnly: true,
+        applicationServerKey: "BL4Kgt7dmI_gDJ22Jb75WF1-B8NEoa2kp5zZ7OqA5ncVoBi8doUdWrCCkYyCNbyUssdqFHmeMRZU_beEJEbq6n0"
+    };
+    
+    // Obtener la suscripción a las notificaciones push
+    navigator.serviceWorker.ready.then((registration) => {
+        registration.pushManager.subscribe(pushOptions)
+        .then((subscription) => {
+            console.log("Suscripción a las notificaciones push exitosa:", subscription);
+        })
+        .catch((error) => {
+            console.error("Error al suscribirse a las notificaciones push:", error);
+        });
+    });
+
+    // Obtener el Json con el endpoint, p256dh, y auth de la suscripción a las notificaciones push, 
+    navigator.serviceWorker.ready
+    .then((registration) => {
+        return registration.pushManager.getSubscription();
+    })
+    .then((subscription) => {
+        if (subscription) {
+        const endpoint = subscription.endpoint;
+        const p256dh = btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey("p256dh"))));
+        const auth = btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey("auth"))));
+
+        // Aquí tienes el JSON con el endpoint, p256dh, y auth
+        subscriptionJson = {
+            endpoint: endpoint,
+            keys: {
+            p256dh: p256dh,
+            auth: auth,
+            },
+        };
+
+        console.log("Suscripción JSON:", subscriptionJson);
+        } else {
+        console.log("No hay una suscripción a notificaciones push.");
+        }
+    })
+    .catch((error) => {
+        console.error("Error al obtener la suscripción a notificaciones push:", error);
+    });
+    
     // Crear una consulta para obtener los documentos ordenados por voltioId y fecha descendente
     const q = query(collection(db, 'leadData'), orderBy('voltioIdKey'));
 
@@ -62,7 +120,6 @@ function createListOfMessages(latestLeadNotesArray){
     messagesListContainer.innerHTML = ''
     latestLeadNotesArray.forEach(function(item) {
         // Crear el elemento div
-        console.log(item);
         const container = document.createElement("div");
         container.classList.add("container", "messageRow");
         container.dataset.id = item.voltioIdKey;
@@ -209,6 +266,27 @@ sendMessageBotton.addEventListener('click', function (e) {
     }
 });
 
+// const webPush = require("web-push")
+function sendPushNotification(message){
+    //  notificacion en el mismo escritorio
+    Notification.requestPermission().then(perm => {
+        console.log(perm);
+        if(perm === "granted"){
+            const notification = new Notification("Voltio messages", {
+                body: message,
+            })
+        }
+    })
+    return
+    // notificacion a otro usuario
+    const payload = message
+    const options = {
+        TTL: 60
+    }
+    webPush.sendPushNotification(subscriptionJson, payload, options)
+    return
+    
+}
 
 
 textBox.addEventListener('keydown', function (e) {
@@ -226,17 +304,18 @@ textBox.addEventListener('keydown', function (e) {
 async function sendComment(){
     let date = new Date() 
     let textBox = document.getElementById('textBox'); 
+    let message = textBox.value
     if(textBox.value != ""){
         await addDoc(collection(db, 'listOfleadNotes'), {
             voltioId: voltioId,
-            customerComment: textBox.value,
+            customerComment: message,
             date: date,
             userName: currentUserName,
             userId: userId,
             leadName: leadName
         }).then( async() => {
             getDetailMessages()
-            
+            sendPushNotification(message)
         }).catch((error) => {
             Swal.fire({
                 position: 'top-end',
