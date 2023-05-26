@@ -18,13 +18,6 @@ function onLoadPage(){
   document.getElementById("app").innerHTML='<object type="text/html" data="views/login.html" width="100%" height="100%" ></object>';
 }
 
-navigator.serviceWorker.getRegistration().then(reg => {
-  reg.pushManager.subscribe({
-    userVisibleOnly: true
-  }).then (sub => {
-    
-  })
-})
 
 /*
 window.addEventListener("keydown", function(event) {
