@@ -10,12 +10,13 @@
       // Your web app's Firebase configuration
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
-      apiKey: "AIzaSyAjGrPx5FyahRLAAKNkyMS-7oqOVq5uJHo",
-      authDomain: "voltioapp2.firebaseapp.com",
-      projectId: "voltioapp2",
-      storageBucket: "voltioapp2.appspot.com",
-      messagingSenderId: "863200029523",
-      appId: "1:863200029523:web:d90575429db1b472f80fa6"
+            apiKey: "AIzaSyAjGrPx5FyahRLAAKNkyMS-7oqOVq5uJHo",
+            authDomain: "voltioapp2.firebaseapp.com",
+            projectId: "voltioapp2",
+            storageBucket: "voltioapp2.appspot.com",
+            messagingSenderId: "863200029523",
+            appId: "1:863200029523:web:d90575429db1b472f80fa6",
+            measurementId: "G-6PJCZC2Q9T"
       };
       
       // Initialize Firebase
