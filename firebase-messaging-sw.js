@@ -17,7 +17,7 @@
       
       const app = initializeApp(firebaseConfig);
       // se sugiere esto para la verrsion 7
-      const messagings = getMessaging(app)
+      const messaging = getMessaging(app)
       // Para la version 9 cambia a:
       //const messaging = getMessaging(app);
 
