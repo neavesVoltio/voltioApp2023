@@ -1,11 +1,11 @@
 import { getFirestore, doc, getDoc, collection, getDocs, query, where, deleteDoc, orderBy, updateDoc, setDoc, limit, addDoc  } from '../firebase/firebaseJs.js'
 import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
-import { messaging } from '../firebase/config.js';
+//import { messaging } from '../firebase/config.js';
 import { getToken, onMessage } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging.js'
 
 const db = getFirestore(app) 
-
+/*
 function initializeFireBaseMessaging(){
     messaging
         .requestPermission()
@@ -36,6 +36,7 @@ messaging.onTokenRefresh(function () {
 })
 
 initializeFireBaseMessaging()
+*/
 // Crear un array para almacenar los últimos registros por voltioId
 const latestLeadNotes = [];
 let voltioId
