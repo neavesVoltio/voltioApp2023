@@ -23,6 +23,6 @@
 
       //prueba con las dos en desarrollo
 
-      messaging.setBackgroundMessageHandler(function(payload){
+      messagings.setBackgroundMessageHandler(function(payload){
         console.log(payload);
       })
