@@ -17,12 +17,12 @@
       
       const app = initializeApp(firebaseConfig);
       // se sugiere esto para la verrsion 7
-      const messaging = getMessaging(app)
+      const messagings = getMessaging(app)
       // Para la version 9 cambia a:
       //const messaging = getMessaging(app);
 
       //prueba con las dos en desarrollo
 
-      messaging.setBackgroundMessageHandler(function(payload){
+      messagings.setBackgroundMessageHandler(function(payload){
         console.log(payload);
       })
