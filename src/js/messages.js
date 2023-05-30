@@ -5,6 +5,7 @@ import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
 import { getToken, onMessage } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging.js'
 
 const db = getFirestore(app) 
+getMessagesList()
 /*
 function initializeFireBaseMessaging(){
     messaging
@@ -130,11 +131,6 @@ function createListOfMessages(latestLeadNotesArray){
     let messageRow = document.querySelectorAll('.messageRow');
     messageRow.forEach(function(item) {
         item.addEventListener('click', function (e) {
-            onMessage(messaging, message=>{
-                console.log('tu mensaje: ', message);
-            })
-        
-            
             if (e.target.closest('.messageRow')) {
                 voltioId = item.dataset.id
                 leadName = item.dataset.name
