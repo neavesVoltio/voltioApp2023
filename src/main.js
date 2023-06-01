@@ -6,11 +6,6 @@ function load_view(view) {
   } catch (error) {
     document.getElementById("app").innerHTML='<object type="text/html" data="../src/views/'+ view + '.html" width="100%" height="100%" ></object>';  
   }
-
-
-  
-  
-
 }
 
 function onLoadPage(){
@@ -18,15 +13,16 @@ function onLoadPage(){
   document.getElementById("app").innerHTML='<object type="text/html" data="views/login.html" width="100%" height="100%" ></object>';
 }
 
+function clickToAppSection(){
+  let app = document.getElementById('app');
+  console.log(app);
+  app.addEventListener('click', function (e) {
+    console.log(e.target.id); 
+  });
+}
 
-/*
-window.addEventListener("keydown", function(event) {
-  console.log(event.code);
-    if (event.shiftLeft
-       + event.code === "KeyE")
-    {
-      event.preventDefault();
-        alert('Alt + X pressed!');
-    }
+
+window.addEventListener("click", function(event) {
+  console.log(event.target);
+    
 });
-*/

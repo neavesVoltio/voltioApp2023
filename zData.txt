@@ -14,7 +14,6 @@ projectElectricPanelBrand
 
 Sig pasos:
 
-30. fecha y hora de los mensajes
 31. que se vea solo por equipo
 32. reps nomas que vean donde son duenos de sus tratos para los mensajes
 33. mostrar el nombre y el mail de todos los reps/users que se han registrado en el app y que tengan el estatus de active
@@ -57,6 +56,7 @@ Sig pasos:
 */ 25. Agregar systemSize a la tabla de leads
 */ 26. credit links, muestra los links al dar refresh, se debe ver como tarjetas, debe tener un link para ir a la pagina
 */ 29. Error al actualizar la propuesta, cuando no se ha guardado el proyecto, hay que crear el proyecto en la collection projectDetails para poder editarlo despues.
+*/ 30. fecha y hora de los mensajes
 
 */ formatted date:
     const timestamp =  r[7] ;

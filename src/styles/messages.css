@@ -1,0 +1,110 @@
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+  }
+  .customerName, .circle, .chatTitleText {
+    user-select: none;
+  }
+
+  .senderName {
+    color:#0f2eda; /* Color de texto azul celeste */
+    text-align: left;
+    margin-bottom: 15px;
+    user-select: none;
+  }
+  
+  .receiverName {
+    color:#869de2; /* Color de texto azul celeste */
+    text-align: left;
+    margin-bottom: 15px;
+    user-select: none;
+  }
+
+  .receiverMessageBox {
+    display: inline-block;
+    background-color: #0A4B73;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px 10px 50px 10px;
+  }
+
+  .senderMessageBox {
+    display: inline-block;
+    background-color: #02994d;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px 10px 10px 50px;
+  }
+
+  .senderMessage,
+  .receiverMessage {
+    color: #c8dbdb;
+    font-size: 1em; /* Aumenta un poco el tamaño del texto */
+    max-width: fit-content; /* Evita que sea mayor al senderName */
+    margin-bottom: 15px;
+  }
+
+  .senderDate,
+  .receiverDate {
+    text-align: right; /* Alinea a la derecha */
+    color: #ccd3d3; /* Color de texto gris oscuro */
+    font-size: 0.7em;
+  }
+
+  .taller-input {
+    height: 60px;
+  }
+
+  .custom-button {
+    background-color: #0A4B73;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .newChat-button {
+    background-color: #384f5e;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 60px;
+    border-radius: 10px 20px 20px 20px;
+  }
+
+  .custom-button:hover, .newChat-button:hover {
+    background-color: #062d46;
+  }
+
+  .circle {
+    background-color: #002841;
+    color: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .messagePreview {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* Estilos para pantalla de celular */
+  @media (max-width: 767px) {
+    .chatTitleText {
+      font-size: 14px;
+    }
+  }
+
+  /* Estilos para pantalla de computadora */
+  @media (min-width: 768px) {
+    .chatTitleText {
+      font-size: 30px;
+    }
+  }
