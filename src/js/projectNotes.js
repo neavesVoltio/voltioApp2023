@@ -68,7 +68,7 @@ onAuthStateChanged(auth, async(user) => {
         })
 
         async function addCustomerCommentButton(textBox, commentsBd, box, leadName){
-            
+            console.log(commentsBd);
             let voltioId = document.getElementById("leadVoltioId").value
             console.log(voltioId);
             // Date function 
@@ -133,6 +133,7 @@ onAuthStateChanged(auth, async(user) => {
             let dateOfComment = document.createElement("p")
             
             for( var i=0;i <=dataNotes.length - 1; i++){
+                let formDate = formattedDate(dataNotes[i][1])
                 let noteContainer = document.createElement("div")
                 let userNameTitle = document.createElement("strong")
                 let textOfComment = document.createElement("p")
@@ -149,7 +150,7 @@ onAuthStateChanged(auth, async(user) => {
                 dateOfComment.classList.add("text-light")
                 userNameTitle.innerHTML = dataNotes[i][2]
                 textOfComment.innerHTML = dataNotes[i][0]
-                dateOfComment.innerHTML = dataNotes[i][1]
+                dateOfComment.innerHTML = formDate
                 mainDiv.appendChild(noteContainer)
                 noteContainer.append(userNameTitle)
                 noteContainer.append(textOfComment)
@@ -163,3 +164,17 @@ onAuthStateChanged(auth, async(user) => {
         console.log('no user logged');
     }
 })
+
+function formattedDate(date){
+    const timestamp =  date ;
+    const dateNew = new Date(timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000));
+    
+    let month = dateNew.getMonth() < 10 ? '0'+ (dateNew.getMonth() + 1): (dateNew.getMonth()+ 1)
+    let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
+    let hours = dateNew.getHours() < 10 ? '0' + dateNew.getHours() : dateNew.getHours();
+    let minutes = dateNew.getMinutes() < 10 ? '0' + dateNew.getMinutes() : dateNew.getMinutes();
+    let seconds = dateNew.getSeconds() < 10 ? '0' + dateNew.getSeconds() : dateNew.getSeconds();
+
+    const formattedDate = `${month}/${day}/${dateNew.getFullYear()} ${hours}:${minutes}:${seconds}`;
+    return formattedDate
+}

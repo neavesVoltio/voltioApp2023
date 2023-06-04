@@ -249,12 +249,16 @@
 
     <!-- <div class="container"> -->
       <div class="container">
-        <div id="app" class="position-absolute top-50 start-50 translate-middle  w-100 h-100 p-3  d-inline-block text-center"  style="height: 100px;" onclick="clickToAppSection()">
+        <div id="app" class="position-absolute top-50 start-50 translate-middle  w-100 h-100 p-3  d-inline-block text-center"  style="height: 100px;">
         </div>
       </div>
         
     <!-- CONTENT HERE -->
-
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between px-4 py-3 border-top small bg-dark text-light">
+        <p class="text-muted mb-1 mb-md-0">Copyright © 2023 <a target="_blank">Voltio</a>.</p>
+      </footer>
+      <!-- partial -->
         <!-- Modal -->
 
         <div id="loading" class="d-flex justify-content-center align-items-center invisible">
@@ -266,9 +270,12 @@
         </div>
 
         <script type="module" src="src/googleAuth.js"></script>
+        
         <script type="module" src="src/js/userLogged.js"></script>
         <script type="module" src="src/js/logout.js"></script>
-        <script type="module" src="src/js/adminAccess.js"></script>
+        <!--
+          <script type="module" src="src/js/adminAccess.js"></script>
+        -->
         <script src="src/js/bootstrap.js"></script>
         <script src="src/main.js"></script>
   </body>

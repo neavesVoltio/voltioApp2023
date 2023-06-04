@@ -2,9 +2,21 @@
 
 function load_view(view) {
   try {
-    document.getElementById("app").innerHTML='<object type="text/html" data="src/views/'+ view + '.html" width="100%" height="100%" ></object>';  
+    
+    if(view === 'messages'){
+      document.getElementById("app").innerHTML= '<object type="text/html" data="src/views/'+ view +
+                                                '.html" width="100%" height="100%" alt="menu" id='+view+'></object>';
+                                                
+      
+                                                
+    } else {
+      document.getElementById("app").innerHTML= '<object type="text/html" data="src/views/'+ view + 
+                                              '.html" width="100%" height="100%"></object>';  
+    }
+    
   } catch (error) {
-    document.getElementById("app").innerHTML='<object type="text/html" data="../src/views/'+ view + '.html" width="100%" height="100%" ></object>';  
+    document.getElementById("app").innerHTML= '<object type="text/html" data="../src/view/'+ view + 
+                                              '.html" width="100%" height="100%" class="messagesMenuCliked"></object>';  
   }
 }
 
@@ -14,15 +26,24 @@ function onLoadPage(){
 }
 
 function clickToAppSection(){
-  let app = document.getElementById('app');
-  console.log(app);
+  let app = document.querySelector(object)
   app.addEventListener('click', function (e) {
-    console.log(e.target.id); 
+     
+    
   });
+  
 }
 
+function next(params) {
+  console.log(params);
+      let searchLeadText = document.getElementById('usernameOnMenu');
+      searchLeadText.textContent = '1'
+      console.log(searchLeadText.textContent);
+}
 
 window.addEventListener("click", function(event) {
-  console.log(event.target);
-    
+  if(event.target.id === 'chatTitleLeadname'){
+    console.log(event.target.id); 
+    load_view('dashboard')
+  }
 });

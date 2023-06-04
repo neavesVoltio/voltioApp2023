@@ -1,11 +1,12 @@
 import { getFirestore, doc, getDoc, collection, getDocs, query, where, deleteDoc, orderBy, updateDoc, setDoc, limit, addDoc  } from '../firebase/firebaseJs.js'
 import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
+
 //import { messaging } from '../firebase/config.js';
 import { getToken, onMessage } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging.js'
-console.log(document.getElementById('app'));
 const db = getFirestore(app) 
 getMessagesList()
+
 /*
 function initializeFireBaseMessaging(){
     messaging
@@ -51,6 +52,7 @@ let loading = document.getElementById('loading');
 let userId
 let latestLeadNotesArray
 let subscriptionJson
+let goToLeadDetailFromMessage = document.getElementById('goToLeadDetailFromMessage');
 // startLoading()
 
 function startLoading(){
@@ -128,7 +130,9 @@ function createListOfMessages(latestLeadNotesArray){
         
     });
     endLoading()
+
     let messageRow = document.querySelectorAll('.messageRow');
+    
     messageRow.forEach(function(item) {
         item.addEventListener('click', function (e) {
             if (e.target.closest('.messageRow')) {
@@ -153,6 +157,8 @@ async function getDetailMessages(){
     let chatTitleVoltioId = document.getElementById('chatTitleVoltioId');
     chatTitleVoltioId.innerHTML = voltioId
     chatTitleLeadname.innerHTML = leadName
+    goToLeadDetailFromMessage.setAttribute("name", voltioId);
+    console.log(goToLeadDetailFromMessage);
     let messagesDetailContainer = document.getElementById('messagesDetailContainer')
     messagesDetailContainer.innerHTML = ''
     const collectionRef = collection(db, 'listOfleadNotes');
@@ -311,47 +317,3 @@ function filterListName(){
     createListOfMessages(filteredArray)
 }
 
-// crear el div app y cargar una vista
-let chatTitleLeadname = document.getElementById('chatTitleLeadname');
-chatTitleLeadname.addEventListener('click', function (e) {
-    generateElements()
-});
-
-function generateElements() {
-    const htmlElement = document.querySelector('html[lang="en"]');
-    if (htmlElement) {
-        // Eliminar todos los nodos hijos del elemento html
-        while (htmlElement.firstChild) {
-        htmlElement.firstChild.remove();
-        }
-    }
-    // Crear elementos HTML
-    const container = document.createElement('div');
-    container.className = 'container';
-  
-    const appDiv = document.createElement('div');
-    appDiv.id = 'app';
-    appDiv.className = 'position-absolute top-50 start-50 translate-middle w-100 h-100 p-3 d-inline-block text-center';
-    appDiv.style.height = '100px';
-  
-    // Agregar el elemento 'appDiv' al contenedor 'container'
-    container.appendChild(appDiv);
-    const containerBody = document.querySelector('body');
-    containerBody.insertAdjacentElement('afterend', container);
-    // Agregar el contenedor al inicio del <body>
-    load_view('projects')
-  }
-  
-  // Llamar a la función para generar los elementos
-  
-  function load_view(view) {
-    try {
-        console.log('try');
-      document.getElementById("app").innerHTML='<object type="text/html" data="/views/'+ view + '.html" width="100%" height="100%" ></object>';  
-    } catch (error) {
-        console.log('catch');
-      document.getElementById("app").innerHTML='<object type="text/html" data="../src/views/'+ view + '.html" width="100%" height="100%" ></object>';  
-    }
-  }
-
-  //onclick="load_view('projects')"

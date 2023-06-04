@@ -14,10 +14,9 @@ projectElectricPanelBrand
 
 Sig pasos:
 
-31. que se vea solo por equipo
+31. que los mensajes se vean solo por equipo
 32. reps nomas que vean donde son duenos de sus tratos para los mensajes
 33. mostrar el nombre y el mail de todos los reps/users que se han registrado en el app y que tengan el estatus de active
-34. Que se vaya al detalle del lead al hacer click a un boton
 35. mostrar imagenes en el chat
 36. y tal vez algo para poner la importancia
 37. como sabes si los mensajes son de leads o projectos?
@@ -25,8 +24,6 @@ Sig pasos:
 40. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
 38. en users falta un botton para activarlos o desactivarlos
 
-*/ 27. Crear el template de los mensajes
-*/ 28. Un boton para crear nuevo chat, 
 
 
 */    revisar por que no se han agregado los adders al lead
@@ -55,8 +52,12 @@ Sig pasos:
 */ 24. agregar closer y setter a la tabla 
 */ 25. Agregar systemSize a la tabla de leads
 */ 26. credit links, muestra los links al dar refresh, se debe ver como tarjetas, debe tener un link para ir a la pagina
+*/ 27. Crear el template de los mensajes
 */ 29. Error al actualizar la propuesta, cuando no se ha guardado el proyecto, hay que crear el proyecto en la collection projectDetails para poder editarlo despues.
+*/ 28. Un boton para crear nuevo chat, 
 */ 30. fecha y hora de los mensajes
+*/ 34. Que se vaya al detalle del lead al hacer click a un boton
+*/ 39. LA SECCION DE MENSAJES SE DEBE MOVER A SEARCH LEAD Y HACER UNA FUNCION DONDE SI EL E.TARGET SEA MENSAJES, SE MUESTRE ESA SECCION
 
 */ formatted date:
     const timestamp =  r[7] ;
@@ -65,4 +66,4 @@ Sig pasos:
     let month = dateNew.getMonth() < 10 ? '0'+ (dateNew.getMonth() + 1): (dateNew.getMonth()+ 1)
     let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
     const formattedDate = `${month}/${day}/${dateNew.getFullYear()}`;
-                
+

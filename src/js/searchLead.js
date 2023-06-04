@@ -223,6 +223,7 @@ onAuthStateChanged(auth, async(user) => {
           document.querySelector('#addNewLeadSection').style.display = 'none'
           document.querySelector('#searchProjectSection').style.display = 'block'
           document.querySelector('#profileViewSection').style.display = 'none'
+          document.querySelector('#chatSection').style.display = 'none'
           viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           //document.getElementById('imageCustomerGallery').innerHTML = ''
           document.getElementById('customerFilesUpload').value = ''
@@ -307,9 +308,20 @@ function searchLeadByInput(){
     searchResultsBox.appendChild(tr)
     
   })
+
+  let goToLeadDetailFromMessage = document.getElementById('goToLeadDetailFromMessage');
+
+  goToLeadDetailFromMessage.addEventListener('click', function (e) {
+    document.querySelector('#chatSection').style.display = 'none'
+    voltioId = goToLeadDetailFromMessage.getAttribute("name")
+    clearInputs()
+    setDataToProfileView(voltioId) 
+  });
+
+
   let viewProfileButton = document.querySelectorAll('.editLeadButton')
   viewProfileButton.forEach( btn => {
-    btn.addEventListener('click', async (e) => {
+    btn.addEventListener('click', async (e) => { 
         voltioId = e.target.dataset.leadVoltioId
         clearInputs()
         setDataToProfileView(voltioId) 
