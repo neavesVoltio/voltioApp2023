@@ -5,7 +5,7 @@ import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
 //import { messaging } from '../firebase/config.js';
 import { getToken, onMessage } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging.js'
 const db = getFirestore(app) 
-getMessagesList()
+
 
 /*
 function initializeFireBaseMessaging(){
@@ -40,7 +40,7 @@ messaging.onTokenRefresh(function () {
 initializeFireBaseMessaging()
 */
 // Crear un array para almacenar los últimos registros por voltioId
-const latestLeadNotes = [];
+let latestLeadNotes = [];
 let voltioId
 let leadName
 let backToMessagesListBtn = document.getElementById('backToMessagesListBtn');
@@ -53,6 +53,19 @@ let userId
 let latestLeadNotesArray
 let subscriptionJson
 let goToLeadDetailFromMessage = document.getElementById('goToLeadDetailFromMessage');
+let projectsCheckbox = document.getElementById('projectsCheckbox');
+
+getMessagesList('lead')
+
+projectsCheckbox.addEventListener('change', function (e) {
+    if(e.target.checked){
+        console.log('checked');
+        getMessagesList('Project')
+    } else {
+        console.log('unchecked');
+        getMessagesList('lead')
+    }
+});
 // startLoading()
 
 function startLoading(){
@@ -76,23 +89,26 @@ onAuthStateChanged(auth, async(user) => {
 })
 
  
-async function getMessagesList(){
-        
+async function getMessagesList(project){
+    latestLeadNotes = []
     // Crear una consulta para obtener los documentos ordenados por voltioId y fecha descendente
-    const q = query(collection(db, 'leadData'), orderBy('voltioIdKey'));
+    const q = query(collection(db, 'leadData'), orderBy('voltioIdKey'), where('status', '==', project));
 
     // Obtener los documentos ordenados por voltioId y fecha descendente
     const querySnapshot = await getDocs(q);
 
     // Iterar sobre los documentos y guardar el último registro por voltioId en el objeto
     querySnapshot.forEach((doc) => {
-    const data = doc.data();
+        
+    let data = doc.data();
     const voltioId = data.voltioIdKey;
     latestLeadNotes[voltioId] = data;
+    data = ''
     });
-
+    latestLeadNotesArray = ''
     // Convertir el objeto en un array de los últimos registros
     latestLeadNotesArray = Object.values(latestLeadNotes);
+    console.log(latestLeadNotes);
     createListOfMessages(latestLeadNotesArray)
 }
 
@@ -111,12 +127,12 @@ function createListOfMessages(latestLeadNotesArray){
             <div class="row">
             <div class="col-12">
                 <div class="row align-items-center border-bottom py-2 custom-button">
-                <div class="col-2">
-                    <div class="circle">${item.voltioIdKey}</div>
-                </div>
-                <div class="col-10">
-                    <p class="customerName p-4">${item.customerName}</p>
-                </div>
+                    <div class="col-2">
+                        <div class="circle">${item.voltioIdKey}</div>
+                    </div>
+                    <div class="col-10">
+                        <p class="customerName p-4 ${item.status}">${item.customerName}</p>
+                    </div>
                 </div>
             </div>
             </div>
