@@ -13,13 +13,15 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
+v2.1.37
 
-31. que los mensajes se vean solo por equipo
+31. que los mensajes se vean solo por equipo 
 32. reps nomas que vean donde son duenos de sus tratos para los mensajes
 33. mostrar el nombre y el mail de todos los reps/users que se han registrado en el app y que tengan el estatus de active
 35. mostrar imagenes en el chat
 36. y tal vez algo para poner la importancia
-37. como sabes si los mensajes son de leads o projectos?
+    
+
 39. Y para el chat de leads, voy a agregar un pequeño boton para que le den click a resuelto o leído
 40. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
 38. en users falta un botton para activarlos o desactivarlos
@@ -57,6 +59,7 @@ Sig pasos:
 */ 28. Un boton para crear nuevo chat, 
 */ 30. fecha y hora de los mensajes
 */ 34. Que se vaya al detalle del lead al hacer click a un boton
+*/ 37. como sabes si los mensajes son de leads o projectos? Se tiene que hacer el cambio de lead a proyect, Si el Proyect type no es Lead entonces es Proyect o Canceled Proyect
 */ 39. LA SECCION DE MENSAJES SE DEBE MOVER A SEARCH LEAD Y HACER UNA FUNCION DONDE SI EL E.TARGET SEA MENSAJES, SE MUESTRE ESA SECCION
 
 */ formatted date:
