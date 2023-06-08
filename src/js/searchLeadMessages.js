@@ -54,7 +54,7 @@ let navTabUtilityContainer = document.getElementById('navTabUtilityContainer');
 let navTabDesignContainer = document.getElementById('navTabDesignContainer');
 let navTabPricingContainer = document.getElementById('navTabPricingContainer');
 let navTabDetailsContainer = document.getElementById('navTabDetailsContainer');
-viewProjectsButton.dataset.status = 'Project'
+
 let navProposalsMenu = document.getElementById('navProposalsMenu');
 let proposalViewsAccordionItem = document.getElementById('proposalViewsAccordionItem');
 let status = 'lead'
@@ -69,6 +69,15 @@ let creditLinks = document.getElementById('creditLinks');
 let refreshCreditLinksButton = document.getElementById('refreshCreditLinksButton');
 let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
 let loading = document.getElementById('loading');
+
+let goToLeadDetailFromMessage = document.getElementById('goToLeadDetailFromMessage');
+
+goToLeadDetailFromMessage.addEventListener('click', function (e) {
+  document.querySelector('#chatSection').style.display = 'none'
+  voltioId = goToLeadDetailFromMessage.getAttribute("name")
+  clearInputs()
+  setDataToProfileView(voltioId) 
+});
 
 startLoading()
 
@@ -151,7 +160,7 @@ onAuthStateChanged(auth, async(user) => {
 
 
       //getFirestoreDataToPagination()
-      getLeadOrProjectData()
+      //getLeadOrProjectData()
 
       statusFilter.addEventListener('change', function (e) {
         statusFilterData = e.target.value
@@ -181,7 +190,7 @@ onAuthStateChanged(auth, async(user) => {
   
                 ])
           })
-        
+          
           searchLeadByInput()
         } else {
           let querySnapshoot
@@ -209,7 +218,7 @@ onAuthStateChanged(auth, async(user) => {
   
                 ])
           })
-        
+          console.log(data);
           searchLeadByInput()
 
         }

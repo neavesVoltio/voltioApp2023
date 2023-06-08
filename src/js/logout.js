@@ -11,7 +11,7 @@ try{
 
 } catch(error){
     
-}
+} 
 
 export function logOut(){   
     console.log("logout function")

@@ -4,7 +4,6 @@ import { app } from '../firebase/config.js'
 
 onAuthStateChanged(auth, async(user) => {
     if(user){
-       
         document.getElementById("app").innerHTML='<object type="text/html" data="src/views/dashboard.html" width="100%" height="100%" ></object>';
         document.getElementById('usernameOnMenu').innerHTML = user.displayName
         document.getElementById('navbar').style.display = 'block'
@@ -14,6 +13,7 @@ onAuthStateChanged(auth, async(user) => {
         userLogged.forEach( btn => {
             btn.style.display = 'block'
         })
+        
     } else{
         document.getElementById("app").innerHTML='<object type="text/html" data="src/views/login.html" width="100%" height="100%" ></object>';
         console.log('no user logged xxx');

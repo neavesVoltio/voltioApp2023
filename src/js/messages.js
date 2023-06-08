@@ -6,6 +6,8 @@ import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
 import { getToken, onMessage } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging.js'
 const db = getFirestore(app) 
 
+let usernameOnMenu = document.getElementById('usernameOnMenu');
+console.log(usernameOnMenu);
 
 /*
 function initializeFireBaseMessaging(){
