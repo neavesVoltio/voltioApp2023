@@ -279,6 +279,7 @@ function searchLeadByInput(){
   searchResultsBox.innerHTML = ""
   resultsArray.forEach(function(r){
     let tr = template.cloneNode(true)
+    let messageRow = tr.querySelector(".messageRow")
     let leadId = tr.querySelector(".leadId");
     let leadProgress = tr.querySelector(".leadProgress");
     let leadStage = tr.querySelector(".leadStage");
@@ -293,7 +294,7 @@ function searchLeadByInput(){
     let month = dateNew.getMonth() < 10 ? '0'+ (dateNew.getMonth() + 1): (dateNew.getMonth()+ 1)
     let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
     const formattedDate = `${month}/${day}/${dateNew.getFullYear()}`;
-
+    messageRow.dataset.voltioId = r[0]
     leadId.textContent = r[0]
     editButton.textContent = r[1]
     leadProgress.textContent = r[2]
@@ -318,6 +319,18 @@ function searchLeadByInput(){
     })
   })
   endLoading()
+  let messageRow = document.querySelectorAll('.messageRow');
+    messageRow.forEach(function(item) {
+        item.addEventListener('click', function (e) {
+            if (e.target.closest('.messageRow')) {
+                console.log('clicked ' + e.target.closest('.messageRow').dataset.voltioId);
+                voltioId = e.target.closest('.messageRow').dataset.voltioId
+                clearInputs()
+                setDataToProfileView(voltioId) 
+                
+              }
+        });
+    });
 }
 
 projectAddOnSystem.addEventListener('change', function (e) {
@@ -1762,6 +1775,4 @@ function generarTarjetas(linkData, linkName) {
 
                           
 }
-
-
 

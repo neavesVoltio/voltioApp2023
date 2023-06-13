@@ -172,3 +172,57 @@
   left: calc(50% - 27px/2 + 10px);
   top: calc(50% - 27px/2);
 }
+
+.toggle-button-message {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.toggle-input-message {
+  display: none;
+}
+
+.star-icon {
+  font-family: "FontAwesome"; /* Asegúrate de tener cargada la fuente FontAwesome */
+  font-size: 24px;
+  color: gray;
+}
+
+.toggle-input-message:checked + .star-icon {
+  color: yellow;
+}
+
+/* flag button    */
+.toggle-button-flag {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.toggle-input-flag {
+  display: none;
+}
+
+.flag-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-color: gray;
+}
+
+.toggle-input-flag:checked + .flag-icon {
+  background-color: green;
+}
+
+.toggle-input-flag:checked + .flag-icon:before {
+  content: "\2716";
+  color: white;
+}
+
+
+

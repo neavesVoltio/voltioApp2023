@@ -217,14 +217,24 @@ async function getDetailMessages(){
         contentElement.innerHTML = `
         <h5 class="chat-title receiverName">${userName}</h5>
         <p class="chat-message receiverMessage">${customerComment}</p>
-        <p class="chat-date receiverDate">${formattedDate}</p>
+        <p class="chat-date receiverDate mb-2">${formattedDate}</p>
+            <label class="toggle-button-message">
+            <input type="checkbox" class="toggle-input-message">
+            <span class="star-icon">&#9734;</span>
+            </label>
         `;
     } else {
         contentElement.classList.add('senderMessageBox', 'chat', 'col-10', 'offset-2', 'mb-2');
         contentElement.innerHTML = `
         <h5 class="chat-title senderName">${userName}</h5>
         <p class="chat-message senderMessage">${customerComment}</p>
-        <p class="chat-date senderDate">${formattedDate}</p>
+        <p class="chat-date senderDate mb-2">${formattedDate}</p>
+        <div class="senderDate">
+            <label class="toggle-button-message">
+            <input type="checkbox" class="toggle-input-message">
+            <span class="star-icon">&#9734;</span>
+            </label>
+        </div>
         `;
     }
 

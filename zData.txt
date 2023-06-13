@@ -15,16 +15,15 @@ projectElectricPanelBrand
 Sig pasos:
 v2.1.37
 
-31. que los mensajes se vean solo por equipo 
-32. reps nomas que vean donde son duenos de sus tratos para los mensajes
-33. mostrar el nombre y el mail de todos los reps/users que se han registrado en el app y que tengan el estatus de active
-35. mostrar imagenes en el chat
-36. y tal vez algo para poner la importancia
-    
-
-39. Y para el chat de leads, voy a agregar un pequeño boton para que le den click a resuelto o leído
-40. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
-38. en users falta un botton para activarlos o desactivarlos
+38. que los mensajes se vean solo por equipo 
+40. reps nomas que vean donde son duenos de sus tratos para los mensajes
+41. mostrar el nombre y el mail de todos los reps/users que se han registrado en el app y que tengan el estatus de active
+42. mostrar imagenes en el chat
+43. y tal vez algo para poner la importancia
+ 
+35. Y para el chat de leads, voy a agregar un pequeño boton para que le den click a resuelto o leído
+36. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
+37. en users falta un botton para activarlos o desactivarlos
 
 
 
@@ -70,3 +69,16 @@ v2.1.37
     let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
     const formattedDate = `${month}/${day}/${dateNew.getFullYear()}`;
 
+let messageRow = document.querySelectorAll('.messageRow');
+    
+    messageRow.forEach(function(item) {
+        item.addEventListener('click', function (e) {
+            if (e.target.closest('.messageRow')) {
+                voltioId = item.dataset.id
+                leadName = item.dataset.name
+                getDetailMessages()
+                listMessagesSection.style.display = 'none'
+                detailedMessagesSection.style.display = 'block'             
+              }
+        });
+    });
