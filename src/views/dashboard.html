@@ -75,19 +75,25 @@
                         </div>
                         <div class="row">
                           <div id="toDoAdminData">
-                            <div class="row align-items-center border-bottom py-2 custom-button mb-2 border-info">
-                              <div class="col">
+                            <div class="row align-items-center border-bottom py-2 custom-button mb-2 border-info messageRow" 
+                              data-bs-toggle="modal" data-bs-target="#addNewTaskModalRep"
+                              data-id="V-11"
+                              data-name="JAVIER NEAVES">
+                              <div class="col-4">
                                 <p>V-11</p>
                               </div>
-                              <div class="col">
+                              <div class="col-8">
                                 <p>Javier Neaves</p>
                               </div>
                             </div>
-                            <div class="row align-items-center border-bottom py-2 custom-button mb-2 border-info">
-                              <div class="col">
-                                <p>V-11</p>
+                            <div class="row align-items-center border-bottom py-2 custom-button mb-2 border-info messageRow" 
+                              data-bs-toggle="modal" data-bs-target="#addNewTaskModalRep"
+                              data-id="V-10"
+                              data-name="">
+                              <div class="col-4">
+                                <p>V-10</p>
                               </div>
-                              <div class="col">
+                              <div class="col-8">
                                 <p>Javier Neaves</p>
                               </div>
                             </div>
@@ -249,23 +255,23 @@
       </div>
       <div class="modal-body">
         <div class="card rounded bg-dark bg-gradient border-info text-light mb-4">
-                          <div class="card-header">
-                            <p class="mb-2"> Task Title</p>
-                            <input type="text" class="form-control bg-dark text-light" id="taskTitleInputRep" placeholder="title">
-                          </div>
-                          <div class="card-body">
-                            <h5 class="card-title mb-2">Task subtitle</h5>
-                            <input type="text" class="form-control bg-dark text-light mb-2" id="taskSubtitleInputRep" placeholder="sub-title">
-                            
-                            <div class="mb-3">
-                              <label for="taskDescriptionInput" class="form-label">Description and details of the current tasks</label>
-                              <textarea class="form-control bg-dark text-light mb-2" id="taskDescriptionInputRep" rows="3"></textarea>
-                            </div>
-                                                        
-                            <p class="text-start mb-2">Due date:</p>
-                            <input type="date" class="form-control bg-dark text-light mb-2" id="taskDueDateInputRep" placeholder="date">
+          <div class="card-header">
+            <p class="mb-2"> Task Title</p>
+            <input type="text" class="form-control bg-dark text-light" id="taskTitleInputRep" placeholder="title">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title mb-2">Task subtitle</h5>
+            <input type="text" class="form-control bg-dark text-light mb-2" id="taskSubtitleInputRep" placeholder="sub-title">
+            
+            <div class="mb-3">
+              <label for="taskDescriptionInput" class="form-label">Description and details of the current tasks</label>
+              <textarea class="form-control bg-dark text-light mb-2" id="taskDescriptionInputRep" rows="3"></textarea>
+            </div>
+                                        
+            <p class="text-start mb-2">Due date:</p>
+            <input type="date" class="form-control bg-dark text-light mb-2" id="taskDueDateInputRep" placeholder="date">
 
-                          </div>
+          </div>
          </div>
       </div>
       <div class="modal-footer">
@@ -277,5 +283,6 @@
 </div>
 <script type="module" src="../js/adminAccess.js"></script>
 <script type="module" src="../js/bootstrap.js"></script>
+<script type="module" src="../js/dashboard.js"></script>
 </body>
 </html>
