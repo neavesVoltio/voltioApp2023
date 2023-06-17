@@ -64,7 +64,7 @@
             <div class="card rounded bg-transparent border-info " name="hideWhenRep"  id="adminTaskCard">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                  <h6 class="card-title mb-0 text-light mb-2">Project Tasks <a class="btn btn-outlined-info text-info fst-italic text-decoration-underline" data-bs-toggle="modal" data-bs-target="#addNewTaskModal" > ..add new task </a> </h6>
+                  <h6 class="card-title mb-0 text-light mb-2">Project Tasks <a class="btn btn-outlined-info text-info fst-italic text-decoration-underline" data-bs-toggle="modal" data-bs-target="#addNewTaskModal" > ..view tasks </a> </h6>
                 </div>
                 <div class="row">
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
@@ -75,10 +75,16 @@
                         </div>
                         <div class="row">
                           <div id="toDoAdminData">
-                            <div class="row align-items-center border-bottom py-2 custom-button mb-2 border-info messageRow" 
-                              data-bs-toggle="modal" data-bs-target="#addNewTaskModalRep"
+                            <!-- <div class="row align-items-center border-bottom py-2 custom-button mb-2 border-info messageRow" 
+                              data-bs-toggle="modal" data-bs-target="#addNewTaskModal"
                               data-id="V-11"
-                              data-name="JAVIER NEAVES">
+                              data-name="JAVIER NEAVES"
+                              data-subtitle="Pending taks"
+                              data-description="This is a pending task description"
+                              data-duedate='05/25/2023 00:28:21'
+                              data-assignedTo="neaves@voltio.us"
+                              data-creationDate="06/07/2023"
+                              data-taskStatus="To Do">
                               <div class="col-4">
                                 <p>V-11</p>
                               </div>
@@ -87,7 +93,7 @@
                               </div>
                             </div>
                             <div class="row align-items-center border-bottom py-2 custom-button mb-2 border-info messageRow" 
-                              data-bs-toggle="modal" data-bs-target="#addNewTaskModalRep"
+                              data-bs-toggle="modal" data-bs-target="#addNewTaskModal"
                               data-id="V-10"
                               data-name="">
                               <div class="col-4">
@@ -96,7 +102,7 @@
                               <div class="col-8">
                                 <p>Javier Neaves</p>
                               </div>
-                            </div>
+                            </div> -->
                           </div>
                         </div>
                       </div>
@@ -211,7 +217,8 @@
 
 	
   <!-- Modal -->
-<div class="modal fade" id="addNewTaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade mt-5" id="addNewTaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" 
+     aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content bg-black text-light">
       <div class="modal-header">
@@ -220,7 +227,6 @@
       <div class="modal-body">
         <div class="card rounded bg-dark bg-gradient border-info text-light mb-4">
           <div class="card-header">
-            <p class="mb-2"> Task Title</p>
             <input type="text" class="form-control bg-dark text-light mb-2" id="taskTitleInput" placeholder="title">
             <input type="text" class="form-control bg-dark text-light" id="taskVoltioIdInput" placeholder="Voltio Id" readonly>
           </div>
@@ -235,13 +241,25 @@
                                         
             <p class="text-start mb-2">Due date:</p>
             <input type="date" class="form-control bg-dark text-light mb-2" id="taskDueDateInput" placeholder="date">
-            <input type="text" class="form-control bg-dark text-light mb-2" id="taskStatus" placeholder="title">
+
+            <label class="text-start mb-2">Assigned to:</label>
+            <select class="form-select bg-dark text-light mb-2" id="taskAssignedTo">
+              <option value="option1">Option 1</option>
+              <option value="neaves@voltio.us">neaves@voltio.us</option>
+              <option value="option3">Option 3</option>
+            </select>
+            <label class="text-start mb-2">Status:</label>
+            <select class="form-select bg-dark text-light mb-3" id="taskStatus">
+              <option >To Do</option>
+              <option >In Progress</option>
+              <option >Done</option>
+            </select>
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" id="addNewTaskModalOpenButton">Close</button>
+            <button type="button" class="btn btn-outline-primary" id="saveTaskModal" data-bs-dismiss="modal">Save changes</button>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" id="addNewTaskModalOpenButton">Close</button>
-        <button type="button" class="btn btn-outline-primary" id="saveTaskModal" data-bs-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>

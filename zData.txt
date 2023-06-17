@@ -20,7 +20,10 @@ v2.1.37
 41. mostrar el nombre y el mail de todos los reps/users que se han registrado en el app y que tengan el estatus de active
 42. mostrar imagenes en el chat
 43. y tal vez algo para poner la importancia
- 
+
+44. Dashboard, manejo de tareas, crear, editar, asignar a un rep
+45. // se toman todos los dataset y se guardan en firebase, falta agregar el id de esa coll para borrar registro
+
 35. Y para el chat de leads, voy a agregar un pequeño boton para que le den click a resuelto o leído
 36. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
 37. en users falta un botton para activarlos o desactivarlos
@@ -82,3 +85,11 @@ let messageRow = document.querySelectorAll('.messageRow');
               }
         });
     });
+
+data-id="V-11"
+data-name="JAVIER NEAVES"
+data-subtitle="Pending taks"
+data-description="This is a pending task description"
+data-duedate="06/07/2023"
+data-assignedTo="neaves@voltio.us"
+data-creationDate="06/07/2023"

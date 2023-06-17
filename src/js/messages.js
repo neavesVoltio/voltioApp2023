@@ -219,7 +219,17 @@ async function getDetailMessages(){
         <p class="chat-message receiverMessage">${customerComment}</p>
         <p class="chat-date receiverDate mb-2">${formattedDate}</p>
             <label class="toggle-button-message">
-            <input type="checkbox" class="toggle-input-message">
+            <input type="checkbox" class="toggle-input-message createTask"
+            data-id= '${voltioId}' 
+            data-name= '${leadName} '
+            data-subtitle='Task created from messages'
+            data-description='${customerComment}'
+            data-duedate='${formattedDate}'
+            data-assignedTo= '${currentUserName} '
+            data-creationDate='${formattedDate}'
+            data-taskStatus='To Do'
+            data-createdBy= '${currentUserName} '
+            >
             <span class="star-icon">&#9734;</span>
             </label>
         `;
@@ -231,7 +241,17 @@ async function getDetailMessages(){
         <p class="chat-date senderDate mb-2">${formattedDate}</p>
         <div class="senderDate">
             <label class="toggle-button-message">
-            <input type="checkbox" class="toggle-input-message">
+            <input type="checkbox" class="toggle-input-message createTask"
+            data-id= '${voltioId}' 
+            data-name= '${leadName} '
+            data-subtitle='Task created from messages'
+            data-description='${customerComment}'
+            data-duedate='${formattedDate}'
+            data-assignedTo= '${currentUserName} '
+            data-creationDate='${formattedDate}'
+            data-taskStatus='To Do'
+            data-createdBy= '${currentUserName} '
+            >
             <span class="star-icon">&#9734;</span>
             </label>
         </div>
@@ -244,7 +264,24 @@ async function getDetailMessages(){
 
     // Agregar el elemento creado al documento o contenedor deseado
     messagesDetailContainer.appendChild(chatElement);
+
+    let createTask = document.querySelectorAll('.createTask');
+    createTask.forEach(function(item) {
+        item.addEventListener('click', function (e) {
+            const isChecked = e.target.checked
+            if (e.target.checked) {
+                console.log(e.target.dataset.description);
+                // se toman todos los dataset y se guardan en firebase, falta agregar el id de esa coll para borrar registro
+            } else {
+                console.log('no checked');
+            }
+            
+        });
     });
+
+    });
+
+    
 }
 
 
