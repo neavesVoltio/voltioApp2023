@@ -50,6 +50,7 @@ let listMessagesSection = document.getElementById('listMessagesSection');
 let detailedMessagesSection = document.getElementById('detailedMessagesSection');
 let searchLeadText = document.getElementById('searchLeadText');
 let currentUserName
+let currentUserEmail
 let loading = document.getElementById('loading');
 let userId
 let latestLeadNotesArray
@@ -57,7 +58,7 @@ let subscriptionJson
 let goToLeadDetailFromMessage = document.getElementById('goToLeadDetailFromMessage');
 let projectsCheckbox = document.getElementById('projectsCheckbox');
 
-getMessagesList('lead')
+
 
 projectsCheckbox.addEventListener('change', function (e) {
     if(e.target.checked){
@@ -81,9 +82,11 @@ function endLoading(){
 onAuthStateChanged(auth, async(user) => {
     if (user) {
         // El usuario está autenticado
+
         currentUserName = user.displayName;
         userId = user.uid
-        
+        currentUserEmail = user.email
+        getMessagesList('lead')
       } else {
         // El usuario no está autenticado
         console.log('No hay usuario autenticado');
@@ -108,7 +111,7 @@ async function getMessagesList(project){
     data = ''
     });
     latestLeadNotesArray = ''
-    // Convertir el objeto en un array de los últimos registros
+    // Convertir el objeto en u n array de los últimos registros
     latestLeadNotesArray = Object.values(latestLeadNotes);
     console.log(latestLeadNotes);
     createListOfMessages(latestLeadNotesArray)
@@ -186,6 +189,7 @@ async function getDetailMessages(){
 
     querySnapshot.forEach((doc) => {
     const data = doc.data();
+    const registerId = doc.id
     const { userName, customerComment, date } = data;
 
     const chatElement = document.createElement('div');
@@ -221,14 +225,15 @@ async function getDetailMessages(){
             <label class="toggle-button-message">
             <input type="checkbox" class="toggle-input-message createTask"
             data-id= '${voltioId}' 
-            data-name= '${leadName} '
+            data-name= '${leadName}'
             data-subtitle='Task created from messages'
             data-description='${customerComment}'
             data-duedate='${formattedDate}'
-            data-assignedTo= '${currentUserName} '
+            data-assignedTo= '${currentUserEmail}'
             data-creationDate='${formattedDate}'
             data-taskStatus='To Do'
-            data-createdBy= '${currentUserName} '
+            data-createdBy= '${currentUserEmail}'
+            data-starred='${registerId}'
             >
             <span class="star-icon">&#9734;</span>
             </label>
@@ -243,14 +248,15 @@ async function getDetailMessages(){
             <label class="toggle-button-message">
             <input type="checkbox" class="toggle-input-message createTask"
             data-id= '${voltioId}' 
-            data-name= '${leadName} '
+            data-name= '${leadName}'
             data-subtitle='Task created from messages'
             data-description='${customerComment}'
             data-duedate='${formattedDate}'
-            data-assignedTo= '${currentUserName} '
+            data-assignedTo= '${currentUserEmail}'
             data-creationDate='${formattedDate}'
             data-taskStatus='To Do'
-            data-createdBy= '${currentUserName} '
+            data-createdBy= '${currentUserEmail}'
+            data-starred='${registerId}'
             >
             <span class="star-icon">&#9734;</span>
             </label>
@@ -265,25 +271,71 @@ async function getDetailMessages(){
     // Agregar el elemento creado al documento o contenedor deseado
     messagesDetailContainer.appendChild(chatElement);
 
+
+    });
+    
     let createTask = document.querySelectorAll('.createTask');
     createTask.forEach(function(item) {
         item.addEventListener('click', function (e) {
             const isChecked = e.target.checked
             if (e.target.checked) {
                 console.log(e.target.dataset.description);
-                // se toman todos los dataset y se guardan en firebase, falta agregar el id de esa coll para borrar registro
+                let messageData={
+                    "data-id": voltioId,
+                    "data-name": leadName,
+                    "data-subtitle": "Task created by message",
+                    "data-description": e.target.dataset.description,
+                    "data-duedate": new Date(),
+                    "data-assignedTo": currentUserEmail,
+                    "data-creationDate": new Date(),
+                    "data-taskStatus": "To Do",
+                    "data-createdBy": currentUserEmail,
+                    "data-starred": e.target.dataset.starred,
+                }
+                addProjectTask(messageData)
+                // se toman todos los dataset y se guardan en firebase, falta agregar el id de esa collection para borrar registro
+                return
             } else {
                 console.log('no checked');
+                deleteTaskByStarredValue(e.target.dataset.starred)
             }
             
         });
     });
-
-    });
-
     
 }
 
+async function deleteTaskByStarredValue(starredValue) {
+    const collectionRef = collection(db, 'projectTasks');
+    const q = query(collectionRef, where('data-starred', '==', starredValue));
+    const querySnapshot = await getDocs(q);
+    
+    querySnapshot.forEach((doc) => {
+      deleteDoc(doc.ref)
+        .then(() => {
+          console.log(`Documento eliminado: ${doc.id}`);
+        })
+        .catch((error) => {
+          console.error('Error al eliminar el documento: ', error);
+        });
+    });
+  }
+
+
+async function addProjectTask(messageData) {
+    const projectTasksRef = collection(db, "projectTasks");
+  
+    const taskData = {
+      
+    };
+  
+    try {
+      const docRef = await addDoc(projectTasksRef, messageData);
+      console.log("Document added with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+}
 
 function truncateWords(){
     const messagePreview = document.querySelectorAll('.messagePreview');

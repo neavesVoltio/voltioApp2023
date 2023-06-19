@@ -1,4 +1,4 @@
-import { getFirestore, doc, getDoc, collection, getDocs, query, where, deleteDoc, orderBy, updateDoc, setDoc, addDoc  } from '../firebase/firebaseJs.js'
+import { getFirestore, doc, getDoc, collection, getDocs, query, where, deleteDoc, orderBy, updateDoc, setDoc, addDoc, Timestamp  } from '../firebase/firebaseJs.js'
 import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
 const db = getFirestore(app) 
@@ -13,7 +13,6 @@ let taskStatus = document.getElementById('taskStatus');
 
 onAuthStateChanged(auth, async(user)=>{
     if(user){
-        console.log(user.email);
         fetchAssignedTasks(user.email)
     }else{
         'no user logged'
@@ -22,19 +21,23 @@ onAuthStateChanged(auth, async(user)=>{
 
 async function fetchAssignedTasks(userEmail) {
   const projectTasksRef = collection(db, "projectTasks");
-
+console.log(userEmail);
   const q = query(projectTasksRef, where("data-assignedTo", "==", userEmail));
 
   try {
     const querySnapshot = await getDocs(q);
     const assignedTasks = [];
-
+    let toDoAdminData = document.getElementById('toDoAdminData');
+    toDoAdminData.innerHTML = ''
     querySnapshot.forEach((doc) => {
       assignedTasks.push(doc.data());
+      createMessageRow(doc.data(), doc.id)
     });
+    
+    
 
     assignedTasks.forEach(function(item) {
-        createMessageRow(item)
+      //createMessageRow(item)
     })
 
   } catch (error) {
@@ -42,10 +45,9 @@ async function fetchAssignedTasks(userEmail) {
     return [];
   }
 }
-
-function createMessageRow(data) {
-    let toDoAdminData = document.getElementById('toDoAdminData');
-    toDoAdminData.innerHTML = ''
+// crea row de las tareas
+function createMessageRow(data, docId) {
+    console.log(data);
     const messageRow = document.createElement("div");
     messageRow.classList.add("row", "align-items-center", "border-bottom", "py-2", "custom-button", "mb-2", "border-info", "messageRow");
     messageRow.setAttribute("data-bs-toggle", "modal");
@@ -55,9 +57,10 @@ function createMessageRow(data) {
     messageRow.setAttribute("data-subtitle", data["data-subtitle"]);
     messageRow.setAttribute("data-description", data["data-description"]);
     messageRow.setAttribute("data-duedate", data["data-duedate"]);
-    messageRow.setAttribute("data-assignedTo", data["data-assignedTo"]);
+    messageRow.setAttribute("data-assignedto", data["data-assignedTo"]);
     messageRow.setAttribute("data-creationDate", data["data-creationDate"]);
-    messageRow.setAttribute("data-taskStatus", data["data-taskStatus"]);
+    messageRow.setAttribute("data-taskstatus", data["data-taskStatus"]);
+    messageRow.setAttribute("data-taskid", docId);
   
     const col4 = document.createElement("div");
     col4.classList.add("col-4");
@@ -79,14 +82,23 @@ function createMessageRow(data) {
     messageRowSet.forEach(function(item) {
         item.addEventListener('click', function (e) {
             if (e.target.closest('.messageRow')) {
-                console.log(item.dataset.name);
+              const text = item.dataset.duedate
+              const regex = /\(([^)]+)\)/;
+              const matches = text.match(regex);
+              let values = {}
+              values = matches[1].split(", ");
+              let seconds = values[0]
+              const numbers = seconds.replace(/\D/g, "");
+              const date = new Date(numbers * 1000);
+              const formattedDate = date.toISOString().slice(0, 10);
                 taskTitleInput.value = item.dataset.name
                 taskVoltioIdInput.value = item.dataset.id
                 taskSubtitleInput.value = item.dataset.subtitle
                 taskDescriptionInput.value = item.dataset.description
-                taskDueDateInput.value = item.dataset.duedate
-                taskAssignedTo.value = item.dataset.assignedTo
-                taskStatus.value = item.dataset.taskStatus
+                taskDueDateInput.value = formattedDate
+                taskAssignedTo.value = item.dataset.assignedto
+                taskStatus.value = item.dataset.taskstatus
+                saveTaskModal.dataset.taskid = item.dataset.taskid
               }
         });
     });
@@ -96,29 +108,54 @@ function createMessageRow(data) {
 // SAVE TASKS
 
 async function addProjectTask() {
-    const projectTasksRef = collection(db, "projectTasks");
-  
-    const taskData = {
-      "data-id": "V-11",
-      "data-name": "JAVIER NEAVES",
-      "data-subtitle": "Pending taks",
-      "data-description": "This is a pending task description",
-      "data-duedate": new Date("05/25/2023 00:28:21"),
-      "data-assignedTo": "neaves@voltio.us",
-      "data-creationDate": new Date("06/07/2023"),
-      "data-taskStatus": "To Do",
-      "data-createdBy": "neaves@voltio.us",
+  const projectTasksRef = collection(db, "projectTasks");
 
-    };
-  
-    try {
-      const docRef = await addDoc(projectTasksRef, taskData);
-      console.log("Document added with ID: ", docRef.id);
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
+  const taskData = {
+    "data-id": "V-11",
+    "data-name": "JAVIER NEAVES",
+    "data-subtitle": "Pending taks",
+    "data-description": "This is a pending task description",
+    "data-duedate": new Date("05/25/2023 00:28:21"),
+    "data-assignedTo": "neaves@voltio.us",
+    "data-creationDate": new Date("06/07/2023"),
+    "data-taskStatus": "To Do",
+    "data-createdBy": "neaves@voltio.us",
+
+  };
+
+  try {
+    const docRef = await addDoc(projectTasksRef, taskData);
+    console.log("Document added with ID: ", docRef.id);
+  } catch (error) {
+    console.error("Error adding document: ", error);
   }
+}
 
   saveTaskModal.addEventListener('click', function (e) {
-    addProjectTask()
+    console.log(e.target.dataset.taskid);
+    let taskId = e.target.dataset.taskid
+    editProjectTask(taskId)
   });
+
+  async function editProjectTask(taskId){
+
+    const taskRef = doc(db, 'projectTasks', taskId);
+    try {
+      await updateDoc(taskRef, {
+        "data-name" :taskTitleInput.value,
+        "data-id" : taskVoltioIdInput.value,
+        "data-subtitle" : taskSubtitleInput.value,
+        "data-description": taskDescriptionInput.value,
+        "data-duedate":taskDueDateInput.value,
+        "data-assignedTo":taskAssignedTo.value,
+        "data-taskStatus":taskStatus.value
+      });
+      console.log("task edited");  
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+
+  // error al guardar fecha despues de editar, ya que se guarda con un valor distinto.
+  
