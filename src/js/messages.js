@@ -433,4 +433,3 @@ function filterListName(){
     })
     createListOfMessages(filteredArray)
 }
-
