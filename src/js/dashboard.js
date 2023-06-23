@@ -10,10 +10,12 @@ let taskVoltioIdInput = document.getElementById('taskVoltioIdInput');
 let taskDescriptionInput = document.getElementById('taskDescriptionInput');
 let taskAssignedTo = document.getElementById('taskAssignedTo');
 let taskStatus = document.getElementById('taskStatus');
+let userLogged
 
 onAuthStateChanged(auth, async(user)=>{
     if(user){
-        fetchAssignedTasks(user.email)
+      userLogged = user.email
+      fetchAssignedTasks(userLogged)
     }else{
         'no user logged'
     }
@@ -21,7 +23,6 @@ onAuthStateChanged(auth, async(user)=>{
 
 async function fetchAssignedTasks(userEmail) {
   const projectTasksRef = collection(db, "projectTasks");
-console.log(userEmail);
   const q = query(projectTasksRef, where("data-assignedTo", "==", userEmail));
 
   try {
@@ -33,8 +34,6 @@ console.log(userEmail);
       assignedTasks.push(doc.data());
       createMessageRow(doc.data(), doc.id)
     });
-    
-    
 
     assignedTasks.forEach(function(item) {
       //createMessageRow(item)
@@ -45,9 +44,9 @@ console.log(userEmail);
     return [];
   }
 }
+
 // crea row de las tareas
 function createMessageRow(data, docId) {
-    console.log(data);
     const messageRow = document.createElement("div");
     messageRow.classList.add("row", "align-items-center", "border-bottom", "py-2", "custom-button", "mb-2", "border-info", "messageRow");
     messageRow.setAttribute("data-bs-toggle", "modal");
@@ -103,7 +102,7 @@ function createMessageRow(data, docId) {
         });
     });
     
-  }
+}
   
 // SAVE TASKS
 
@@ -138,7 +137,8 @@ async function addProjectTask() {
   });
 
   async function editProjectTask(taskId){
-
+    const fecha = new Date(taskDueDateInput.value);
+    let realDate = fecha.setDate(fecha.getDate() + 1);
     const taskRef = doc(db, 'projectTasks', taskId);
     try {
       await updateDoc(taskRef, {
@@ -146,9 +146,20 @@ async function addProjectTask() {
         "data-id" : taskVoltioIdInput.value,
         "data-subtitle" : taskSubtitleInput.value,
         "data-description": taskDescriptionInput.value,
-        "data-duedate":taskDueDateInput.value,
+        "data-duedate": realDate,
         "data-assignedTo":taskAssignedTo.value,
         "data-taskStatus":taskStatus.value
+      }).then((result) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Task updated!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        fetchAssignedTasks(userLogged)
+      }).catch((err) => {
+        console.log(err);
       });
       console.log("task edited");  
     } catch (error) {
