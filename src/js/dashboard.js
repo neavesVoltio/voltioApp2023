@@ -89,12 +89,20 @@ function createMessageRow(data, docId) {
               let seconds = values[0]
               const numbers = seconds.replace(/\D/g, "");
               const date = new Date(numbers * 1000);
-              const formattedDate = date.toISOString().slice(0, 10);
+              //const formattedDate = date.toISOString().slice(0, 10);
+              console.log(date);
+              const fecha = new Date(date);
+              const anio = fecha.getFullYear();
+              const mes = ('0' + (fecha.getMonth() + 1)).slice(-2);
+              const dia = ('0' + fecha.getDate()).slice(-2);
+            
+              const fechaFormateada = `${anio}-${mes}-${dia}`;
+
                 taskTitleInput.value = item.dataset.name
                 taskVoltioIdInput.value = item.dataset.id
                 taskSubtitleInput.value = item.dataset.subtitle
                 taskDescriptionInput.value = item.dataset.description
-                taskDueDateInput.value = formattedDate
+                taskDueDateInput.value = fechaFormateada
                 taskAssignedTo.value = item.dataset.assignedto
                 taskStatus.value = item.dataset.taskstatus
                 saveTaskModal.dataset.taskid = item.dataset.taskid
@@ -105,30 +113,6 @@ function createMessageRow(data, docId) {
 }
   
 // SAVE TASKS
-
-async function addProjectTask() {
-  const projectTasksRef = collection(db, "projectTasks");
-
-  const taskData = {
-    "data-id": "V-11",
-    "data-name": "JAVIER NEAVES",
-    "data-subtitle": "Pending taks",
-    "data-description": "This is a pending task description",
-    "data-duedate": new Date("05/25/2023 00:28:21"),
-    "data-assignedTo": "neaves@voltio.us",
-    "data-creationDate": new Date("06/07/2023"),
-    "data-taskStatus": "To Do",
-    "data-createdBy": "neaves@voltio.us",
-
-  };
-
-  try {
-    const docRef = await addDoc(projectTasksRef, taskData);
-    console.log("Document added with ID: ", docRef.id);
-  } catch (error) {
-    console.error("Error adding document: ", error);
-  }
-}
 
   saveTaskModal.addEventListener('click', function (e) {
     console.log(e.target.dataset.taskid);
@@ -146,7 +130,7 @@ async function addProjectTask() {
         "data-id" : taskVoltioIdInput.value,
         "data-subtitle" : taskSubtitleInput.value,
         "data-description": taskDescriptionInput.value,
-        "data-duedate": realDate,
+        "data-duedate": new Date(realDate),
         "data-assignedTo":taskAssignedTo.value,
         "data-taskStatus":taskStatus.value
       }).then((result) => {
