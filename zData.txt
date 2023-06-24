@@ -13,7 +13,7 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.1.38 tareas
+v2.1.39 fixDates
 
 38. que los mensajes se vean solo por equipo 
 40. reps nomas que vean donde son duenos de sus tratos para los mensajes
