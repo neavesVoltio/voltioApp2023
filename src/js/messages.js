@@ -6,9 +6,6 @@ import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
 import { getToken, onMessage } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging.js'
 const db = getFirestore(app) 
 
-let usernameOnMenu = document.getElementById('usernameOnMenu');
-console.log(usernameOnMenu);
-
 /*
 function initializeFireBaseMessaging(){
     messaging
@@ -113,7 +110,6 @@ async function getMessagesList(project){
     latestLeadNotesArray = ''
     // Convertir el objeto en u n array de los últimos registros
     latestLeadNotesArray = Object.values(latestLeadNotes);
-    console.log(latestLeadNotes);
     createListOfMessages(latestLeadNotesArray)
 }
 
@@ -179,7 +175,6 @@ async function getDetailMessages(){
     chatTitleVoltioId.innerHTML = voltioId
     chatTitleLeadname.innerHTML = leadName
     goToLeadDetailFromMessage.setAttribute("name", voltioId);
-    console.log(goToLeadDetailFromMessage);
     let messagesDetailContainer = document.getElementById('messagesDetailContainer')
     messagesDetailContainer.innerHTML = ''
     const collectionRef = collection(db, 'listOfleadNotes');
@@ -190,7 +185,7 @@ async function getDetailMessages(){
     querySnapshot.forEach((doc) => {
     const data = doc.data();
     const registerId = doc.id
-    const { userName, customerComment, date } = data;
+    const { userName, customerComment, date, starred } = data;
 
     const chatElement = document.createElement('div');
     chatElement.classList.add('container');
@@ -224,6 +219,7 @@ async function getDetailMessages(){
         <p class="chat-date receiverDate mb-2">${formattedDate}</p>
             <label class="toggle-button-message">
             <input type="checkbox" class="toggle-input-message createTask"
+            id='${registerId}'
             data-id= '${voltioId}' 
             data-name= '${leadName}'
             data-subtitle='Task created from messages'
@@ -238,6 +234,15 @@ async function getDetailMessages(){
             <span class="star-icon">&#9734;</span>
             </label>
         `;
+        console.log(registerId);
+        let registerIdTarget = document.getElementById(registerId);
+        if (!registerIdTarget) {
+            console.log('no starred');
+        } else if(starred === 'yes'){
+            console.log('starred');
+            registerIdTarget.checked = true;
+        } 
+        
     } else {
         contentElement.classList.add('senderMessageBox', 'chat', 'col-10', 'offset-2', 'mb-2');
         contentElement.innerHTML = `
@@ -247,6 +252,7 @@ async function getDetailMessages(){
         <div class="senderDate">
             <label class="toggle-button-message">
             <input type="checkbox" class="toggle-input-message createTask"
+            id='${registerId}'
             data-id= '${voltioId}' 
             data-name= '${leadName}'
             data-subtitle='Task created from messages'
@@ -262,6 +268,14 @@ async function getDetailMessages(){
             </label>
         </div>
         `;
+        console.log(registerId);
+        let registerIdTarget = document.getElementById(registerId);
+        if (!registerIdTarget) {
+            console.log('no starred');
+        } else if(starred === 'yes'){
+            console.log('starred');
+            registerIdTarget.checked = true;
+        } 
     }
 
     colElement.appendChild(contentElement);
@@ -292,6 +306,7 @@ async function getDetailMessages(){
                     "data-createdBy": currentUserEmail,
                     "data-starred": e.target.dataset.starred,
                 }
+                updateStarredInfo(e.target.dataset.starred)
                 addProjectTask(messageData)
                 // se toman todos los dataset y se guardan en firebase, falta agregar el id de esa collection para borrar registro
                 return
@@ -303,6 +318,24 @@ async function getDetailMessages(){
         });
     });
     
+}
+
+async function updateStarredInfo(taskId){
+    const taskRef = doc(db, 'listOfleadNotes', taskId);
+    try {
+      await updateDoc(taskRef, {
+        "starred": 'yes'
+      })
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Task created!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    } catch (error) {
+      console.log(error);
+    }
 }
 
 async function deleteTaskByStarredValue(starredValue) {
@@ -319,6 +352,10 @@ async function deleteTaskByStarredValue(starredValue) {
           console.error('Error al eliminar el documento: ', error);
         });
     });
+    const taskRef = doc(db, 'listOfleadNotes', starredValue);
+    await updateDoc(taskRef, {
+        "starred": 'no'
+    })
   }
 
 

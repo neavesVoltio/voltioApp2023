@@ -1,6 +1,7 @@
 import { getFirestore, doc, getDoc, collection, getDocs, query, where, deleteDoc, orderBy, updateDoc, setDoc, addDoc, Timestamp  } from '../firebase/firebaseJs.js'
 import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
+
 const db = getFirestore(app) 
 let taskTitleInput = document.getElementById('taskTitleInput');
 let taskSubtitleInput = document.getElementById('taskSubtitleInput');
@@ -11,15 +12,21 @@ let taskDescriptionInput = document.getElementById('taskDescriptionInput');
 let taskAssignedTo = document.getElementById('taskAssignedTo');
 let taskStatus = document.getElementById('taskStatus');
 let userLogged
+let viewMessagesButton = document.getElementById('viewMessagesButton');
 
 onAuthStateChanged(auth, async(user)=>{
     if(user){
       userLogged = user.email
-      fetchAssignedTasks(userLogged)
+      
     }else{
         'no user logged'
     }
 })
+
+viewMessagesButton.addEventListener('click', function (e) {
+  fetchAssignedTasks(userLogged)
+});
+
 
 async function fetchAssignedTasks(userEmail) {
   const projectTasksRef = collection(db, "projectTasks");
@@ -29,6 +36,10 @@ async function fetchAssignedTasks(userEmail) {
     const querySnapshot = await getDocs(q);
     const assignedTasks = [];
     let toDoAdminData = document.getElementById('toDoAdminData');
+    let inProgressAdminCardData = document.getElementById('inProgressAdminCardData');
+    let doneAdminCardData = document.getElementById('doneAdminCardData');
+    doneAdminCardData.innerHTML = ''
+    inProgressAdminCardData.innerHTML = ''
     toDoAdminData.innerHTML = ''
     querySnapshot.forEach((doc) => {
       assignedTasks.push(doc.data());
@@ -75,7 +86,15 @@ function createMessageRow(data, docId) {
   
     messageRow.appendChild(col4);
     messageRow.appendChild(col8);
-    toDoAdminData.appendChild(messageRow)
+    console.log(data["data-taskStatus"]);
+    if (data["data-taskStatus"] === 'To Do') {
+      toDoAdminData.appendChild(messageRow)  
+    } else if(data["data-taskStatus"] === 'Done'){
+      doneAdminCardData.appendChild(messageRow)  
+    } else {
+      inProgressAdminCardData.appendChild(messageRow)  
+    }
+    
 
     let messageRowSet = document.querySelectorAll('.messageRow');
     messageRowSet.forEach(function(item) {
@@ -133,19 +152,15 @@ function createMessageRow(data, docId) {
         "data-duedate": new Date(realDate),
         "data-assignedTo":taskAssignedTo.value,
         "data-taskStatus":taskStatus.value
-      }).then((result) => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Task updated!',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        fetchAssignedTasks(userLogged)
-      }).catch((err) => {
-        console.log(err);
-      });
-      console.log("task edited");  
+      })
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Task updated!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      fetchAssignedTasks(userLogged)
     } catch (error) {
       console.log(error);
     }

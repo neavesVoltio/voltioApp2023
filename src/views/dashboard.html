@@ -16,6 +16,7 @@
   <!-- End fonts -->
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../styles/messages.css">
+  <link rel="stylesheet" href="../resources/sweetAlert.css">
 </head>
 <body>
 	<div class="main-wrapper bg-dark">
@@ -64,7 +65,7 @@
             <div class="card rounded bg-transparent border-info " name="hideWhenRep"  id="adminTaskCard">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                  <h6 class="card-title mb-0 text-light mb-2">Project Tasks <a class="btn btn-outlined-info text-info fst-italic text-decoration-underline" data-bs-toggle="modal" data-bs-target="#addNewTaskModal" > ..view tasks </a> </h6>
+                  <h6 class="card-title mb-0 text-light mb-2">Project Tasks <a class="btn btn-outlined-info text-info fst-italic text-decoration-underline" id="viewMessagesButton" > ..view tasks </a> </h6>
                 </div>
                 <div class="row">
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
@@ -139,7 +140,7 @@
           <!-- project task  wrapper end -->
 
           <!-- rep task  wrapper start -->
-          <div class="d-block col-lg-11 mb-5 col-md-12 col-sm-12">
+          <div class="d-none col-lg-11 mb-5 col-md-12 col-sm-12">
             <div class="card rounded bg-transparent border-info">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-2">
@@ -191,7 +192,7 @@
 
           </div>
         </div>
-        <div class="row bg-dark">
+        <div class="row bg-dark" style="display: none;">
           <div class="container">
             <div class="card bg-dark text-light">
               <div class="card-body bg-dark text-light" >
@@ -299,6 +300,7 @@
     </div>
   </div>
 </div>
+<script src="../resources/sweetAlert.js"></script>
 <script type="module" src="../js/adminAccess.js"></script>
 <script type="module" src="../js/bootstrap.js"></script>
 <script type="module" src="../js/dashboard.js"></script>
