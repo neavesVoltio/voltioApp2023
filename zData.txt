@@ -13,11 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.1.44 
+v2.1.45
 
-*/ 44. Dashboard, manejo de tareas, crear, editar, asignar a un rep
-    44.1 Drop down que cargue la lista de admins o reps
-
+*/ 45. Dos botones en dashboard para ver mis tareas y las de todos (solo lo deben ver los admin)
     
 xx. que los mensajes se vean solo por equipo 
 xx. reps nomas que vean donde son duenos de sus tratos para los mensajes
@@ -59,15 +57,17 @@ xx. en users falta un botton para activarlos o desactivarlos
 */ 28. Un boton para crear nuevo chat, 
 */ 30. fecha y hora de los mensajes
 */ 34. Que se vaya al detalle del lead al hacer click a un boton
-*/ 37. como sabes si los mensajes son de leads o projectos? Se tiene que hacer el cambio de lead a proyect, Si el Proyect type no es Lead entonces es Proyect o Canceled Proyect
-*/ 39. LA SECCION DE MENSAJES SE DEBE MOVER A SEARCH LEAD Y HACER UNA FUNCION DONDE SI EL E.TARGET SEA MENSAJES, SE MUESTRE ESA SECCION
 
-*/ 45. se toman todos los dataset y se guardan en firebase, falta agregar el id de esa coll para borrar registro
 
 */36. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
     */ 36.1 La estrella convierte en task, falta que la secc messages cargue la estrella 
        */ 36.2 Cargue el mensaje modificado desde tasks
+*/ 37. como sabes si los mensajes son de leads o projectos? Se tiene que hacer el cambio de lead a proyect, Si el Proyect type no es Lead entonces es Proyect o Canceled Proyect
+*/ 39. LA SECCION DE MENSAJES SE DEBE MOVER A SEARCH LEAD Y HACER UNA FUNCION DONDE SI EL E.TARGET SEA MENSAJES, SE MUESTRE ESA SECCION
 */ 43. y tal vez algo para poner la importancia // se agrega una estrella para marcar importancia y se crea tarea
+*/ 44. Dashboard, manejo de tareas, crear, editar, asignar a un rep
+   */ 44.1 Drop down que cargue la lista de admins o reps // export function
+*/ 45. se toman todos los dataset y se guardan en firebase, falta agregar el id de esa coll para borrar registro
 
 */ formatted date:
     const timestamp =  r[7] ;

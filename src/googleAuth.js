@@ -2,6 +2,7 @@ import { GoogleAuthProvider, signInWithPopup  } from "https://www.gstatic.com/fi
 import { auth, app } from './firebase/config.js'
 import { getFirestore, doc, setDoc, query, where, collection, getDocs, addDoc  } from './firebase/firebaseJs.js'
 import { onAuthStateChanged, updateProfile } from './firebase/firebaseAuth.js';
+
 const db = getFirestore(app) 
 
 const googleButton = document.querySelector('#my-signin2')
@@ -16,10 +17,9 @@ googleButton.addEventListener('click', async () => {
             let name = user.displayName;
             let userId = user.uid
             let email = user.email
-            
+
         } else{
             console.log('no user logged xxx');
-            document.getElementById('navbar').style.display = 'none'
             document.getElementById('navbar').style.display = 'none'
             document.getElementById('navbar-container').style.display = 'none'
             document.getElementById('sidebar').style.display = 'none'
@@ -37,4 +37,4 @@ googleButton.addEventListener('click', async () => {
     }
     
 }) 
-
+ 

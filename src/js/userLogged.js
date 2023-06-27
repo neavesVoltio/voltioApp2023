@@ -9,6 +9,7 @@ onAuthStateChanged(auth, async(user) => {
         document.getElementById('navbar').style.display = 'block'
         document.getElementById('navbar-container').style.display = 'block'
         document.getElementById('sidebar').style.display = 'block'
+        
         let userLogged = document.querySelectorAll('.userLogged')
         userLogged.forEach( btn => {
             btn.style.display = 'block'

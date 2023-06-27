@@ -12,7 +12,8 @@ let taskDescriptionInput = document.getElementById('taskDescriptionInput');
 let taskAssignedTo = document.getElementById('taskAssignedTo');
 let taskStatus = document.getElementById('taskStatus');
 let userLogged
-let viewMessagesButton = document.getElementById('viewMessagesButton');
+let viewAllTasksButton = document.getElementById('viewAllTasksButton');
+let viewMyTasksButton = document.getElementById('viewMyTasksButton');
 
 onAuthStateChanged(auth, async(user)=>{
     if(user){
@@ -23,15 +24,30 @@ onAuthStateChanged(auth, async(user)=>{
     }
 })
 
-viewMessagesButton.addEventListener('click', function (e) {
-  fetchAssignedTasks(userLogged)
+viewAllTasksButton.addEventListener('click', function (e) {
+  fetchAssignedTasks(userLogged, 'allTasks')
+});
+
+viewMyTasksButton.addEventListener('click', function (e) {
+  fetchAssignedTasks(userLogged, 'myTasks')
 });
 
 
-async function fetchAssignedTasks(userEmail) {
-  const projectTasksRef = collection(db, "projectTasks");
-  const q = query(projectTasksRef, where("data-assignedTo", "==", userEmail));
+function fetchAssignedTasks(userEmail, tasks) {
 
+  const projectTasksRef = collection(db, "projectTasks");
+  
+  if(tasks === 'myTasks'){
+    const q = query(projectTasksRef, where("data-assignedTo", "==", userEmail));
+    viewTasks(q)
+  } else {
+    const q = query(projectTasksRef);
+    viewTasks(q)
+  }
+  
+}  
+
+async function viewTasks(q) {
   try {
     const querySnapshot = await getDocs(q);
     const assignedTasks = [];
@@ -55,6 +71,8 @@ async function fetchAssignedTasks(userEmail) {
     return [];
   }
 }
+  
+
 
 // crea row de las tareas
 function createMessageRow(data, docId) {
@@ -87,7 +105,6 @@ function createMessageRow(data, docId) {
   
     messageRow.appendChild(col4);
     messageRow.appendChild(col8);
-    console.log(data["data-taskStatus"]);
     if (data["data-taskStatus"] === 'To Do') {
       toDoAdminData.appendChild(messageRow)  
     } else if(data["data-taskStatus"] === 'Done'){
@@ -110,7 +127,6 @@ function createMessageRow(data, docId) {
               const numbers = seconds.replace(/\D/g, "");
               const date = new Date(numbers * 1000);
               //const formattedDate = date.toISOString().slice(0, 10);
-              console.log(date);
               const fecha = new Date(date);
               const anio = fecha.getFullYear();
               const mes = ('0' + (fecha.getMonth() + 1)).slice(-2);
@@ -137,7 +153,6 @@ function createMessageRow(data, docId) {
 // SAVE TASKS
 
   saveTaskModal.addEventListener('click', function (e) {
-    console.log(e.target.dataset.taskid);
     let taskId = e.target.dataset.taskid
     let messageId = e.target.dataset.messageid
     editProjectTask(taskId, messageId)
@@ -148,7 +163,6 @@ function createMessageRow(data, docId) {
     let realDate = fecha.setDate(fecha.getDate() + 1);
     const taskRef = doc(db, 'projectTasks', taskId);
     const messageRef = doc(db, 'listOfleadNotes', messageId);
-    console.log(messageId);
     try {
       await updateDoc(taskRef, {
         "data-name" :taskTitleInput.value,
@@ -177,4 +191,23 @@ function createMessageRow(data, docId) {
   }
 
   // error al guardar fecha despues de editar, ya que se guarda con un valor distinto.
+  getRepDropdown()
+  async function getRepDropdown() {
+    const db = getFirestore();
   
+    // const userProfileCollection = collection(db, 'userProfile');
+  
+    // const userProfileSnapshot = await getDocs(userProfileCollection);
+    let userEmails = [];
+    const q = query(collection(db, "userProfile"), where("accessLevel", "==", "Admin"));
+    const querySnapshot = await getDocs(q);
+    userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
+            
+    userEmails.forEach(function(item) {
+        let el = document.createElement('option');
+        el.innerHTML = item
+        taskAssignedTo.appendChild(el)
+    });
+  
+    return userEmails;
+  }

@@ -65,7 +65,10 @@
             <div class="card rounded bg-transparent border-info " name="hideWhenRep"  id="adminTaskCard">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                  <h6 class="card-title mb-0 text-light mb-2">Project Tasks <a class="btn btn-outlined-info text-info fst-italic text-decoration-underline" id="viewMessagesButton" > ..view tasks </a> </h6>
+                  <h6 class="card-title mb-0 text-light mb-2">Project Tasks <p>
+                    <a class="btn btn-outlined-info text-info fst-italic text-decoration-underline" id="viewAllTasksButton" > ..view all tasks </a> 
+                    <a class="btn btn-outlined-info text-info fst-italic text-decoration-underline" id="viewMyTasksButton" > ..view my tasks </a>
+                  </p> </h6>
                 </div>
                 <div class="row">
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
@@ -245,9 +248,7 @@
 
             <label class="text-start mb-2">Assigned to:</label>
             <select class="form-select bg-dark text-light mb-2" id="taskAssignedTo">
-              <option value="option1">Option 1</option>
-              <option value="neaves@voltio.us">neaves@voltio.us</option>
-              <option value="option3">Option 3</option>
+              
             </select>
             <label class="text-start mb-2">Status:</label>
             <select class="form-select bg-dark text-light mb-3" id="taskStatus">
