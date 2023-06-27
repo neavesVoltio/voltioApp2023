@@ -70,6 +70,7 @@ function createMessageRow(data, docId) {
     messageRow.setAttribute("data-assignedto", data["data-assignedTo"]);
     messageRow.setAttribute("data-creationDate", data["data-creationDate"]);
     messageRow.setAttribute("data-taskstatus", data["data-taskStatus"]);
+    messageRow.setAttribute("data-messageid", data["data-starred"]);
     messageRow.setAttribute("data-taskid", docId);
   
     const col4 = document.createElement("div");
@@ -125,6 +126,8 @@ function createMessageRow(data, docId) {
                 taskAssignedTo.value = item.dataset.assignedto
                 taskStatus.value = item.dataset.taskstatus
                 saveTaskModal.dataset.taskid = item.dataset.taskid
+                saveTaskModal.dataset.messageid = item.dataset.messageid
+                
               }
         });
     });
@@ -136,13 +139,16 @@ function createMessageRow(data, docId) {
   saveTaskModal.addEventListener('click', function (e) {
     console.log(e.target.dataset.taskid);
     let taskId = e.target.dataset.taskid
-    editProjectTask(taskId)
+    let messageId = e.target.dataset.messageid
+    editProjectTask(taskId, messageId)
   });
 
-  async function editProjectTask(taskId){
+  async function editProjectTask(taskId, messageId){
     const fecha = new Date(taskDueDateInput.value);
     let realDate = fecha.setDate(fecha.getDate() + 1);
     const taskRef = doc(db, 'projectTasks', taskId);
+    const messageRef = doc(db, 'listOfleadNotes', messageId);
+    console.log(messageId);
     try {
       await updateDoc(taskRef, {
         "data-name" :taskTitleInput.value,
@@ -152,6 +158,9 @@ function createMessageRow(data, docId) {
         "data-duedate": new Date(realDate),
         "data-assignedTo":taskAssignedTo.value,
         "data-taskStatus":taskStatus.value
+      })
+      await updateDoc(messageRef, {
+        "customerComment": taskDescriptionInput.value,
       })
       Swal.fire({
         position: 'top-end',

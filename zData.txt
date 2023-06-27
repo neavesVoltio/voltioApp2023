@@ -13,22 +13,18 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.1.39 fixDates
-
-36. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
-    36.1 La estrella convierte en task, falta que la secc messages cargue la estrella y cargue el mensaje modificado desde tasks
-    
-38. que los mensajes se vean solo por equipo 
-40. reps nomas que vean donde son duenos de sus tratos para los mensajes
-41. mostrar el nombre y el mail de todos los reps/users que se han registrado en el app y que tengan el estatus de active
-42. mostrar imagenes en el chat 
-*/ 43. y tal vez algo para poner la importancia // se agrega una estrella para marcar importancia y se crea tarea
-
+v2.1.44 
 
 */ 44. Dashboard, manejo de tareas, crear, editar, asignar a un rep
+    44.1 Drop down que cargue la lista de admins o reps
 
-35. Y para el chat de leads, voy a agregar un pequeño boton para que le den click a resuelto o leído
-37. en users falta un botton para activarlos o desactivarlos
+    
+xx. que los mensajes se vean solo por equipo 
+xx. reps nomas que vean donde son duenos de sus tratos para los mensajes
+xx. mostrar el nombre y el mail de todos los reps/users que se han registrado en el app y que tengan el estatus de active
+xx. mostrar imagenes en el chat 
+xx. Y para el chat de leads, voy a agregar un pequeño boton para que le den click a resuelto o leído
+xx. en users falta un botton para activarlos o desactivarlos
 
 
 
@@ -67,6 +63,11 @@ v2.1.39 fixDates
 */ 39. LA SECCION DE MENSAJES SE DEBE MOVER A SEARCH LEAD Y HACER UNA FUNCION DONDE SI EL E.TARGET SEA MENSAJES, SE MUESTRE ESA SECCION
 
 */ 45. se toman todos los dataset y se guardan en firebase, falta agregar el id de esa coll para borrar registro
+
+*/36. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
+    */ 36.1 La estrella convierte en task, falta que la secc messages cargue la estrella 
+       */ 36.2 Cargue el mensaje modificado desde tasks
+*/ 43. y tal vez algo para poner la importancia // se agrega una estrella para marcar importancia y se crea tarea
 
 */ formatted date:
     const timestamp =  r[7] ;

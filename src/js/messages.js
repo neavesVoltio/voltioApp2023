@@ -234,14 +234,6 @@ async function getDetailMessages(){
             <span class="star-icon">&#9734;</span>
             </label>
         `;
-        console.log(registerId);
-        let registerIdTarget = document.getElementById(registerId);
-        if (!registerIdTarget) {
-            console.log('no starred');
-        } else if(starred === 'yes'){
-            console.log('starred');
-            registerIdTarget.checked = true;
-        } 
         
     } else {
         contentElement.classList.add('senderMessageBox', 'chat', 'col-10', 'offset-2', 'mb-2');
@@ -268,14 +260,7 @@ async function getDetailMessages(){
             </label>
         </div>
         `;
-        console.log(registerId);
-        let registerIdTarget = document.getElementById(registerId);
-        if (!registerIdTarget) {
-            console.log('no starred');
-        } else if(starred === 'yes'){
-            console.log('starred');
-            registerIdTarget.checked = true;
-        } 
+         
     }
 
     colElement.appendChild(contentElement);
@@ -284,8 +269,15 @@ async function getDetailMessages(){
 
     // Agregar el elemento creado al documento o contenedor deseado
     messagesDetailContainer.appendChild(chatElement);
-
-
+    console.log(registerId);
+    let registerIdTarget = document.getElementById(registerId);
+    console.log(registerIdTarget);
+    if (!registerId) {
+        console.log('no starred');
+    } else if(starred === 'yes'){
+        console.log('starred');
+        registerIdTarget.checked = true;
+    }
     });
     
     let createTask = document.querySelectorAll('.createTask');
@@ -312,7 +304,23 @@ async function getDetailMessages(){
                 return
             } else {
                 console.log('no checked');
-                deleteTaskByStarredValue(e.target.dataset.starred)
+                Swal.fire({
+                    title: 'Do you want to delete this task?',
+                    showDenyButton: true,
+                    denyButtonText: 'Delete',
+                    confirmButtonText: `Back`,
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                        e.target.checked = true;  
+                    } else if (result.isDenied) {
+                        deleteTaskByStarredValue(e.target.dataset.starred)
+                        Swal.fire('Deleted!', '', 'success')
+                    }
+                  })
+                
+                
             }
             
         });
