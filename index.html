@@ -18,7 +18,7 @@
       <div class="sidebar-header bg-transparent shadow-lg">
         <a href="#" class="noble-ui-logo logo-light d-block mb-2">Voltio<span>Dashboard</span></a>
       </div>
-      <div class="sidebar-body bg-transparent" >
+      <div class="sidebar-body bg-transparent" >  
         <ul class="navbar-nav me-auto my-3 navbar-nav-scroll"  style="--bs-scroll-height: 700px; --bs-scroll-background: black;" id="sideBarMenu">
           <div class="container" id="dashboardMenuSection">
             <li class="nav-item nav-category  text-white p-2">Main</li>
@@ -67,7 +67,7 @@
           </div>
           <div class="container" id="userMenuSection">
             <li class="nav-item nav-category text-white p-2">Users</li>
-            <li class="nav-item p-2">
+            <li class="nav-item p-2 rolAdmin" style="display: none;">
               <a class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="users" onclick="load_view('memberProfile')">
                 <span class="material-symbols-outlined text-white p-2">person</span>
                 <span class="link-title text-white" id="addUserView">Team</span>
@@ -82,7 +82,7 @@
               </a>
             </li>
           </div>
-          <div class="container" id="suppliersMenuSection">
+          <div class="container rolAdmin" id="suppliersMenuSection" style="display: none;">
             <li class="nav-item nav-category text-white p-2">EPC</li>
             <li class="nav-item p-2">
               <a class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="suppliers" onclick="load_view('epc')">
@@ -183,7 +183,7 @@
             </li>
           </div>
           <div class="container" id="menuUsers">
-            <li class="nav-item mt-2 bg-dark">
+            <li class="nav-item mt-2 bg-dark rolAdmin" style="display: none;">
               <a class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="users" onclick="load_view('memberProfile')">
                 <span class="material-symbols-outlined text-white p-2">person</span>
                 <span class="link-title text-white" id="addUserView">Team</span>
@@ -196,7 +196,7 @@
               </a>
             </li>
           </div>
-          <div class="container rolRep" id="menuSuppliers">
+          <div class="container rolRep rolAdmin" id="menuSuppliers" style="display: none;">
             <li class="nav-item mt-2 bg-dark">
               <a class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="leads" onclick="load_view('epc')">
                 <span class="material-symbols-outlined text-white p-2">engineering</span>
@@ -218,7 +218,7 @@
               </a>
             </li>
           </div>
-          <div class="container" id="menuCalculator">
+          <div class="container rolAdmin" id="menuCalculator" style="display: none;">
             <li class="nav-item bg-dark">
               <a class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="customers">
                 <span class="material-symbols-outlined text-white p-2">calculate</span>
@@ -226,7 +226,7 @@
               </a>
             </li>
           </div>
-          <div class="container" id="menuCommissions">
+          <div class="container rolAdmin" id="menuCommissions" style="display: none;">
             <li class="nav-item bg-dark">
               <a class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="customers">
                 <span class="material-symbols-outlined text-white">request_quote</span>

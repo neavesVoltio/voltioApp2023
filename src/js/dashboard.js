@@ -14,11 +14,25 @@ let taskStatus = document.getElementById('taskStatus');
 let userLogged
 let viewAllTasksButton = document.getElementById('viewAllTasksButton');
 let viewMyTasksButton = document.getElementById('viewMyTasksButton');
-
+let userManager
+let userRol
+let managerUsers = []
 onAuthStateChanged(auth, async(user)=>{
     if(user){
       userLogged = user.email
-      
+      const docRef = doc(db, "userProfile", user.email);
+      const docSnap = await getDoc(docRef);
+      userRol = docSnap.data().accessLevel      
+      userManager = docSnap.data().manager
+      console.log(userRol, userManager);      
+      // seccion para obtener el listado de usaurios depende del manager
+      const managerListOfUsers = collection(db, "userProfile");
+      userManager = 'neaves@voltio.us'
+      const qManager = query(managerListOfUsers, where("manager", "==", userManager));
+      const querySnapshot = await getDocs(qManager);
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id);
+      });
     }else{
         'no user logged'
     }
@@ -41,8 +55,13 @@ function fetchAssignedTasks(userEmail, tasks) {
     const q = query(projectTasksRef, where("data-assignedTo", "==", userEmail));
     viewTasks(q)
   } else {
-    const q = query(projectTasksRef);
-    viewTasks(q)
+    if(userRol === 'Rep'){
+      return
+    } else {
+      const q = query(projectTasksRef);
+      viewTasks(q)
+    }
+    
   }
   
 }  
@@ -199,7 +218,7 @@ function createMessageRow(data, docId) {
   
     // const userProfileSnapshot = await getDocs(userProfileCollection);
     let userEmails = [];
-    const q = query(collection(db, "userProfile"), where("accessLevel", "==", "Admin"));
+    const q = query(collection(db, "userProfile")); // , where("accessLevel", "==", "Admin")
     const querySnapshot = await getDocs(q);
     userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
             
