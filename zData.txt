@@ -15,6 +15,22 @@ projectElectricPanelBrand
 Sig pasos:
 v2.1.49
 
+Dashboard: Overview of deals, news, leaderboard, new stuff.
+Members: Basic info, payrate
+Leads (Solar/Roof): Customer information, Picture upload, Ubill upload, Rep notes. (Chat within the lead with reps?) Credit info.
+Projects: (Solar/Roof): Basic Customer info, Project info, financing information, picture Upload (Calcs, design, contracts, ETC)
+Commission Tab: Deals with CMS to be paid out, inventory debt, invoice creation.
+Calculators:
+    
+Roofing Calculator
+Solar Calculator
+Commission Calculators
+EPC Tab: Basic installer information, redline, adders (Prices), financing options, contact information.
+Resources tab: anything that helps with processes.
+Portals/Accounts tab: all accounts used for operations (Password Protected)
+Inventory: Items, cost, input/output, balances for reps
+
+There needs to be a way of linking certain tabs and certain information.
     
 xx. que los mensajes se vean solo por equipo 
 xx. reps nomas que vean donde son duenos de sus tratos para los mensajes
