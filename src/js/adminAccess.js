@@ -12,29 +12,42 @@ let rolRep = document.querySelectorAll('.rolRep')
 let rolManager = document.querySelectorAll('.rolManager')
 let rolRegManager = document.querySelectorAll('.rolRegManager')
 let noRol = document.querySelectorAll('.norol')
-
+let accessLevel
 
 onAuthStateChanged(auth, async(user) => {
     if(user){
         const docRef = doc(db, "userProfile", user.email);
         const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
         
-        if(docSnap.data().accessLevel === 'superadmin'){
+        accessLevel = docSnap.data().accessLevel
+        if (docSnap.exists()) {
+            
+        if(accessLevel === 'superadmin'){
             console.log("Document data super admin:", docSnap.data());
+            rolAdmin.forEach((e)=>{
+                e.style.display = 'block'
+            })
+
+        }else if(accessLevel === 'admin'){
+            console.log('admin');
+            rolAdmin.forEach((e)=>{
+                e.style.display = 'block'
+            })
+        }else if(accessLevel === 'regionalmanager'){
+            console.log('Regional manager');
             rolAdmin.forEach((e)=>{
                 e.style.display = 'none'
             })
-
-        }else if(docSnap.data().accessLevel === 'admin'){
-            console.log('admin');
-        }else if(docSnap.data().accessLevel === 'regionalmanager'){
-            console.log('Regional manager');
-        }else if(docSnap.data().accessLevel === 'manager'){
+        }else if(accessLevel === 'manager'){
             console.log('manager');
-        }else if(docSnap.data().accessLevel === 'rep'){
-            console.log('rep');
+            rolAdmin.forEach((e)=>{
+                e.style.display = 'none'
+            })
+        }else if(accessLevel === 'Rep' || !docSnap.data().accessLevel){
+            console.log('Rep');
+            rolAdmin.forEach((e)=>{
+                e.style.display = 'none'
+            })
         }
 
         } else {
