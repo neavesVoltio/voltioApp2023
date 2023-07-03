@@ -13,9 +13,8 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.1.45
+v2.1.49
 
-*/ 45. Dos botones en dashboard para ver mis tareas y las de todos (solo lo deben ver los admin)
     
 xx. que los mensajes se vean solo por equipo 
 xx. reps nomas que vean donde son duenos de sus tratos para los mensajes
@@ -23,8 +22,6 @@ xx. mostrar el nombre y el mail de todos los reps/users que se han registrado en
 xx. mostrar imagenes en el chat 
 xx. Y para el chat de leads, voy a agregar un pequeño boton para que le den click a resuelto o leído
 xx. en users falta un botton para activarlos o desactivarlos
-
-
 
 */    revisar por que no se han agregado los adders al lead
 */ 1. Habilitar el boton para que guarde la calculadora y que se pueda elegir la principal y las secundarias.
@@ -57,8 +54,6 @@ xx. en users falta un botton para activarlos o desactivarlos
 */ 28. Un boton para crear nuevo chat, 
 */ 30. fecha y hora de los mensajes
 */ 34. Que se vaya al detalle del lead al hacer click a un boton
-
-
 */36. Más bien un botón que convierta cualquier mensaje en task, Y tal vez que diga task complete, o not complete, O pending
     */ 36.1 La estrella convierte en task, falta que la secc messages cargue la estrella 
        */ 36.2 Cargue el mensaje modificado desde tasks
@@ -68,6 +63,10 @@ xx. en users falta un botton para activarlos o desactivarlos
 */ 44. Dashboard, manejo de tareas, crear, editar, asignar a un rep
    */ 44.1 Drop down que cargue la lista de admins o reps // export function
 */ 45. se toman todos los dataset y se guardan en firebase, falta agregar el id de esa coll para borrar registro
+*/ 46. Dos botones en dashboard para ver mis tareas y las de todos (solo lo deben ver los admin)
+*/ 47. Se actualiza el statusSection para que al guardar el proposal status al 'Sold' se haga project, al hacer esto se muestra en la tabla tambien
+*/ 48. Al cambiar el status a sold se debe agregar el contract date, en caso de cambiarlo a otro estatus se debe borrar la contract date
+*/ 49. Al dar click a view project se debe mostrar el Contract Date en lugar del Creation Date 
 
 */ formatted date:
     const timestamp =  r[7] ;

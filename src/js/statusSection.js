@@ -12,29 +12,35 @@ onAuthStateChanged(auth, async(user) => {
         let statusSection = document.getElementById('statusSection')
         statusSection.addEventListener('change', (e) => {
             if(e.target.matches('#proposalStatus')){
-                saveStatusToServer()
+                let proposalStatus = e.target.value
+                let contractDate = new Date()
+                if (proposalStatus === 'Sold') {
+                    saveStatusToServer('Project', contractDate)
+                } else {
+                    let contractDate = ''
+                    saveStatusToServer('lead', contractDate)   
+                }
             }
             if(e.target.matches('#projectType')){
-                saveStatusToServer()
+                saveStatusToServer('lead', contractDate) 
             }
             if(e.target.matches('#status')){
-                saveStatusToServer()
+                saveStatusToServer('lead', contractDate) 
             }
             if(e.target.matches('#progress')){
-                saveStatusToServer()
+                saveStatusToServer('lead', contractDate) 
             }
             if(e.target.matches('#creditStatus')){
-                saveStatusToServer()
+                saveStatusToServer('lead', contractDate) 
             }
             if(e.target.matches('#apptDate')){
-                saveStatusToServer()
+                saveStatusToServer('lead', contractDate) 
             }
             if(e.target.matches('#ss')){
-
-                saveStatusToServer()
+                saveStatusToServer('lead', contractDate) 
             }
             if(e.target.matches('#docs')){
-                saveStatusToServer()
+                saveStatusToServer('lead', contractDate) 
             }
         })
         
@@ -43,26 +49,26 @@ onAuthStateChanged(auth, async(user) => {
     }
 })
 
-async function saveStatusToServer(){
+async function saveStatusToServer(leadStatus, contractDate){
     let voltioId = document.getElementById('leadVoltioId').value
-        let proposalStatus = document.getElementById('proposalStatus').value
-        let projectType = document.getElementById('projectType').value
-        let status = document.getElementById('status').value
-        let progress = document.getElementById('progress').value
-        let apptDate = document.getElementById('apptDate').value
-        let creditStatus = document.getElementById('creditStatus').value
-        let ss = document.getElementById('ss').check
-        let docs = document.getElementById('docs').check
-        console.log(docs);
+    let proposalStatus = document.getElementById('proposalStatus').value
+    let projectType = document.getElementById('projectType').value
+    let status = document.getElementById('status').value
+    let progress = document.getElementById('progress').value
+    let apptDate = document.getElementById('apptDate').value
+    let creditStatus = document.getElementById('creditStatus').value
+    let ss = document.getElementById('ss').check
+    let docs = document.getElementById('docs').check
       
     // se debe agregar el status a la bd leadData
       const projectInfoData = query(collection(db, 'leadData'), where('voltioIdKey', '==', voltioId));
       const querySnapshootData = await getDocs(projectInfoData)
       const docIdData = querySnapshootData.forEach( async(docs) => {
-        console.log(docs.id);
          await updateDoc(doc(db, "leadData", docs.id), {
              projectStatus: status,
-             progress: progress
+             progress: progress,
+             status: leadStatus,
+             contractDate: contractDate
            })
       })
 
@@ -125,11 +131,8 @@ async function saveStatusToServer(){
       ['Final Documents', '95%'],
       ['Job completed', '100%']]
       let cons = progressValues.map( r => r[0])
-      console.log(cons);
       const posIndex = cons.indexOf(progress)
-      console.log(posIndex);
       const value = progressValues[posIndex][1]
-      console.log(value);
       progressBar.style.width = value
       
     }).catch((error) => {

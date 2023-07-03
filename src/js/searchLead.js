@@ -45,6 +45,7 @@ let saveCurrentProjectButton =document.getElementById('saveCurrentProjectButton'
 let targetCommission = document.getElementById('targetCommission');
 let projectCost = document.getElementById('projectCost');
 let viewProjectsButton = document.getElementById('viewProjectsButton');
+viewProjectsButton.dataset.status = 'Project'
 let navTabUtility = document.getElementById('navTabUtility');
 let navTabDesign = document.getElementById('navTabDesign');
 let navTabPricing = document.getElementById('navTabPricing');
@@ -54,7 +55,6 @@ let navTabUtilityContainer = document.getElementById('navTabUtilityContainer');
 let navTabDesignContainer = document.getElementById('navTabDesignContainer');
 let navTabPricingContainer = document.getElementById('navTabPricingContainer');
 let navTabDetailsContainer = document.getElementById('navTabDetailsContainer');
-viewProjectsButton.dataset.status = 'Project'
 let navProposalsMenu = document.getElementById('navProposalsMenu');
 let proposalViewsAccordionItem = document.getElementById('proposalViewsAccordionItem');
 let status = 'lead'
@@ -136,7 +136,7 @@ onAuthStateChanged(auth, async(user) => {
           inputBox.value = ''
           viewProjectsButton.value = ''
           statusFilter.value = ''
-          
+          document.getElementById('creationDate').innerHTML = 'CONTRACT DATE';
         } else {
           viewProjectsButton.dataset.status = 'Project'
           status = 'lead'
@@ -145,6 +145,7 @@ onAuthStateChanged(auth, async(user) => {
           inputBox.value = ''
           viewProjectsButton.value = ''
           statusFilter.value = ''
+          document.getElementById('creationDate').innerHTML = 'CREATED DATE';
         }
         
       })
@@ -169,6 +170,7 @@ onAuthStateChanged(auth, async(user) => {
             let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
             let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
             let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+            let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
                 data.push([
                   doc.data().voltioIdKey,
                   doc.data().customerName,
@@ -177,8 +179,7 @@ onAuthStateChanged(auth, async(user) => {
                   profileCloser,
                   profileSetter,
                   systemSize,
-                  doc.data().creationDate,
-  
+                  chartDate,
                 ])
           })
         
@@ -366,6 +367,7 @@ async function setDataToProfileView(voltioId){
             document.getElementById('leadBirth').value = doc.data().profileBirth
             docId = doc.id
         })
+
     // WE USE LEAD STATUS TO SET DATA ON STATUS VIEW SECTION
     const docRef = doc(db, "leadStatus", voltioId);
     const docSnap = await getDoc(docRef);
