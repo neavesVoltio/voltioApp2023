@@ -59,7 +59,54 @@
 
         <div class="row profile-body bg-dark">
           <div class="col">
-
+          <div class="d-block col-lg-11 mb-5 col-md-12 col-sm-12" >
+            <div class="card rounded bg-transparent border-info ">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <h6 class="card-title mb-0 text-light mb-2">Dashboard</h6>
+                </div>
+                <div class="row">
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
+                    <div class="card rounded bg-transparent border-info mb-5">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                          <h6 class="card-title mb-0 text-light mb-2">Monthly sales</h6>
+                        </div>
+                        <div class="row">
+                          <div id="monthlyChartSection">
+                          </div>
+                        </div>
+                      </div>
+                    </div> <!-- To Do card end -->
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
+                    <div class="card rounded bg-transparent border-info mb-5">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                          <h6 class="card-title mb-0 text-light mb-2">Team sales</h6>
+                        </div>
+                        <div class="row">
+                            <div id="teamSalesChartSection"></div>
+                        </div>
+                      </div>
+                    </div> <!-- In Progress card end -->
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12">
+                    <div class="card rounded bg-transparent border-info">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                          <h6 class="card-title mb-0 text-light mb-2">Leader Board</h6>
+                        </div>
+                        <div class="row">
+                            <div id="leaderBoardChartSection"></div>
+                        </div>
+                      </div>
+                    </div> <!-- Completed card end -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- project task  wrapper start -->
           <div class="d-block col-lg-11 mb-5 col-md-12 col-sm-12" >
             <div class="card rounded bg-transparent border-info " name="hideWhenRep"  id="adminTaskCard">
@@ -305,5 +352,7 @@
 <script type="module" src="../js/adminAccess.js"></script>
 <script type="module" src="../js/bootstrap.js"></script>
 <script type="module" src="../js/dashboard.js"></script>
+<script type="module" src="../components/chart.js"></script>
+<script type="module" src="../js/dashboardChart.js"></script>
 </body>
 </html>

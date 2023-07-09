@@ -13,7 +13,8 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.1.49
+v2.1.50
+51. charts for leaderboard, se pueden agregar 3 columnas, preguntar cuales necesitan.
 
 Dashboard: Overview of deals, news, leaderboard, new stuff.
 Members: Basic info, payrate
@@ -83,6 +84,7 @@ xx. en users falta un botton para activarlos o desactivarlos
 */ 47. Se actualiza el statusSection para que al guardar el proposal status al 'Sold' se haga project, al hacer esto se muestra en la tabla tambien
 */ 48. Al cambiar el status a sold se debe agregar el contract date, en caso de cambiarlo a otro estatus se debe borrar la contract date
 */ 49. Al dar click a view project se debe mostrar el Contract Date en lugar del Creation Date 
+*/ 50. Se inclye el HTML del login en el div app para que cargue siempre, se incluye el codigo para el chartjs y agrego las columnas del dashboard para las graficas
 
 */ formatted date:
     const timestamp =  r[7] ;
