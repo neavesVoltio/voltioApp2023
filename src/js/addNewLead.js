@@ -73,16 +73,28 @@ saveLeadButton.addEventListener('click', (e) =>{
     } else {
         onAuthStateChanged(auth, async(user) => {
             if(user){
-                let rep = user.uid
-                let voltioId = []         
-                const voltioIds = query(collection(db, 'voltioId'))
-                const voltioIdsSnapshot = await getDocs(voltioIds)
-                voltioIdsSnapshot.forEach((e) => {
-                    voltioId.push(e.data().voltioId)
-                })
-                
-                let newVoltioId = Math.max(...voltioId) + 1
-                console.log(newVoltioId);
+                let rep = user.email
+                let voltioId = [] 
+                // function to get current voltio Id an add new one before save new lead on database        
+                const voltioIdDocRef = doc(db, "voltioId", "RfNLJdEPxgQ6WTUb2asd");
+                let newVoltioId
+                try {
+                    const voltioIdDocSnapshot = await getDoc(voltioIdDocRef);
+
+                    if (voltioIdDocSnapshot.exists()) {
+                    const currentVoltioId = voltioIdDocSnapshot.data().voltioId;
+
+                    newVoltioId = currentVoltioId + 1;
+
+                    await updateDoc(voltioIdDocRef, { voltioId: newVoltioId });
+
+                    } else {
+                    console.log("Document does not exist!");
+                    }
+                } catch (error) {
+                    console.error("Error updating VoltioId: ", error);
+                    throw error;
+                }
                 
                 await addDoc(collection(db, 'leadData'), {
                     customerLanguage: customerLanguage.toUpperCase() ,
@@ -103,13 +115,11 @@ saveLeadButton.addEventListener('click', (e) =>{
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Congrats, lead has been saved',
+                        title: 'Congrats, new lead has been created',
                         showConfirmButton: false,
                         timer: 1500
                       })
-                      await addDoc(collection(db, 'voltioId'), {
-                        voltioId: newVoltioId,
-                      })
+                      
                       // las siguientes 3 lineas se usan para crear un nuevo proyecto en blanco, esto para que se le puedan agregar datos en el futuro
                       const collectionRef = collection(db, 'projectDetails');
                       const documentRef = doc(collectionRef, 'V-'+newVoltioId);
@@ -147,6 +157,7 @@ async function setDataToProfileView(voltioId){
     document.getElementById('titleOfEditLeadView').innerHTML = 'Lead'
     document.getElementById('searchProjectSection').style.display = 'none'
     document.getElementById('profileViewSection').style.display = 'block'
+    console.log(voltioId);
     const projectInfo = query(collection(db, 'leadData'), where('voltioIdKey', '==', voltioId));
         const querySnapshoot = await getDocs(projectInfo)
         const allData = querySnapshoot.forEach( async(doc) => {
