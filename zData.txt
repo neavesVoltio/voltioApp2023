@@ -13,9 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.1.51
-53. 
-52. charts for leaderboard, se pueden agregar 3 columnas, preguntar cuales necesitan.
+v2.1.52
+52. Se actualiza la grafica para obtener los resultados mensuales desde firestore
+XX. charts for leaderboard, se pueden agregar 3 columnas, preguntar cuales necesitan.
 
 Dashboard: Overview of deals, news, leaderboard, new stuff.
 Members: Basic info, payrate
