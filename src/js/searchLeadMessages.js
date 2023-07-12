@@ -171,7 +171,7 @@ onAuthStateChanged(auth, async(user) => {
         data = []
         if(!filter){
           let querySnapshoot
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'));
           querySnapshoot = await getDocs(projectInfo)
 
           const allData = querySnapshoot.forEach( async(doc) => {
@@ -195,10 +195,10 @@ onAuthStateChanged(auth, async(user) => {
         } else {
           let querySnapshoot
           if(statusFilterData === ''){
-            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status));
+            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'));
             querySnapshoot = await getDocs(projectInfo)
           } else if(!progressFilter){
-            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('projectStatus', '==', statusFilterData));
+            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('projectStatus', '==', statusFilterData), where('project', '==', 'solar'));
             querySnapshoot = await getDocs(projectInfo)
           }  
 
@@ -236,7 +236,7 @@ onAuthStateChanged(auth, async(user) => {
           viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           //document.getElementById('imageCustomerGallery').innerHTML = ''
           document.getElementById('customerFilesUpload').value = ''
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'));
           const querySnapshoot = await getDocs(projectInfo)
           const allData = querySnapshoot.forEach( async(doc) => {
             let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
@@ -1607,7 +1607,10 @@ async function getRepDropdown() {
   const q = query(collection(db, "userProfile"), where("accessLevel", "!=", "Admin"));
   const querySnapshot = await getDocs(q);
   userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
-          
+  leadCloser.innerHTML = ' '
+  leadCloser.appendChild(document.createElement('option'))
+  leadSetter.innerHTML = ' '
+  leadSetter.appendChild(document.createElement('option'))             
   userEmails.forEach(function(item) {
       let el = document.createElement('option');
       el.innerHTML = item

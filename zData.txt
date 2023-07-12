@@ -13,8 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.1.52
-52. Se actualiza la grafica para obtener los resultados mensuales desde firestore
+v2.1.53
+53. Se crea el menu de Roofing y se implementa las secciones para gregar nuevo lead de roofingMaterial
+xx. Se actualiza la grafica para obtener los resultados mensuales desde firestore / falta ordenar por mes
 XX. charts for leaderboard, se pueden agregar 3 columnas, preguntar cuales necesitan.
 
 Dashboard: Overview of deals, news, leaderboard, new stuff.
@@ -110,10 +111,3 @@ let messageRow = document.querySelectorAll('.messageRow');
         });
     });
 
-data-id="V-11"
-data-name="JAVIER NEAVES"
-data-subtitle="Pending taks"
-data-description="This is a pending task description"
-data-duedate="06/07/2023"
-data-assignedTo="neaves@voltio.us"
-data-creationDate="06/07/2023"

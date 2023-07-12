@@ -18,7 +18,6 @@
   <!-- End fonts -->
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../resources/sweetAlert.css">
-  <link rel="stylesheet" href="../styles/messages.css">
 </head>
 <body class="bg-dark bg-gradient">
 	<div class="main-wrapper bg-dark bg-gradient" >
@@ -30,171 +29,173 @@
     <!-- tabs end -->
     <!-- sections -->
       <section id="addNewLeadSection" style="display: none;">
-      <div class="page-content bg-transparent bg-gradient">
-        <!-- profile -->
-        <div class="row" id="profile">
-          <div class="col-12 grid-margin">
-            <div class="card rounded bg-dark border-info">
-              <div class="d-flex justify-content-between p-4 rounded-bottom shadow">
-                    <button class="btn btn-outline-info h4 p-4 searchLeadViewSection">SEARCH LEADS</button>
+          <div class="page-content bg-transparent ">
+            <!-- profile -->
+            <div class="row" id="profile">
+              <div class="col-12 grid-margin">
+                <h2 class="mb-2">Roofing</h2>
+                <div class="card rounded bg-dark border-info">
+                  <div class="d-flex justify-content-between p-4 rounded-bottom shadow">
+                        <button class="btn btn-outline-info h4 p-4 searchLeadViewSection">SEARCH LEADS</button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <!-- profile -->
-        <div class="row profile-body">
-        <!-- middle wrapper start -->
-        <div class="col-md-12 col-xl-12 middle-wrapper bg-transparent">
-          <!-- add new lead -->
-          <div class="row">
-            <div class="col-md-12 grid-margin">
-              <div class="card rounded bg-dark border-info">
-                <div class="card-header bg-transparent shadow">
-                  <H5>Add customer info..</H5>
-                </div>
-                <div class="card-body bg-dark">
-                  <form class="row g-3">
-                        
-                    <div class="col-12">
-                      <label for="customerName" class="form-label">Name</label>
-                      <input type="text" class="form-control border-info required" id="customerName" >
+            <!-- profile -->
+            <div class="row profile-body">
+            <!-- middle wrapper start -->
+            <div class="col-md-12 col-xl-12 middle-wrapper bg-transparent">
+              <!-- add new lead -->
+              <div class="row">
+                <div class="col-md-12 grid-margin">
+                  <div class="card rounded bg-dark border-info">
+                    <div class="card-header bg-transparent shadow">
+                      <H5>Add customer info..</H5>
                     </div>
-                    <div class="col-md-6">
-                        <label for="customerLanguage" class="form-label">Language</label>
-                        <select class="form-select bg-dark border-info" id="customerLanguage">
-                          <option value="Spanish">Spanish</option>
-                          <option value="English">English</option>
+                    <div class="card-body bg-dark">
+                      <form class="row g-3">
+                            
+                        <div class="col-12">
+                          <label for="customerName" class="form-label">Name</label>
+                          <input type="text" class="form-control border-info required" id="customerName" >
+                        </div>
+                        <div class="col-md-6">
+                            <label for="customerLanguage" class="form-label">Language</label>
+                            <select class="form-select bg-dark border-info" id="customerLanguage">
+                              <option value="Spanish">Spanish</option>
+                              <option value="English">English</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="customerPhoneNumber" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control border-info" id="customerPhoneNumber">
+                        </div>
+                        <div class="col-12">
+                          <label for="customerAddress" class="form-label">Address</label>
+                          <input type="text" class="form-control required border-info" id="customerAddress" placeholder="1234 Main st" >
+                        </div>
+                        <div class="col-md-6">
+                          <label for="inputCity" class="form-label">City</label>
+                          <input type="text" class="form-control required border-info" id="inputCity" >
+                        </div>
+                        <div class="col-md-4">
+                          <label for="inputState" class="form-label">State</label>
+                          <select id="inputState" class="form-select required bg-dark border-info" >
+                            <option selected value="">Choose...</option>
+                            <option>AA</option>
+                            <option>AE</option>
+                            <option>AK</option>
+                            <option>AL</option>
+                            <option>AP</option>
+                            <option>AR</option>
+                            <option>AS</option>
+                            <option>AZ</option>
+                            <option>CA</option>
+                            <option>CO</option>
+                            <option>CT</option>
+                            <option>DC</option>
+                            <option>DE</option>
+                            <option>FL</option>
+                            <option>FM</option>
+                            <option>GA</option>
+                            <option>GU</option>
+                            <option>HI</option>
+                            <option>IA</option>
+                            <option>ID</option>
+                            <option>IL</option>
+                            <option>IN</option>
+                            <option>KS</option>
+                            <option>KY</option>
+                            <option>LA</option>
+                            <option>MA</option>
+                            <option>MD</option>
+                            <option>ME</option>
+                            <option>MH</option>
+                            <option>MI</option>
+                            <option>MN</option>
+                            <option>MO</option>
+                            <option>MP</option>
+                            <option>MS</option>
+                            <option>MT</option>
+                            <option>NC</option>
+                            <option>ND</option>
+                            <option>NE</option>
+                            <option>NH</option>
+                            <option>NJ</option>
+                            <option>NM</option>
+                            <option>NV</option>
+                            <option>NY</option>
+                            <option>OH</option>
+                            <option>OK</option>
+                            <option>OR</option>
+                            <option>PA</option>
+                            <option>PR</option>
+                            <option>PW</option>
+                            <option>RI</option>
+                            <option>SC</option>
+                            <option>SD</option>
+                            <option>TN</option>
+                            <option>TX</option>
+                            <option>UT</option>
+                            <option>VA</option>
+                            <option>VI</option>
+                            <option>VT</option>
+                            <option>WA</option>
+                            <option>WI</option>
+                            <option>WV</option>
+                            <option>WY</option>
+                          </select>
+                        </div>
+                        <div class="col-md-2">
+                          <label for="inputZip" class="form-label">Zip</label>
+                          <input type="text" class="form-control required border-info" id="inputZip" >
+                        </div>
+                        <div class="col-md-6" style="display: none;">
+                            <label for="profileBirth" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control border-info" id="profileBirth">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="profileCloser" class="form-label">Closer</label>
+                          <select class="form-select bg-dark border-info" id="profileCloser">
+                            <option></option>
+                          </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="profileSetter" class="form-label">Setter</label>
+                        <select class="form-select bg-dark border-info" id="profileSetter">
+                          <option></option>
                         </select>
+                      </div>
+                      </form>
                     </div>
-                    <div class="col-md-6">
-                        <label for="customerPhoneNumber" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control border-info" id="customerPhoneNumber">
+                    <div class="card-footer bg-transparent">
+                      <div class="col-12">
+                        <button type="button" class="btn btn-outline-info" id="updateProfileButton" data-id="roofing">Save</button>
+                      </div>
                     </div>
-                    <div class="col-12">
-                      <label for="customerAddress" class="form-label">Address</label>
-                      <input type="text" class="form-control required border-info" id="customerAddress" placeholder="1234 Main st" >
-                    </div>
-                    <div class="col-md-6">
-                      <label for="inputCity" class="form-label">City</label>
-                      <input type="text" class="form-control required border-info" id="inputCity" >
-                    </div>
-                    <div class="col-md-4">
-                      <label for="inputState" class="form-label">State</label>
-                      <select id="inputState" class="form-select required bg-dark border-info" >
-                        <option selected value="">Choose...</option>
-                        <option>AA</option>
-                        <option>AE</option>
-                        <option>AK</option>
-                        <option>AL</option>
-                        <option>AP</option>
-                        <option>AR</option>
-                        <option>AS</option>
-                        <option>AZ</option>
-                        <option>CA</option>
-                        <option>CO</option>
-                        <option>CT</option>
-                        <option>DC</option>
-                        <option>DE</option>
-                        <option>FL</option>
-                        <option>FM</option>
-                        <option>GA</option>
-                        <option>GU</option>
-                        <option>HI</option>
-                        <option>IA</option>
-                        <option>ID</option>
-                        <option>IL</option>
-                        <option>IN</option>
-                        <option>KS</option>
-                        <option>KY</option>
-                        <option>LA</option>
-                        <option>MA</option>
-                        <option>MD</option>
-                        <option>ME</option>
-                        <option>MH</option>
-                        <option>MI</option>
-                        <option>MN</option>
-                        <option>MO</option>
-                        <option>MP</option>
-                        <option>MS</option>
-                        <option>MT</option>
-                        <option>NC</option>
-                        <option>ND</option>
-                        <option>NE</option>
-                        <option>NH</option>
-                        <option>NJ</option>
-                        <option>NM</option>
-                        <option>NV</option>
-                        <option>NY</option>
-                        <option>OH</option>
-                        <option>OK</option>
-                        <option>OR</option>
-                        <option>PA</option>
-                        <option>PR</option>
-                        <option>PW</option>
-                        <option>RI</option>
-                        <option>SC</option>
-                        <option>SD</option>
-                        <option>TN</option>
-                        <option>TX</option>
-                        <option>UT</option>
-                        <option>VA</option>
-                        <option>VI</option>
-                        <option>VT</option>
-                        <option>WA</option>
-                        <option>WI</option>
-                        <option>WV</option>
-                        <option>WY</option>
-                      </select>
-                    </div>
-                    <div class="col-md-2">
-                      <label for="inputZip" class="form-label">Zip</label>
-                      <input type="text" class="form-control required border-info" id="inputZip" >
-                    </div>
-                    <div class="col-md-6">
-                        <label for="profileBirth" class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control border-info" id="profileBirth">
-                    </div>
-                    <div class="col-md-6">
-                      <label for="profileCloser" class="form-label">Closer</label>
-                      <select class="form-select bg-dark border-info" id="profileCloser">
-                        <option></option>
-                      </select>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="profileSetter" class="form-label">Setter</label>
-                    <select class="form-select bg-dark border-info" id="profileSetter">
-                      <option></option>
-                    </select>
-                  </div>
-                  </form>
-                </div>
-                <div class="card-footer bg-transparent">
-                  <div class="col-12">
-                    <button type="button" class="btn btn-outline-info" id="updateProfileButton" data-id="solar">Save</button>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- middle wrapper end -->
+            <!-- right wrapper start -->
+            <div class="d-none d-xl-block col-xl-3">
+
+            </div>
+            <!-- right wrapper end -->
           </div>
         </div>
-        <!-- middle wrapper end -->
-        <!-- right wrapper start -->
-        <div class="d-none d-xl-block col-xl-3">
 
-        </div>
-        <!-- right wrapper end -->
-      </div>
-    </div>
-
-    
-    <!-- partial -->
-      </section>
-      <section id="searchProjectSection" style="display: none;"> 
         
-          <div class="page-content bg-transparent bg-gradient">
+        <!-- partial -->
+      </section>
+      <section id="searchProjectSection" style="display: block;"> 
+        
+          <div class="page-content bg-transparent ">
               <!-- profile -->
               <div class="row" id="profile">
                 <div class="col-12 grid-margin">
+                  <h2 class="mb-2">Roofing</h2>
                   <div class="card rounded bg-dark border-info">
                     <div class="d-flex justify-content-between p-4 rounded-bottom shadow">
                           <button class="btn btn-outline-info h4 p-4 addNewLeadViewSection">ADD NEW LEAD</button>
@@ -246,7 +247,7 @@
                               <thead>
                                 <tr>
                                 <th scope="col" class="text-info">ID</th>
-                                <th scope="col" class="text-info">NAME</th>
+                                <th scope="col" class="text-info text-left">NAME</th>
                                 <th scope="col" class="text-info">PROGRESS</th>
                                 <th scope="col" class="text-info">STAGE</th>
                                 <th scope="col" class="text-info">CLOSER</th>
@@ -261,7 +262,7 @@
                             </table>
                           </div>
                             <template id="rowTemplate">
-                              <tr class= "result-box table-striped bg-transparent">
+                              <tr class= "result-box table-striped bg-transparent messageRow">
                                 <td class="leadId text-left"></td>
                                 <th class="leadName p-2" scope="row">
                                   <button type="button" class="btn editLeadButton"></button>
@@ -303,6 +304,7 @@
             <!-- profile -->
             <div class="row" id="profile">
               <div class="col-12 grid-margin">
+                <h2 class="mb-2">Roofing</h2>
                 <div class="card rounded bg-dark border-info">
                   <div class="d-flex justify-content-between p-4 rounded-bottom shadow">
                         <button class="btn btn-outline-info h4 p-4 searchLeadViewSection" data-bs-toggle="collapse" data-bs-parent=".collapse">BACK TO SEARCH LEAD</button>
@@ -445,10 +447,7 @@
                                       <input type="text" class="form-control mb-3 bg-dark opacity-75 text-white text-end" id="leadZip" aria-describedby="state">
                                       <label for="leadZip" class="form-label">Zip</label>
                                     </div>
-                                    <div class="mb-3 form-floating input-group-lg">
-                                      <input type="date" class="form-control mb-3 bg-dark opacity-75 text-white text-end" id="leadBirth">
-                                      <label for="leadBirth" class="form-label">Date of Birth</label>
-                                  </div>
+                                    
                                     <div class="col-md-6">
                                       <div class="mb-3 form-floating input-group-lg">
                                         <select class="form-select bg-dark opacity-75 text-white text-end" id="leadCloser">
@@ -1283,146 +1282,122 @@
         </div>
       </section>
       <!-- seccion de mensajes-->
-      <section id="chatSection" style="display: block;">
-        <div class="page-content bg-transparent bg-gradient">
-          <div class="container-fluid">
-            <div class="row">
-              <!-- Contenido del primer div -->
-              <div class="col-12 col-sm-4 col-md-4 col-lg-4 d-sm-block personas sliding-div-personas" id="listMessagesSection">
-                <!-- Columna de personas -->
+      <section id="chatSection" style="display: none;">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- Contenido del primer div -->
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4 d-sm-block personas sliding-div-personas" id="listMessagesSection">
+              <!-- Columna de personas -->
 
-                <!-- Inicia botom de chat -->
-                <div class="container mb-2" id="newChatButton" style="display: none;">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="row align-items-center border-bottom py-2 newChat-button" >
-                        <span class="material-symbols-outlined col-2">
-                          add
-                        </span>
-                        <h3 class="col-10">New chat</h3>
-                      </div>
+              <!-- Inicia botom de chat -->
+              <div class="container mb-2" id="newChatButton" style="display: none;">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row align-items-center border-bottom py-2 newChat-button" >
+                      <span class="material-symbols-outlined col-2">
+                        add
+                      </span>
+                      <h3 class="col-10">New chat</h3>
                     </div>
                   </div>
                 </div>
-                <div class="container ">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="row align-items-center border-bottom py-2">
-                        <div class="col-6">
-                          View proyects:
-                        </div>
-                        <div class="col-6 align-items-center">
-                          <div class="container-switch align-items-center">
-                            <input type="checkbox" class="checkbox-switch" id="projectsCheckbox">
-                            <label class="switch-switch" for="projectsCheckbox">
-                              <span class="slider-switch"></span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="container mb-2" id="searchChatButton" >
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="row align-items-center border-bottom py-2">
-                        <div class="col-2">
-                          <span class="material-symbols-outlined">search</span>
-                        </div>
-                        <div class="col-10">
-                          <input type="text" class="form-control taller-input border-info" placeholder="Search..." id="searchLeadText">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Termina Boton de chat -->
-                <div id="messagesListContainer"></div>
-                <!-- Inicia Mensaje 
-                <div class="container messageRow" data-id="12346">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="row align-items-center border-bottom py-2 custom-button" >
-                        <div class="col-2">
-                          <div class="circle">JN</div>
-                        </div>
-                        <div class="col-10">
-                          <h4 class="userName">Javier Neaves</h4>
-                          <p class="messagePreview">Último mensaje escrito</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                Termina Mensaje -->
-                
               </div>
-              <!-- Contenido del segundo div -->
-              <div class="col-12 col-sm-8 col-md-8 col-lg-8 mensajes sliding-div" id="detailedMessagesSection" style="display: none;">
-                <!-- Columna de mensajes -->
-                <div class="container">
-                  <div class="row">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="row align-items-center border-bottom py-2 mb-4 custom-button" >
-                          <div class="col-2">
-                            <div class="">
-                              <button class="btn btn-outline-info border-0" id="backToMessagesListBtn">
-                                <span class="material-symbols-outlined">
-                                  arrow_back_ios
-                                </span>
-                              </button>
-                            </div>
-                          </div>
-                          <div class="col-10" id="goToLeadDetailFromMessage">
-                            <div class="row align-items-center">
-                              <div class="col-3">
-                                <div class="circle" id="chatTitleVoltioId"></div>
-                              </div>
-                              <div class="col-9">
-                                <h6 id="chatTitleLeadname" class="p-4 chatTitleText"></h6>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+              <div class="container mb-2" id="searchChatButton" >
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row align-items-center border-bottom py-2">
+                      <div class="col-2">
+                        <span class="material-symbols-outlined">search</span>
+                      </div>
+                      <div class="col-10">
+                        <input type="text" class="form-control taller-input border-info" placeholder="Search..." id="searchLeadText">
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+              <!-- Termina Boton de chat -->
+              <div id="messagesListContainer"></div>
+              <!-- Inicia Mensaje 
+              <div class="container messageRow" data-id="12346">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row align-items-center border-bottom py-2 custom-button" >
+                      <div class="col-2">
+                        <div class="circle">JN</div>
+                      </div>
+                      <div class="col-10">
+                        <h4 class="userName">Javier Neaves</h4>
+                        <p class="messagePreview">Último mensaje escrito</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              Termina Mensaje -->
+              
+            </div>
+            <!-- Contenido del segundo div -->
+            <div class="col-12 col-sm-8 col-md-8 col-lg-8 mensajes sliding-div" id="detailedMessagesSection" style="display: none;">
+              <!-- Columna de mensajes -->
+              <div class="container">
+                <div class="row">
                   <div class="row">
                     <div class="col-12">
-                      <div class="input-section mb-5">
-                        <div class="row align-items-center">
-                          <div class="col-10">
-                            <input type="text" class="form-control taller-input border-info" placeholder="Senda a message." id="textBox">
+                      <div class="row align-items-center border-bottom py-2 mb-4 custom-button" >
+                        <div class="col-2">
+                          <div class="">
+                            <button class="btn btn-outline-info border-0" id="backToMessagesListBtn">
+                              <span class="material-symbols-outlined">
+                                arrow_back_ios
+                              </span>
+                            </button>
                           </div>
-                          <button class="btn btn-outline-info col-2 btn-lg" id="sendMessageBotton">
-                            <span class="material-symbols-outlined ">
-                              send
-                            </span>
-                          </button>
+                        </div>
+                        <div class="col-2">
+                          <div class="circle" id="chatTitleVoltioId"></div>
+                        </div>
+                        <div class="col-8">
+                          <h6 id="chatTitleLeadname" class="p-4 chatTitleText"></h6>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div id="messagesDetailContainer"></div>
-                  <!-- Ejemplos de mensajes 
-                  <div class="container mb-2 receiverMessageBox text-box col-10 chat">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="">
-                          <h3 class="chat-title">Javier Neaves</h3>
-                          <p class="chat-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                          <p class="chat-date">01/01/2023 18:50</p>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="input-section mb-5">
+                      <div class="row align-items-center">
+                        <div class="col-10">
+                          <input type="text" class="form-control taller-input border-info" placeholder="Senda a message." id="textBox">
                         </div>
+                        <button class="btn btn-outline-info col-2 btn-lg" id="sendMessageBotton">
+                          <span class="material-symbols-outlined ">
+                            send
+                          </span>
+                        </button>
                       </div>
                     </div>
                   </div>
-                  
-                  -->
+                </div>
+                <div id="messagesDetailContainer"></div>
+                <div id="goToLeadDetailFromMessage"></div>
+                <!-- Ejemplos de mensajes 
+                <div class="container mb-2 receiverMessageBox text-box col-10 chat">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="">
+                        <h3 class="chat-title">Javier Neaves</h3>
+                        <p class="chat-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p class="chat-date">01/01/2023 18:50</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
+                -->
               </div>
+              
             </div>
           </div>
         </div>
@@ -1454,14 +1429,11 @@
   <script src="../resources/sweetAlert.js"></script>
   <script src="../js/bootstrap.js"></script>
   <script type="module" src="../js/addNewLead.js"></script>
-  <script type="module" src="../js/messages.js"></script>
-  <script type="module" src="../js/searchLeadMessages.js"></script>
+  <script type="module" src="../js/searchLeadRoofing.js"></script>
   
   <script type="module" src="../js/projectNotes.js"></script>
   <script type="module" src="../js/statusSection.js"></script>
   
-  <script type="module" src="../js/calculator.js"></script>
-  <script type="module" src="../js/signature_pad.js"></script>
 	<!-- End custom js for this page -->
 
 </body>

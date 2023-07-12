@@ -40,7 +40,7 @@ addNewLeadViewSection.forEach((e) =>{
 
 
 saveLeadButton.addEventListener('click', (e) =>{
-
+    console.log(saveLeadButton.dataset.id);
     let customerLanguage = document.getElementById('customerLanguage').value
     let customerPhoneNumber = document.getElementById('customerPhoneNumber').value
     let customerAddress= document.getElementById('customerAddress').value
@@ -95,7 +95,7 @@ saveLeadButton.addEventListener('click', (e) =>{
                     console.error("Error updating VoltioId: ", error);
                     throw error;
                 }
-                
+                // function to add new lead to the firestore database, added project
                 await addDoc(collection(db, 'leadData'), {
                     customerLanguage: customerLanguage.toUpperCase() ,
                     customerPhoneNumber: customerPhoneNumber.toUpperCase(),
@@ -110,7 +110,8 @@ saveLeadButton.addEventListener('click', (e) =>{
                     setter: profileSetter.value,
                     voltioIdKey: 'V-'+newVoltioId,
                     status: 'lead',
-                    creationDate: new Date()
+                    creationDate: new Date(),
+                    project: saveLeadButton.dataset.id
                 }).then( async() => {
                     Swal.fire({
                         position: 'top-end',
@@ -206,7 +207,7 @@ async function getRepDropdown() {
   
     // const userProfileSnapshot = await getDocs(userProfileCollection);
     let userEmails = [];
-    const q = query(collection(db, "userProfile"), where("accessLevel", "!=", "Admin"));
+    const q = query(collection(db, "userProfile"));
     const querySnapshot = await getDocs(q);
     userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
     
@@ -215,6 +216,10 @@ async function getRepDropdown() {
       userEmails.push(doc.data().userEmail)
     });
     */
+    profileCloser.innerHTML = ' '
+    profileCloser.appendChild(document.createElement('option'))
+    profileSetter.innerHTML = ' '
+    profileSetter.appendChild(document.createElement('option'))
     userEmails.forEach(function(item) {
         let el = document.createElement('option');
         el.innerHTML = item

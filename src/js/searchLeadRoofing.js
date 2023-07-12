@@ -1,9 +1,9 @@
 import { getFirestore, doc, getDoc, collection, getDocs, query, where, deleteDoc, orderBy, updateDoc, setDoc, addDoc, collectionGroup, startAfter, limit, serverTimestamp  } from '../firebase/firebaseJs.js'
 import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
-import { calculations } from '../js/calculator.js'
-import '../js/signature_pad.js'
-import { showLoadingAlert } from '../js/loadSweetAlert.js'
+import { calculations } from './calculator.js'
+import './signature_pad.js'
+import { showLoadingAlert } from './loadSweetAlert.js'
 
 const db = getFirestore(app) 
 let voltioId 
@@ -164,7 +164,7 @@ onAuthStateChanged(auth, async(user) => {
         data = []
         if(!filter){
           let querySnapshoot
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'roofing'));
           querySnapshoot = await getDocs(projectInfo)
 
           const allData = querySnapshoot.forEach( async(doc) => {
@@ -188,10 +188,10 @@ onAuthStateChanged(auth, async(user) => {
         } else {
           let querySnapshoot
           if(statusFilterData === ''){
-            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'));
+            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'roofing'));
             querySnapshoot = await getDocs(projectInfo)
           } else if(!progressFilter){
-            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('projectStatus', '==', statusFilterData), where('project', '==', 'solar'));
+            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('projectStatus', '==', statusFilterData), where('project', '==', 'roofing'));
             querySnapshoot = await getDocs(projectInfo)
           }  
 
@@ -229,7 +229,7 @@ onAuthStateChanged(auth, async(user) => {
           viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           //document.getElementById('imageCustomerGallery').innerHTML = ''
           document.getElementById('customerFilesUpload').value = ''
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'roofing'));
           const querySnapshoot = await getDocs(projectInfo)
           const allData = querySnapshoot.forEach( async(doc) => {
             let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
@@ -365,7 +365,7 @@ async function setDataToProfileView(voltioId){
             document.getElementById('leadEmail').value = doc.data().customerEmail
             document.getElementById('leadCloser').value = doc.data().profileCloser
             document.getElementById('leadSetter').value = doc.data().profileSetter
-            document.getElementById('leadBirth').value = doc.data().profileBirth
+            
             docId = doc.id
         })
 
@@ -462,7 +462,7 @@ async function saveLeadToServer(){
       profileCloser: document.getElementById('leadCloser').value,
       profileSetter: document.getElementById('leadSetter').value,
       systemSize: document.getElementById('systemSizeText').innerHTML,
-      profileBirth: document.getElementById('leadBirth').value
+      
     }).then( () => {
       Swal.fire({
           position: 'top-end',
@@ -1611,13 +1611,13 @@ async function getRepDropdown() {
 
   // const userProfileSnapshot = await getDocs(userProfileCollection);
   let userEmails = [];
-  const q = query(collection(db, "userProfile"), where("accessLevel", "!=", "Admin"));
+  const q = query(collection(db, "userProfile"));
   const querySnapshot = await getDocs(q);
   userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
   leadCloser.innerHTML = ' '
   leadCloser.appendChild(document.createElement('option'))
   leadSetter.innerHTML = ' '
-  leadSetter.appendChild(document.createElement('option'))        
+  leadSetter.appendChild(document.createElement('option'))             
   userEmails.forEach(function(item) {
       let el = document.createElement('option');
       el.innerHTML = item
