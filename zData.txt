@@ -13,8 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.1.53
-53. Se crea el menu de Roofing y se implementa las secciones para gregar nuevo lead de roofingMaterial
+v2.2.02
+/* 2.02 Se agrega menu roofing y se oculta add new lead para solar, los mensajes se desactiva el acceso a solar leads
+/* 53. Se crea el menu de Roofing y se implementa las secciones para gregar nuevo lead de roofingMaterial
 xx. Se actualiza la grafica para obtener los resultados mensuales desde firestore / falta ordenar por mes
 XX. charts for leaderboard, se pueden agregar 3 columnas, preguntar cuales necesitan.
 

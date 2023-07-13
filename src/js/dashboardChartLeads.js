@@ -19,7 +19,7 @@ onAuthStateChanged(auth, async(user)=>{
         const querySnapshot = await getDocs(q);
         let countOfLeads = 0
         querySnapshot.forEach((doc) => {
-          if(!doc.data().contractDate){
+          if(!doc.data().project){
             console.log('no contract date ' + doc.data().customerName);
           } else{
             console.log(doc.data().contractDate, doc.data().customerName, doc.data().systemSize + 1);
@@ -61,7 +61,7 @@ onAuthStateChanged(auth, async(user)=>{
 
 function createChartBymonth(){
   // Obtén la referencia al elemento <div>
-  const chartSection = document.getElementById('monthlyChartSection');
+  const chartSection = document.getElementById('teamSalesChartSection');
 
   // Crea un elemento <canvas> para la gráfica
   const canvas = document.createElement('canvas');
@@ -88,7 +88,7 @@ function createChartBymonth(){
       {
         label: 'Leads',
         data: values,
-        backgroundColor: ['#078C41'],
+        backgroundColor: ['#D9CB04'],
       },
     ],
   };

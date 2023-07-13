@@ -1,75 +1,26 @@
 import { getFirestore, doc, getDoc, collection, getDocs, query, where, deleteDoc, orderBy, updateDoc, setDoc, addDoc, collectionGroup, startAfter, limit, serverTimestamp  } from '../firebase/firebaseJs.js'
 import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
-import { calculations } from './calculator.js'
 import './signature_pad.js'
 import { showLoadingAlert } from './loadSweetAlert.js'
 
 const db = getFirestore(app) 
 let voltioId 
-let installer
-let sumOfAdders
-let solarPanelLocation
-let roofConditionData
 let data = []  
-let addersData = []
-let addersDataBd = [] 
-let projectRedline
-let mpu
 let inputBox = document.getElementById('searchLeadInput')
 let searchLeadViewSection = document.querySelectorAll('.searchLeadViewSection')
 let clearInputsElement = document.querySelectorAll('.clearInputs')
 let customerNameOnTop = document.getElementById('customerNameOnTop')
-let panelLocationClass = document.querySelectorAll('.panelLocationClass');
-let addersBadgeContainer = document.getElementById('addersBadgeContainer');
-let projectUsage = document.getElementById('projectUsage');
-let totalYearlyPayment = document.getElementById('totalYearlyPayment');
-let designArea = document.getElementById('designArea');
-let proyectInstaller = document.getElementById('proyectInstaller');
-let proyectFinancial = document.getElementById('proyectFinancial');
-let projectPanelsNumber = document.getElementById('projectPanelsNumber');
-let projectAddOnSystem = document.getElementById('projectAddOnSystem');
-let ProjectCustomerCashBack = document.getElementById('ProjectCustomerCashBack');
-let projectCmsModInput = document.getElementById('projectCmsMod')
-let roofCondition = document.getElementById('roofCondition');
-let utilityAverageMonthly = document.getElementById('utilityAverageMonthly');
-let systemSizeText = document.getElementById('systemSizeText');
-let KwhKw = document.getElementById('KwhKw');
-let genKwH = document.getElementById('genKwH');
-let offsetText = document.getElementById('offsetText');
-let totalAdders = document.getElementById('totalAdders');
-let averageMonthlyPayment = document.getElementById('averageMonthlyPayment');
-let projectCmsModLabel = document.getElementById('projectCmsModLabel')
-let projectMPU = document.getElementById('projectMPU')
-let saveCurrentProjectButton =document.getElementById('saveCurrentProjectButton');
-let targetCommission = document.getElementById('targetCommission');
-let projectCost = document.getElementById('projectCost');
 let viewProjectsButton = document.getElementById('viewProjectsButton');
-viewProjectsButton.dataset.status = 'Project'
-let navTabUtility = document.getElementById('navTabUtility');
-let navTabDesign = document.getElementById('navTabDesign');
-let navTabPricing = document.getElementById('navTabPricing');
-let navTabDetails = document.getElementById('navTabDetails');
-let projectRedlineEl = document.getElementById('projectRedline');
-let navTabUtilityContainer = document.getElementById('navTabUtilityContainer');
-let navTabDesignContainer = document.getElementById('navTabDesignContainer');
-let navTabPricingContainer = document.getElementById('navTabPricingContainer');
-let navTabDetailsContainer = document.getElementById('navTabDetailsContainer');
-let navProposalsMenu = document.getElementById('navProposalsMenu');
-let proposalViewsAccordionItem = document.getElementById('proposalViewsAccordionItem');
+    viewProjectsButton.dataset.status = 'Project'
 let status = 'lead'
 let statusFilter = document.getElementById('statusFilter');
 let statusFilterData = 'In-Progress 🚀'
 let progressFilter
-let runCreditView = document.getElementById('runCreditView');
-let upFileCustomer = document.getElementById('upFileCustomer');
 let getProjectImagesButton = document.getElementById('getProjectImagesButton');
-let creditLinksName = document.getElementById('creditLinksName');
-let creditLinks = document.getElementById('creditLinks');
 let refreshCreditLinksButton = document.getElementById('refreshCreditLinksButton');
 let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
 let loading = document.getElementById('loading');
-let projectType
 
 startLoading()
 
@@ -81,50 +32,7 @@ function endLoading(){
   loading.classList.add("invisible");
 }
 
-
-navProposalsMenu.addEventListener('click', function (e) {
-  if(e.target.id === 'navTabUtility'){
-    navTabUtilityContainer.style.display = 'block'
-    navTabDesignContainer.style.display = 'none'
-    navTabPricingContainer.style.display = 'none'
-    navTabDetailsContainer.style.display = 'none'
-    navTabUtility.classList.add('active')
-    navTabDesign.classList.remove('active')
-    navTabPricing.classList.remove('active')
-    navTabDetails.classList.remove('active')
-  }
-  if(e.target.id === 'navTabDesign'){
-    navTabUtilityContainer.style.display = 'none'
-    navTabDesignContainer.style.display = 'block'
-    navTabPricingContainer.style.display = 'none'
-    navTabDetailsContainer.style.display = 'none'
-    navTabUtility.classList.remove('active')
-    navTabDesign.classList.add('active')
-    navTabPricing.classList.remove('active')
-    navTabDetails.classList.remove('active')
-  }
-  if(e.target.id === 'navTabPricing'){
-    navTabUtilityContainer.style.display = 'none'
-    navTabDesignContainer.style.display = 'none'
-    navTabPricingContainer.style.display = 'block'
-    navTabDetailsContainer.style.display = 'none'
-    navTabUtility.classList.remove('active')
-    navTabDesign.classList.remove('active')
-    navTabPricing.classList.add('active')
-    navTabDetails.classList.remove('active')
-  }
-  if(e.target.id === 'navTabDetails'){
-    navTabUtilityContainer.style.display = 'none'
-    navTabDesignContainer.style.display = 'none'
-    navTabPricingContainer.style.display = 'none'
-    navTabDetailsContainer.style.display = 'block'
-    navTabUtility.classList.remove('active')
-    navTabDesign.classList.remove('active')
-    navTabPricing.classList.remove('active')
-    navTabDetails.classList.add('active')
-  }
-});
-
+getComments()
 
 onAuthStateChanged(auth, async(user) => {
     if(user){
@@ -150,7 +58,6 @@ onAuthStateChanged(auth, async(user) => {
         }
         
       })
-
 
       //getFirestoreDataToPagination()
       getLeadOrProjectData()
@@ -225,7 +132,6 @@ onAuthStateChanged(auth, async(user) => {
           document.querySelector('#addNewLeadSection').style.display = 'none'
           document.querySelector('#searchProjectSection').style.display = 'block'
           document.querySelector('#profileViewSection').style.display = 'none'
-          document.querySelector('#chatSection').style.display = 'none'
           viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           //document.getElementById('imageCustomerGallery').innerHTML = ''
           document.getElementById('customerFilesUpload').value = ''
@@ -247,7 +153,6 @@ onAuthStateChanged(auth, async(user) => {
   
                 ])
           })
-          clearProjectInfo()
           searchLeadByInput()
           
         })
@@ -318,6 +223,7 @@ function searchLeadByInput(){
         voltioId = e.target.dataset.leadVoltioId
         clearInputs()
         setDataToProfileView(voltioId) 
+        getCreditInfo()
     })
   })
   endLoading()
@@ -335,16 +241,13 @@ function searchLeadByInput(){
     });
 }
 
-projectAddOnSystem.addEventListener('change', function (e) {
-  calculations()
-});
 // THIS LET IS USED TO GET PROJECT DOC ID, AND HANDLE EDIT ACTIONS
+
 let docId
 
 // FUNCTION TO READ ALL LEAD INFO FROM DB AND SET ON EACH FIELD
 async function setDataToProfileView(voltioId){
     getRepDropdown()
-    getFinancialDropdown()
     document.getElementById('titleOfEditLeadView').innerHTML = 'Lead'
     document.getElementById('searchProjectSection').style.display = 'none'
     document.getElementById('profileViewSection').style.display = 'block'
@@ -427,9 +330,6 @@ async function setDataToProfileView(voltioId){
       progressBar.style.width = value
       // THIS FUNCTIONS AREA USED TO COMPLETE DATA ON SOME SECTIONS
       // LIKE COMMENTS, CALCULATOR DATA AND CREDIT INFO, JUST IS PENDING CREDIT LINKS
-      getComments()
-      getDataFromProjectDetails()
-      getCreditInfo()
       
 
     } else {
@@ -437,10 +337,6 @@ async function setDataToProfileView(voltioId){
     }
         
 }
-
-projectPanelsNumber.addEventListener('blur', function (e) {
-  calculations()
-});
 
 let editLeadButtonToServer = document.getElementById('editLeadButtonToServer')
 
@@ -461,7 +357,6 @@ async function saveLeadToServer(){
       customerEmail: document.getElementById('leadEmail').value,
       profileCloser: document.getElementById('leadCloser').value,
       profileSetter: document.getElementById('leadSetter').value,
-      systemSize: document.getElementById('systemSizeText').innerHTML,
       
     }).then( () => {
       Swal.fire({
@@ -483,7 +378,7 @@ function clearInputs(){
 }
 
 async function getComments(){
-  let commentsBd = ['listOfCommentsCustomer', 'listOfCommentsAdmin', 'listOfInternalNotes', 'listOfleadNotes']
+  let commentsBd = ['listOfCommentsCustomer', 'listOfCommentsAdmin']
   let voltioId = document.getElementById("leadVoltioId").value
   for(var n = 0; n <=commentsBd.length -1 ; n++){
     let dataNotes = []
@@ -527,373 +422,6 @@ async function getComments(){
   }
   }
   
-}
-
-projectCmsModInput.addEventListener('change', (e) => {
-  projectCmsModLabel.innerHTML = 'CMS MOD ' + projectCmsModInput.value + '%'
-})
-
-projectMPU.addEventListener('change', () => {
-  if(projectMPU.value === 'YES'){
-    document.getElementById('projectMPUPrice').value = 3000
-  } else {
-    document.getElementById('projectMPUPrice').value = 0
-  }
-  
-  
-})
-
-designArea.addEventListener('change', async function (e) {
-  let designAreaValue = designArea.value
-   designAreaOnChange(designAreaValue)
-  
-});
-
-proyectInstaller.addEventListener('change', function (e) {
-  installer = e.target.value
-  getAddersByInstaller()
-  
-});
-
-proyectFinancial.addEventListener('change', async function (e) {
-  let documentId = proyectFinancial.value
-  const documentRef = doc(db, 'loanData', documentId);
-  const documentSnapshot = await getDoc(documentRef);
-
-  if (documentSnapshot.exists()) {
-    const data = documentSnapshot.data();
-    projectRedline = parseFloat(data.loanRedline)
-    document.getElementById('projectRedline').value = projectRedline
-    sumOfAddersfunction()
-  } else {
-    console.log("El documento no existe.");
-  }
-
-});
-
-async function getAddersByInstaller(){
-  const docRef = doc(db, "installerList", installer);
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    // projectRedline = docSnap.data().installerRedline
-    mpu = docSnap.data().epcMPU
-    let addersArray = []
-    let addersList = docSnap.data().adders
-    addersList.forEach(function(item) {
-      let adderNameData = item.adderNameData
-      let qtyData = item.qtyData
-      addersArray.push([adderNameData, qtyData])
-    })
-      addNewAdderRow(addersArray)
-      setRedlineAndMPU()
-  } else {
-    // doc.data() will be undefined in this case
-    console.log("No such document!");
-  }
-}
-
-// function to create new adder row
-function addNewAdderRow(adderNameData, qtyData){
-  let mainContainer = document.getElementById("addersContainers")
-  mainContainer.innerHTML = ''
-  let addersTitleContainer = document.createElement("tr");
-  
-   let adderTableRow = document.createElement("tr");
-   let adderNameTableData = document.createElement("td");
-   let valueTableData = document.createElement("td");
-   let valueInput = document.createElement("input");
-   let valueInputAdderName = document.createElement("select");
-   let emptyOption = document.createElement('option');
-   
-   valueTableData.className = "bg-transparent text-light border-info"
-   valueInput.className = "form-control bg-transparent text-light border-info sumOfAdders"
-   adderTableRow.className = "bg-transparent text-light border-info table-row"
-   adderNameTableData.className = "bg-transparent text-light border-info"
-   valueInput.type = "number"
-   valueInput.name = "qty"
-   valueInput.value = !qtyData ? 0 : qtyData
-   emptyOption.innerHTML = ''
-   valueInputAdderName.className = "form-select bg-dark shadow text-light border-info text-start stateNameDropdown"
-   valueInputAdderName.name = "adderName"
-   valueInputAdderName.value = !adderNameData ? '' : adderNameData
-
-   mainContainer.append(adderTableRow)
-   adderTableRow.appendChild(adderNameTableData)
-   adderTableRow.appendChild(valueTableData)
-   // adderTableRow.appendChild(deleteButton)
-   // valueTableData.appendChild(valueInput)
-   adderNameTableData.appendChild(valueInputAdderName)
-   valueInputAdderName.append(emptyOption)
-
-   adderNameData.forEach(function(item) {
-    let option = document.createElement('option');
-    valueInputAdderName.append(option)    
-    option.innerHTML = item[0] 
-    option.label = item[0] 
-    option.value = parseFloat(item[1])+','+item[0]
-    
-   });
-
-    let stateNameDropdown = document.querySelectorAll('.stateNameDropdown');
-    stateNameDropdown.forEach(function(item) {
-      item.addEventListener('change', function (e) {
-        let value = e.target.value
-        let name = value.split(',')
-        let newName = name[1]
-        let newValue = name[0]
-        if(!newName){
-          return
-        } else {
-          createAdderButton(newName, newValue)
-          
-        }
-       
-      });
-    });
-    
-}
-
-function sumOfAddersfunction(){
-  
-  var arr = document.querySelectorAll('.qtyButton');
-  var tot=0;
-  arr.forEach(function(item) {
-    tot += parseInt(item.dataset.value);
-  });
-
-  sumOfAdders = tot
-  
-  totalAdders.value = sumOfAdders
-  totalAdders.innerHTML = sumOfAdders.toLocaleString('en-US', {style: 'currency', currency: 'USD',})
-  calculations(tot) 
-}
-
-function createAdderButton(newName, newValue){
-  
-  let btnAdderContainer = document.createElement('btn');
-  btnAdderContainer.className = 'btn btn-outline-info position-relative qtyButton p-2 m-2'
-  btnAdderContainer.type = 'button'
-  btnAdderContainer.innerHTML = newName
-  btnAdderContainer.dataset.value = parseFloat(newValue)
-  btnAdderContainer.dataset.name = newName
-  addersBadgeContainer.append(btnAdderContainer)
-  sumOfAddersfunction()
-  removeButton()
-  
-}
-
-function removeButton(){
-  let buttonAdderName = document.querySelectorAll('.qtyButton');
-  buttonAdderName.forEach(function(item) {
-    item.addEventListener('click', function (e) {
-      e.target.remove();
-      sumOfAddersfunction()
-    });
-    
-  });
-}
-
-ProjectCustomerCashBack.addEventListener('blur', function (e) {
-  sumOfAddersfunction()
-});
-
-panelLocationClass.forEach(function(item) {
-  item.addEventListener('click', function (e) {
-    // body
-    panelLocationClass.forEach((e)=>{ e.classList.remove('border-info')})
-    e.target.classList.toggle('border-info')
-    solarPanelLocation = e.target.id
-    
-  });
-});
-
-function setRedlineAndMPU(){
-  document.getElementById('projectMPUPrice').value = mpu
-}
-
-// SAVE PROJECT
-function getAddersDataToSaveOnDataBase(){
-  addersData = []
-  let addersDataButtons = document.querySelectorAll('.qtyButton');
-  addersDataButtons.forEach(function(item) {
-    let newValue = item.dataset.value
-    let newName = item.dataset.name
-    addersData.push([newName, newValue])
-    
-  });
-  
-}
-
-proposalViewsAccordionItem.addEventListener('blur', function (e) {
-  if(e.target.id = projectUsage.id){console.log('projectUsage xxxxxxxxxx');}
-});
-
-saveCurrentProjectButton.addEventListener('click', async function (e) {
-  startLoading()
-  getAddersDataToSaveOnDataBase()
-  addersDataBd = []
-  addersData.forEach(function(item) {
-    let rowData = {}
-    rowData.qtyData = parseFloat(item[1])
-    rowData.adderNameData = item[0]
-    addersDataBd.push(rowData)
-  });
-  const projectRef = doc(db, 'projectDetails', voltioId);
-  await updateDoc(projectRef, { addersData: null })
-  .then(() => {
-    console.log('El campo addersData ha sido borrado exitosamente');
-  })
-  .catch((error) => {
-    console.error('Error borrando el campo addersData: ', error);
-    endLoading()
-    Swal.fire({
-      icon: 'error',
-      title: 'An error has been occurred',
-      text: `Please contact system admin`,
-      confirmButtonText: 'OK'
-    });
-  });
-  
-  await setDoc(doc(db, "projectDetails", voltioId), {
-    projectUsage: projectUsage.value,
-    totalYearlyPayment: totalYearlyPayment.value,
-    designArea: designArea.value,
-    proyectInstaller: proyectInstaller.value,
-    projectPanelsNumber: projectPanelsNumber.value,
-    projectAddOnSystem: projectAddOnSystem.value,
-    ProjectCustomerCashBack: ProjectCustomerCashBack.value,
-    projectCmsModInput: projectCmsModInput.value,
-    solarPanelLocation: !solarPanelLocation ? '' : solarPanelLocation,
-    roofCondition: roofCondition.value,
-    roofingMaterial: roofingMaterial.value,
-    projectElectricPanelBrand: projectElectricPanelBrand.value,
-    addersData: addersDataBd,
-    proyectFinancial: proyectFinancial.value,
-    projectRedlineEl: projectRedlineEl.value
-  }).then(() => {
-    saveLeadToServer()
-    endLoading()
-    Swal.fire({
-      icon: 'success',
-      title: 'Proposal saved',
-      text: `The proposal has been saved successfully`,
-      confirmButtonText: 'OK'
-    });
-  })
-  .catch((error) => {
-    endLoading()
-    Swal.fire({
-      icon: 'error',
-      title: 'Error ocurred',
-      text: `Please try again.`,
-      confirmButtonText: 'OK'
-    });
-  });
-
-});
-
-let formControl = document.querySelectorAll('.form-control');
-formControl.forEach(function(item) {
-  item.addEventListener('focus', function (e) {
-    e.target.classList.add('border-info')
-  });
-  item.addEventListener('blur', function (e) {
-    e.target.classList.remove('border-info')
-  });
-});
-
-function getDataFromProjectDetails(){
-  const docsRef = collection(db, 'projectDetails');
-  const docRef = doc(docsRef, voltioId);
-
-  getDoc(docRef)
-    .then((doc) => {
-      if (doc.exists()) {
-        const data = doc.data();
-        const dataArray = Object.keys(data).map((key) => data[key]);
-        setProjectDetailsToForm(data)
-      } else {
-        console.log("No existe ningún documento con ese ID");
-      }
-    })
-    .catch((error) => {
-      console.log("Error al obtener el documento:", error);
-    });
-}
-
-function setProjectDetailsToForm(data){
-  projectUsage.value = data.projectUsage
-  totalYearlyPayment.value = data.totalYearlyPayment
-  designArea.value = data.designArea
-  projectPanelsNumber.value = data.projectPanelsNumber
-  projectAddOnSystem.value = data.projectAddOnSystem
-  ProjectCustomerCashBack.value = data.ProjectCustomerCashBack
-  projectCmsModInput.value = data.projectCmsModInput
-  solarPanelLocation = data.solarPanelLocation
-  roofCondition.value = data.roofCondition
-  roofingMaterial.value = data.roofingMaterial
-  projectElectricPanelBrand.value = data.projectElectricPanelBrand
-  designAreaOnChangeWithPromise(data.designArea, data.proyectInstaller)
-  installer = data.proyectInstaller
-  addersDataBd = data.addersData
-  getAddersByInstaller()
-  proyectFinancial.value = data.proyectFinancial
-  projectRedlineEl.value = data.projectRedlineEl
-  let sum = 0 // LET USED TO SUM ADDS
-  addersDataBd.forEach(function(item) {
-      // NO ES POSIBLE SUMAR DESDE AQUI LOS ADDERS AL MENOS QUE SE PUEDA MODIFICAR LA VARIABLE AL CAMBIAR ADDERS EN EL DROPDOWN
-      // revisar por que no se han agregado los adders al lead
-      
-      sum += item.qtyData
-      let newName = item.adderNameData
-      let newValue = item.qtyData
-      createAdderButton(newName, newValue)
-      calculations()
-  });
-
-  panelLocationClass.forEach((e)=>{ e.classList.remove('border-info')})
-  document.getElementById(data.solarPanelLocation).classList.toggle('border-info');
-  utilityAverageMonthly.value = (projectUsage.value / 12 ).toFixed(0)
-  averageMonthlyPayment.value = (totalYearlyPayment.value / 12).toFixed(0)
-}
-
-async function designAreaOnChangeWithPromise(designArea, installer) {
-  
-  return new Promise((resolve) => {
-    designAreaOnChange(designArea, installer);
-    resolve();
-  }).then(() => {
-    proyectInstaller
-    .value = installer;
-    
-  });
-}
-
-async function designAreaOnChange(designArea, installer){
-  console.log(designArea, installer);
-  const docRef = doc(db, "coverageArea", designArea);
-  const docSnap = await getDoc(docRef);
-  let proyectInstaller = document.getElementById('proyectInstaller');
-  proyectInstaller.innerHTML = ''
-  if (docSnap.exists()) {
-    let installers = docSnap.data().installer
-    let emptyOption = document.createElement('option');
-    emptyOption.innerHTML = ''
-    proyectInstaller.append(emptyOption)
-    installers.forEach(function(item) {
-      let option = document.createElement('option');
-      option.innerHTML = item
-      option.value = item
-      proyectInstaller.append(option)
-    });
-    proyectInstaller.value = installer;
-    calculations()
-
-  } else {
-    // doc.data() will be undefined in this case
-    console.log("No such document!");
-  }
 }
 
 // START SECTION TO UPLOAD IMAGES
@@ -991,30 +519,6 @@ async function designAreaOnChange(designArea, installer){
     
   }
 
-  function generateUtilityBillImagesHTML(array) {
-    const container = document.getElementById('utilityBillImagesContainer');
-    container.innerHTML = ""
-    array.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'col-sm-6 col-md-3';
-      
-      const thumbnail = document.createElement('div');
-      thumbnail.className = 'thumbnail';
-      
-      const img = document.createElement('img');
-      img.src = item.link;
-      img.alt = item.voltioId;
-      img.className = 'img-thumbnail mb-2';
-      img.addEventListener("click", () => {
-        window.open(item.link);
-      });
-      thumbnail.appendChild(img);
-      div.appendChild(thumbnail);
-      
-      container.appendChild(div);
-    });
-  }
-
   function generateThumbnail(link, voltioId) {
     const thumbnailDiv = document.createElement('div');
     thumbnailDiv.classList.add('col-sm-6', 'col-md-3');
@@ -1042,7 +546,7 @@ async function designAreaOnChange(designArea, installer){
   }
   
   function insertThumbnails(thumbnails) {
-    const container = document.getElementById('utilityBillImagesContainer');
+    const container = document.getElementById('roofImagesContainer');
     const customerFilesUpload = document.getElementById('customerFilesUpload');
     customerFilesUpload.value = ''
     container.innerHTML = ''
@@ -1050,133 +554,7 @@ async function designAreaOnChange(designArea, installer){
   }
 // END OF UPLOAD IMAGE SECTION
 
-// START SECTION TO UPLOAD IMAGES DESIGN PHOTOS
-
-let designFilesUpload =  document.querySelector('#designFilesUpload');
-  
-designFilesUpload.addEventListener('change', function (e) {
-  // Inicia el sweet alert 
-  const progressAlert = Swal.fire({
-    title: 'loading file...',
-    html: '<div class="progress"><div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>',
-    showCancelButton: false,
-    showConfirmButton: false,
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-    allowEnterKey: false
-  });
-  // termina el sweet alert
-
-  let url = "https://script.google.com/macros/s/AKfycbwdETh-O86DI8AdAh7_mRjVuOqF2Fq99nyA0WfPrbJa9wL4HvKdoa_Vlvzj3HfQcbF9/exec"
-  let fr = new FileReader()
-  fr.addEventListener('loadend', function (e) {
-    let res = fr.result
-    
-    let spt = res.split('base64,')[1]
-    let obj = {
-      base64:spt,
-      type:designFilesUpload.files[0].type,
-      name:voltioId
-    }
-    let response =  fetch(url, {
-        method:'POST',
-        body: JSON.stringify(obj),
-      })
-    .then(r=>r.text())
-    .then(data => {
-      try {
-        const response = JSON.parse(data);
-        
-        saveToDesignImagesCollection(response.link)
-        // Cerrar el Sweet Alert
-        progressAlert.close();
-        // Mostrar una alerta de éxito
-        Swal.fire({
-          icon: 'success',
-          title: 'File loaded',
-          text: `The file has been loaded`,
-          confirmButtonText: 'OK'
-        });
-      } catch (e) {
-        console.error("Error al analizar la respuesta JSON: ", e);
-      }
-    })
-    .catch(err => {
-      console.error("Error en la solicitud POST: ", err);
-    });
-  });
-  fr.readAsDataURL(designFilesUpload.files[0])
-});
-
-async function saveToDesignImagesCollection(link) {
-  try {
-
-    const docRef = await addDoc(collection(db, 'designImages'), {
-      voltioId: voltioId,
-      link: link,
-      timestamp: new Date().toISOString()
-    }).then(getImagesFromDesignImagesCollection())
-
-  } catch (error) {
-    console.error('Error al guardar los datos:', error);
-  }
-}
-
-let viewDesignImageButton = document.getElementById('viewDesignImageButton');
-
-viewDesignImageButton.addEventListener('click', function (e) {
-  getImagesFromDesignImagesCollection()
-});
-
-async function getImagesFromDesignImagesCollection(){
-  const billsCol = collection(db, 'designImages');
-  const q = query(billsCol, where('voltioId', '==', voltioId));
-  const querySnapshot = await getDocs(q);
-  const bills = querySnapshot.docs.map((doc) => doc.data());
-  const thumbnailElements = bills.map((thumbnail) => generateThumbnail(thumbnail.link, thumbnail.voltioId));
-  insertThumbnailsDesign(thumbnailElements);
-  
-}
-
-function insertThumbnailsDesign(thumbnails) {
-  const container = document.getElementById('designFilesImagesContainer');
-  const designFilesUpload = document.getElementById('designFilesUpload');
-  designFilesUpload.value = ''
-  container.innerHTML = ''
-  thumbnails.forEach((thumbnail) => container.appendChild(thumbnail));
-}
-// END OF UPLOAD IMAGE SECTION
-
-
-// FUNCTION TO CLEAR PROJECT ITS USED TO RESET PROJECT VIEW
-  function clearProjectInfo(){
-    projectUsage.value = 0
-    totalYearlyPayment.value = 0
-    designArea.value = ''
-    proyectInstaller.value = ''
-    projectPanelsNumber.value = 0
-    projectAddOnSystem.value = 'YES'
-    ProjectCustomerCashBack.value = 0
-    projectCmsModInput.value = .9
-    roofCondition.value = ''
-    roofingMaterial.value = ''
-    projectElectricPanelBrand.value = ''
-    panelLocationClass.forEach((e)=>{ e.classList.remove('border-info')})
-    addersBadgeContainer.innerHTML = ''
-    systemSizeText.innerHTML = 0
-    KwhKw.innerHTML = 0
-    genKwH.innerHTML = 0
-    offsetText.innerHTML = 0
-    totalAdders.innerHTML = ''
-    utilityAverageMonthly.value = 0
-    averageMonthlyPayment.value = 0
-    targetCommission.innerHTML = ''
-    projectCost.innerHTML = ''
-    proyectFinancial.innerHTML = ''
-    projectRedlineEl.value = 0
-  }
-
-  // START CREDIT INFO SECTION
+// START CREDIT INFO SECTION
 let runCreditDataView = document.getElementById('runCreditDataView');
 
 runCreditDataView.addEventListener('change', function (e) {
@@ -1261,7 +639,9 @@ const signaturePad = new SignaturePad(canvas, {
   backgroundColor: "black",
   penColor: "white"
 });
+
 let progressAlert
+
 // Función para guardar la firma como imagen
 function saveSignature() {
   saveSignatureButton.style.display = 'none'
@@ -1290,7 +670,6 @@ function saveSignature() {
 
 // Agregar un evento de clic al botón de guardar
 saveSignatureButton.addEventListener("click", saveSignature);
-
 
 clearSignature.addEventListener('click', function (e) {
   signaturePad.clear()
@@ -1603,7 +982,7 @@ thumbnails.forEach((thumbnail) => container.appendChild(thumbnail));
 }
 // END OF UPLOAD PROJECT IMAGE SECTION
 
-
+// THIS FUNCTION GET REP INFO TO LOAD DROPDOWN CLOSER AND SETTER
 async function getRepDropdown() {
   const db = getFirestore();
 
@@ -1631,25 +1010,6 @@ async function getRepDropdown() {
   });
 
   return userEmails;
-}
-
-async function getFinancialDropdown(){
-  const db = getFirestore();
-
-  // const userProfileCollection = collection(db, 'userProfile');
-
-  // const userProfileSnapshot = await getDocs(userProfileCollection);
-  let loanName = [];
-  const q = query(collection(db, "loanData"));
-  const querySnapshot = await getDocs(q);
-  loanName = querySnapshot.docs.map((doc) => doc.id);
-  proyectFinancial.appendChild(document.createElement('option'))       
-  loanName.forEach(function(item) {
-      let el = document.createElement('option');
-      el.innerHTML = item
-      proyectFinancial.appendChild(el)
-  });
-
 }
 
 saveCreditLinksButton.addEventListener('click', function (e) {
@@ -1771,14 +1131,3 @@ async function getCreditLinks(){
     console.log("Error obteniendo los creditLinks:", error);
   }
 }
-
-// Función para generar el código HTML
-function generarTarjetas(linkData, linkName) {
-    
-    var iframeSrc = linkData;
-    var h5Text = linkName;
-    var linkHref = linkData;
-
-                          
-}
-

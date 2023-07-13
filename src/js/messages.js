@@ -55,8 +55,6 @@ let subscriptionJson
 let goToLeadDetailFromMessage = document.getElementById('goToLeadDetailFromMessage');
 let projectsCheckbox = document.getElementById('projectsCheckbox');
 
-
-
 projectsCheckbox.addEventListener('change', function (e) {
     if(e.target.checked){
         console.log('checked');
@@ -94,7 +92,7 @@ onAuthStateChanged(auth, async(user) => {
 async function getMessagesList(project){
     latestLeadNotes = []
     // Crear una consulta para obtener los documentos ordenados por voltioId y fecha descendente
-    const q = query(collection(db, 'leadData'), orderBy('voltioIdKey'), where('status', '==', project));
+    const q = query(collection(db, 'leadData'), orderBy('voltioIdKey'), where('status', '==', project), where('project', '==', 'roofing'));
 
     // Obtener los documentos ordenados por voltioId y fecha descendente
     const querySnapshot = await getDocs(q);

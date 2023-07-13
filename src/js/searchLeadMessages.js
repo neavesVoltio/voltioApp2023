@@ -73,6 +73,8 @@ let loading = document.getElementById('loading');
 let goToLeadDetailFromMessage = document.getElementById('goToLeadDetailFromMessage');
 
 goToLeadDetailFromMessage.addEventListener('click', function (e) {
+  console.log('Go to searchLeadMessages.js line 77 to remove return');
+  return
   document.querySelector('#chatSection').style.display = 'none'
   voltioId = goToLeadDetailFromMessage.getAttribute("name")
   clearInputs()
