@@ -13,7 +13,7 @@ onAuthStateChanged(auth, async(user)=>{
       // seccion para obtener el listado de usaurios depende del manager
       const leadRef = collection(db, "leadData");
       const q = query(leadRef, where("profileCloser", "==", currentUserEmail), where('project', '==', 'roofing'));
-      
+      console.log(currentUserEmail);
       
       try {
         const querySnapshot = await getDocs(q);
@@ -22,9 +22,9 @@ onAuthStateChanged(auth, async(user)=>{
           if(!doc.data().project){
             console.log('no contract date ' + doc.data().customerName);
           } else{
-            console.log(doc.data().contractDate, doc.data().customerName, doc.data().systemSize + 1);
+            console.log(doc.data().creationDate, doc.data().customerName, doc.data().systemSize + 1);
           
-            let firestoreDate = doc.data().contractDate
+            let firestoreDate = doc.data().creationDate
             let systemSizeSum = !doc.data().systemSize || doc.data().systemSize === ''? 0 : parseFloat(doc.data().systemSize)
             // la siguiente linea es para obtener la grafica de system size ventas
             // let systemSizeSum = !doc.data().systemSize || doc.data().systemSize === ''? 0 : parseFloat(doc.data().systemSize)

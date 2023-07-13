@@ -14,6 +14,7 @@ projectElectricPanelBrand
 
 Sig pasos:
 v2.2.03
+/* 2.04 Las tareas se hacen desde messages, actualmente solo filtra roofing. 
 /* 2.03 Tercer grafica que muestre todos los users que tienen leads POR USUARIO
 /* 2.02 Se agrega menu roofing y se oculta add new lead para solar, los mensajes se desactiva el acceso a solar leads
 /* 53. Se crea el menu de Roofing y se implementa las secciones para gregar nuevo lead de roofingMaterial

@@ -20,9 +20,9 @@ onAuthStateChanged(auth, async(user)=>{
         let countOfLeads = 0
         querySnapshot.forEach((doc) => {
           if(!doc.data().contractDate){
-            console.log('no contract date ' + doc.data().customerName);
+            //console.log('no contract date ' + doc.data().customerName);
           } else{
-            console.log(doc.data().contractDate, doc.data().customerName, doc.data().systemSize + 1);
+            //console.log(doc.data().contractDate, doc.data().customerName, doc.data().systemSize + 1);
           
             let firestoreDate = doc.data().contractDate
             let systemSizeSum = !doc.data().systemSize || doc.data().systemSize === ''? 0 : parseFloat(doc.data().systemSize)
@@ -41,7 +41,7 @@ onAuthStateChanged(auth, async(user)=>{
 
             sumByMonth[month] = isNaN(sumByMonth[month]) ? countOfLeads : sumByMonth[month] + (countOfLeads + 1);
             // sumByMonth[month] = isNaN(sumByMonth[month]) ? systemSizeSum : sumByMonth[month] + systemSizeSum;
-            console.log(sumByMonth);
+            
           }
           
           

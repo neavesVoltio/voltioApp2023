@@ -20,17 +20,17 @@ onAuthStateChanged(auth, async(user)=>{
         let countOfLeads = 0
         querySnapshot.forEach((doc) => {
           if(!doc.data().project){
-            console.log('no contract date ' + doc.data().customerName);
+            //console.log('no contract date ' + doc.data().customerName);
           } else{
-            console.log(doc.data().contractDate, doc.data().customerName, doc.data().systemSize + 1);
+            //console.log(doc.data().contractDate, doc.data().customerName, doc.data().systemSize + 1);
           
             let firestoreDate = doc.data().contractDate
             let systemSizeSum = !doc.data().systemSize || doc.data().systemSize === ''? 0 : parseFloat(doc.data().systemSize)
             // la siguiente linea es para obtener la grafica de system size ventas
             // let systemSizeSum = !doc.data().systemSize || doc.data().systemSize === ''? 0 : parseFloat(doc.data().systemSize)
 
-            const leadName = doc.data().closer
-            
+            const leadName = doc.data().profileSetter
+            //console.log(leadName);
 
             if(!sumByMonth.hasOwnProperty(leadName)){
               sumByMonth[leadName] = 0
@@ -38,7 +38,7 @@ onAuthStateChanged(auth, async(user)=>{
 
             sumByMonth[leadName] = isNaN(sumByMonth[leadName]) ? countOfLeads : sumByMonth[leadName] + (countOfLeads + 1);
             // sumByMonth[month] = isNaN(sumByMonth[month]) ? systemSizeSum : sumByMonth[month] + systemSizeSum;
-            console.log(sumByMonth);
+            //console.log(sumByMonth);
           }
           
           

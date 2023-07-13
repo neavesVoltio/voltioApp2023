@@ -202,7 +202,7 @@ function createMessageRow(data, docId) {
         showConfirmButton: false,
         timer: 1500
       })
-      fetchAssignedTasks(userLogged)
+      fetchAssignedTasks(userLogged, 'myTasks')
     } catch (error) {
       console.log(error);
     }

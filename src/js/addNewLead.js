@@ -106,8 +106,8 @@ saveLeadButton.addEventListener('click', (e) =>{
                     inputZip: inputZip,
                     profileBirth: profileBirth,
                     repName: rep,
-                    closer: profileCloser.value,
-                    setter: profileSetter.value,
+                    profileCloser: profileCloser.value,
+                    profileSetter: profileSetter.value,
                     voltioIdKey: 'V-'+newVoltioId,
                     status: 'lead',
                     creationDate: new Date(),
@@ -155,6 +155,7 @@ saveLeadButton.addEventListener('click', (e) =>{
 let docId
 
 async function setDataToProfileView(voltioId){
+    getRepDropdown()
     document.getElementById('titleOfEditLeadView').innerHTML = 'Lead'
     document.getElementById('searchProjectSection').style.display = 'none'
     document.getElementById('profileViewSection').style.display = 'block'
