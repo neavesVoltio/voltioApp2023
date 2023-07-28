@@ -40,6 +40,7 @@ addNewLeadViewSection.forEach((e) =>{
 
 
 saveLeadButton.addEventListener('click', (e) =>{
+    getRepDropdown()
     console.log(saveLeadButton.dataset.id);
     let customerLanguage = document.getElementById('customerLanguage').value
     let customerPhoneNumber = document.getElementById('customerPhoneNumber').value
@@ -49,8 +50,6 @@ saveLeadButton.addEventListener('click', (e) =>{
     let customerName= document.getElementById('customerName').value
     let inputZip= document.getElementById('inputZip').value
     let profileBirth= document.getElementById('profileBirth').value
-
-
 
     if(!customerName || !customerAddress || !inputCity || !inputZip || inputState.value === '' ){
         let required = document.querySelectorAll('.required')
@@ -156,6 +155,7 @@ let docId
 
 async function setDataToProfileView(voltioId){
     getRepDropdown()
+    
     document.getElementById('titleOfEditLeadView').innerHTML = 'Lead'
     document.getElementById('searchProjectSection').style.display = 'none'
     document.getElementById('profileViewSection').style.display = 'block'
@@ -163,6 +163,8 @@ async function setDataToProfileView(voltioId){
     const projectInfo = query(collection(db, 'leadData'), where('voltioIdKey', '==', voltioId));
         const querySnapshoot = await getDocs(projectInfo)
         const allData = querySnapshoot.forEach( async(doc) => {
+            let customerNameOnTop = document.getElementById('customerNameOnTop');
+            customerNameOnTop.innerHTML = doc.data().voltioIdKey.toUpperCase() + ' - ' + doc.data().customerName.toUpperCase()
             document.getElementById('leadVoltioId').value = doc.data().voltioIdKey.toUpperCase()
             document.getElementById('leadName').value = doc.data().customerName.toUpperCase()
             document.getElementById('leadPhone').value = doc.data().customerPhoneNumber

@@ -13,7 +13,8 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.03
+v2.2.05
+/* 2.05 Se crean los input para la calculadora, aun no tiene codigo js
 /* 2.04 Las tareas se hacen desde messages, actualmente solo filtra roofing. 
 /* 2.03 Tercer grafica que muestre todos los users que tienen leads POR USUARIO
 /* 2.02 Se agrega menu roofing y se oculta add new lead para solar, los mensajes se desactiva el acceso a solar leads

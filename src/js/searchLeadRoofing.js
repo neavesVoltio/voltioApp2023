@@ -22,7 +22,7 @@ let refreshCreditLinksButton = document.getElementById('refreshCreditLinksButton
 let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
 let loading = document.getElementById('loading');
 
-startLoading()
+// startLoading()
 
 function startLoading(){
   loading.classList.remove("invisible");

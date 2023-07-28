@@ -504,10 +504,96 @@
                         <div id="flush-proposals" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                           <div class="accordion-body">
                             <form>
-                              <div class="mb-3"> <!--ENERGY CONSUMPTION UTILITY-->
-                                <div class="row">
+                              <div class="row">
+                                <div class="col-md-12 col-lg-6">
+                                  <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofQuoteNumber" aria-describedby="roofQuoteNumber" placeholder="$ ...">
+                                        <label for="roofQuoteNumber" class="form-label fs-6">Quote Number</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <select class="form-select bg-dark opacity-75 shadow text-white  text-center" aria-label="roofDesignArea" id="roofDesignArea">
+                                          <option></option>
+                                          <option>SAN JOSE</option>
+                                          <option>VALLEY</option>
+                                          <option>LAS VEGAS</option>
+                                        </select>
+                                        <label for="roofDesignArea" class="form-label">AREA</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofPrice" aria-describedby="roofPrice" placeholder="$ ...">
+                                        <label for="roofPrice" class="form-label fs-6">Roof Price</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofPriceWAdders" aria-describedby="roofPriceWAdders" placeholder="$ ...">
+                                        <label for="roofPriceWAdders" class="form-label fs-6">Roof w Adders</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofSquares" aria-describedby="roofSquares" placeholder="$ ...">
+                                        <label for="roofSquares" class="form-label fs-6">SQUARES (Per 100ft)</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-6">
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofMonths" aria-describedby="roofMonths" >
+                                        <label for="roofMonths" class="form-label fs-6">Months</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofCashback" aria-describedby="roofCashback" >
+                                        <label for="roofCashback" class="form-label fs-6">Cashback</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofAdders" aria-describedby="roofAdders" >
+                                        <label for="roofAdders" class="form-label fs-6">Adders</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofMonthsAmount" aria-describedby="roofMonthsAmount" >
+                                        <label for="roofMonthsAmount" class="form-label fs-6">Months Amount</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofTotalAdders" aria-describedby="roofTotalAdders" >
+                                        <label for="roofTotalAdders" class="form-label fs-6">Total Adders</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                </div>
+                                <div class="col-md-12 col-lg-6">
+                                  <div class="form-floating mb-3 col-md-12">
+                                    <select class="form-select bg-dark opacity-75 shadow text-white  text-center" aria-label="roofFinancing" id="roofFinancing">
+                                      <option></option>
+                                      <option>(NV) Profund</option>
+                                      <option>(NV) Goodleap 5yr. 6.99%</option>
+                                      <option>(NV) Goodleap 5yr. 11.99%</option>
+                                      <option>(NV) Goodleap 7yr. 6.99%</option>
+                                      <option>(NV) Goodleap 7yr. 11.99%</option>
+                                      <option>(NV) Goodleap 10yr. 11.99%</option>
+                                      <option>(NV) Goodleap 12yr. 6.99%</option>
+                                      <option>(NV) Goodleap 12yr. 11.99%</option>
+                                      <option>(NV) Goodleap 15yr. 6.99%</option>
+                                      <option>(NV) Goodleap 15yr. 11.99%</option>
+                                      <option>Cash</option>
+                                    </select>
+                                    <label for="roofFinancing" class="form-label">Financing</label>
+                                  </div>
+                                  <div class="form-floating mb-3 col-md-12">
+                                    <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofMonthlyPayment" aria-describedby="roofMonthlyPayment" >
+                                    <label for="roofMonthlyPayment" class="form-label fs-6">Monthly Payment</label>
+                                  </div>
+                                  <div class="form-floating mb-3 col-md-12">
+                                    <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofMonthlyPaymentWAdders" aria-describedby="roofMonthlyPaymentWAdders" >
+                                    <label for="roofMonthlyPaymentWAdders" class="form-label fs-6">Monthly Payment w/ Adders</label>
+                                  </div>
+                                  <div class="form-floating mb-3 col-md-12">
+                                    <button type="button" class="btn btn-dark shadow btn-block w-100 h-25"><h2>All Financing Options</h2></button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="mb-3 border-top-lg"> <!--ENERGY CONSUMPTION UTILITY-->
+                                <div class="row mt-2">
                                   <div class="col-md-12 col-lg-6">
-                                    <h2 class="mb-4">Images</h2>
+                                    <h2 class="mb-4">Roof Images</h2>
                                     <div class="mb-3">
                                       <label for="customerFilesUpload" class="form-label">Upload Files</label>
                                       <input class="form-control" name="upFileCustomer" type="file" id="customerFilesUpload" multiple> <!-- multiple -->
