@@ -13,7 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.05
+v2.2.06
+
+/* 2.06 Formato a los campos dde moneda 
 /* 2.05 Se crean los input para la calculadora, aun no tiene codigo js
 /* 2.04 Las tareas se hacen desde messages, actualmente solo filtra roofing. 
 /* 2.03 Tercer grafica que muestre todos los users que tienen leads POR USUARIO
@@ -115,3 +117,21 @@ let messageRow = document.querySelectorAll('.messageRow');
         });
     });
 
+
+// Agrega el evento de escucha al campo de entrada
+    roofQuoteNumberInput.addEventListener('blur', function (event) {
+      // Obtén el valor del campo de entrada
+      const inputNumber = event.target.value;
+      console.log(inputNumber);
+      
+      // Formatea el valor como una cantidad de moneda
+      const formattedNumber = Number(inputNumber).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
+      console.log(formattedNumber);
+      
+      // Actualiza el contenido del campo de entrada con el valor formateado
+      roofQuoteNumberInput.value = formattedNumber;
+
+    });
