@@ -13,8 +13,8 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.06
-
+v2.2.07
+/* 2.07 Inician las formulas de la calculadora, se basa en la tabla de excel
 /* 2.06 Formato a los campos dde moneda 
 /* 2.05 Se crean los input para la calculadora, aun no tiene codigo js
 /* 2.04 Las tareas se hacen desde messages, actualmente solo filtra roofing. 
