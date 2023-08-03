@@ -1,9 +1,13 @@
+let commissions = document.getElementById('roofCommissions');
+let roofPriceWAdders = document.getElementById('roofPriceWAdders');
+let roofPrice = document.getElementById('roofPrice');
 let roofQuote // B2
 let squares = document.getElementById('roofSquares');
-let months
-let cashback
+let months = document.getElementById('roofMonths');
+let cashback = document.getElementById('roofCashback');
 
-let totalAdders 
+let totalAdders = document.getElementById('roofTotalAdders');
+let roofAdders = document.getElementById('roofAdders');
 
 let financing = document.getElementById('roofFinancing');
 
@@ -11,9 +15,6 @@ let monthlyPayment
 let monthlyPaymentWAdders
 
 let voltioPps
-let expectedCms = squares * voltioPps
-let repCms = (expectedCms - 1000) * 0.5
-let voltioCms = (expectedCms * 0.5) + 500
 
 let dealerFee
 let redline
@@ -22,9 +23,12 @@ let dealerFeeWAdders
 
 let epcPps
 let addersPps
+let dealerFeePps
 let totalPps
-let monthsAmount = months * monthlyPayment
-let roofQuoteWAdders = (totalAdders/100%-dealerFee)
+let monthsAmount
+let inputNumber
+
+
 
 let financialArray = [
     ['(CA) Goodleap 5yr. 6.99%', 60, 6.99, 0.02019, 0.1125, 294.9759, 341.523450432277],
@@ -80,6 +84,8 @@ let areaArray = [
     ['Las Vegas', 4.8, 6, 1492.57],
 ]
 
+commissions.value = '$0.00'
+
 function findFinancialDataByDescription(description) {
     for (const item of financialArray) {
         if (item[0] === description) {
@@ -93,9 +99,9 @@ function findFinancialDataByArea(description) {
     for (const item of areaArray) {
         if (item[0] === description) {
             return item;
+        }
     }
-}
-return null;
+    return null;
 }
 
 financing.addEventListener('change', function (e) {
@@ -109,17 +115,84 @@ financing.addEventListener('change', function (e) {
     if (financialData) {
         console.log('Financial data found:');
         console.log(financialData);
-        
+        let totalAddersValue = document.getElementById('roofTotalAdders').value
         monthlyPayment = financialData[5]
         monthlyPaymentWAdders = financialData[6]
         dealerFee = financialData[4]
         redline = areaData[1]
         let redlinePrice = (squares.value * redline) * 100
-        console.log(squares.value, redline);
-        console.log(monthlyPayment, monthlyPaymentWAdders, redline, redlinePrice);
-    } else {
-        console.log('Financial data not found.');
+        monthsAmount = months.value * monthlyPayment
+        epcPps = redlinePrice / squares.value
+        totalAddersValue = parseFloat(cashback.value) + parseFloat(roofAdders.value) + parseFloat(monthsAmount)
+        addersPps = totalAddersValue / squares.value
+        roofPriceWAdders.value = (parseFloat(totalAddersValue/(1 - dealerFee)) + parseFloat(roofPrice.value)) // roofQuoteWAdders en excel
+        console.log(roofPriceWAdders.value);
+        totalAdders = totalAddersValue
+        dealerFeeWAdders = dealerFee * roofPriceWAdders.value
+        dealerFeePps = dealerFeeWAdders / squares.value
+        totalPps = roofPriceWAdders.value / squares.value
+        voltioPps = totalPps - epcPps - addersPps - dealerFeePps
+        dealerFeeNoAdders 
+        let expectedCms = squares.value * voltioPps
+        let repCms = (expectedCms - 1000) * 0.5
+        let voltioCms = (expectedCms * 0.5) + 500
+        commissions.value = repCms.toFixed(2).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        });
+        console.log(
+            'monthlyPayment ' + monthlyPayment, 
+            'months.value ' + months.value,
+            'totalAdders.value ' + totalAddersValue,
+            'monthlyPaymentWAdders ' + monthlyPaymentWAdders, 
+            'redline ' + redline,
+            'dealerFee ' + dealerFee,
+            'redlinePrice ' + redlinePrice, 
+            'monthsAmount ' + monthsAmount, 
+            'epcPps ' + epcPps,
+            'addersPps ' + addersPps,
+            'dealerFeeWAdders ' + dealerFeeWAdders,
+            'dealerFeePps ' + dealerFeePps,
+            'totalPps ' + totalPps,
+            'voltioPps ' + voltioPps,
+            'expectedCms ' + expectedCms,
+            'repCms ' + repCms,
+            'voltioCms ' + voltioCms,
+            'inputNumber ' + inputNumber
+            );
+        } else {
+            console.log('Financial data not found.');
     }
 });
 
 
+// Obtén el elemento del campo de entrada
+const roofQuoteNumberInput = document.getElementById('roofQuoteNumber');
+
+let targetElement = document.querySelectorAll('.currency-x');
+
+targetElement.forEach(function(e) {
+    e.addEventListener('blur', function (item) {
+    inputNumber = item.target.value
+    
+    let formattedNumber = isNaN(inputNumber) ? inputNumber : Number(inputNumber).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    });
+    
+    let itemId = document.getElementById(item.target.id).value
+    document.getElementById(item.target.id).value = formattedNumber
+    
+    });
+    
+});
+
+
+// Función para formatear el número como moneda
+function formatAsCurrency(number) {
+    // Utiliza el método toLocaleString para formatear el número en formato de moneda
+    return Number(number).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD'
+    });
+}

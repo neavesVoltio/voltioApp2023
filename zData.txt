@@ -13,7 +13,8 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.07
+v2.2.08
+/* 2.08 Calculos correctos en roof, solo falta fix 2 y moneda 
 /* 2.07 Inician las formulas de la calculadora, se basa en la tabla de excel
 /* 2.06 Formato a los campos dde moneda 
 /* 2.05 Se crean los input para la calculadora, aun no tiene codigo js

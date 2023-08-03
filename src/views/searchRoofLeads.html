@@ -505,15 +505,16 @@
                           <div class="accordion-body">
                             <form>
                               <div class="row">
+                                <div class="form-floating mb-3 col-md-12">
+                                  <input type="text" class="form-control text-end bg-dark text-center currency fs-1 bg-transparent border-0" id="roofCommissions" aria-describedby="roofCommissions" placeholder="$ ..." readonly>
+                                  <label for="roofCommissions" class="form-label fs-6">Commissions</label>
+                                </div>
                                 <div class="col-md-12 col-lg-6">
                                   <div class="row">
                                     <div class="col-md-12 col-lg-6">
+                                      
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofQuoteNumber" aria-describedby="roofQuoteNumber" placeholder="$ ...">
-                                        <label for="roofQuoteNumber" class="form-label fs-6">Commissions</label>
-                                      </div>
-                                      <div class="form-floating mb-3 col-md-12">
-                                        <select class="form-select bg-dark opacity-75 shadow text-white  text-center" aria-label="roofDesignArea" id="roofDesignArea">
+                                        <select class="form-select bg-dark shadow text-white  text-center" aria-label="roofDesignArea" id="roofDesignArea">
                                           <option></option>
                                           <option>San Jose</option>
                                           <option>Valley</option>
@@ -522,37 +523,42 @@
                                         <label for="roofDesignArea" class="form-label">AREA</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofPrice" aria-describedby="roofPrice" placeholder="$ ...">
+                                        <input type="text"  class="form-control text-end bg-dark text-center fs-4 currency" id="roofPrice" aria-describedby="roofPrice" placeholder="$ ...">
                                         <label for="roofPrice" class="form-label fs-6">Roof Price</label>
-                                      </div>
-                                      <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofPriceWAdders" aria-describedby="roofPriceWAdders" placeholder="$ ...">
-                                        <label for="roofPriceWAdders" class="form-label fs-6">Roof w Adders</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
                                         <input type="number" class="form-control text-end bg-dark text-center fs-4" id="roofSquares" aria-describedby="roofSquares" placeholder="$ ...">
                                         <label for="roofSquares" class="form-label fs-6">SQUARES (Per 100ft)</label>
                                       </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-6">
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="number" value=0 class="form-control text-end bg-dark text-center fs-4" id="roofMonths" aria-describedby="roofMonths" >
+                                        <input type="number" class="form-control text-end bg-dark text-center fs-4" id="roofMonths" aria-describedby="roofMonths" >
                                         <label for="roofMonths" class="form-label fs-6">Months</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofCashback" aria-describedby="roofCashback" >
+                                        <input type="text" class="form-control text-end bg-dark text-center fs-4 currency" id="roofCashback" aria-describedby="roofCashback" >
                                         <label for="roofCashback" class="form-label fs-6">Cashback</label>
                                       </div>
+
+
+                                    </div>
+                                    <div class="col-md-12 col-lg-6">
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofAdders" aria-describedby="roofAdders" >
+                                        <input type="text" class="form-control text-end bg-dark text-center fs-4 currency" id="roofAdders" aria-describedby="roofAdders" >
                                         <label for="roofAdders" class="form-label fs-6">Adders</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofMonthsAmount" aria-describedby="roofMonthsAmount" >
+                                        <input type="text" class="form-control text-end bg-dark bg-opacity-75 text-center fs-4 currency" 
+                                          id="roofPriceWAdders" aria-describedby="roofPriceWAdders" readonly style="user-select: none;">
+                                        <label for="roofPriceWAdders" class="form-label fs-6">Roof w Adders</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="text" class="form-control text-end bg-dark bg-opacity-75 text-center fs-4 currency" 
+                                          id="roofMonthsAmount" aria-describedby="roofMonthsAmount" readonly style="user-select: none;">
                                         <label for="roofMonthsAmount" class="form-label fs-6">Months Amount</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofTotalAdders" aria-describedby="roofTotalAdders" >
+                                        <input type="text" class="form-control text-end bg-dark bg-opacity-75 text-center fs-4 currency" 
+                                          id="roofTotalAdders" aria-describedby="roofTotalAdders" readonly style="user-select: none;">
                                         <label for="roofTotalAdders" class="form-label fs-6">Total Adders</label>
                                       </div>
                                     </div>
@@ -561,7 +567,7 @@
                                 </div>
                                 <div class="col-md-12 col-lg-6">
                                   <div class="form-floating mb-3 col-md-12">
-                                    <select class="form-select bg-dark opacity-75 shadow text-white  text-center" aria-label="roofFinancing" id="roofFinancing">
+                                    <select class="form-select bg-dark shadow text-white  text-center" aria-label="roofFinancing" id="roofFinancing">
                                       <option></option>
                                       <option>(CA) Goodleap 5yr. 6.99%</option>
                                       <option>(CA) Goodleap 5yr. 7.99%</option>
@@ -612,11 +618,13 @@
                                     <label for="roofFinancing" class="form-label">Financing</label>
                                   </div>
                                   <div class="form-floating mb-3 col-md-12">
-                                    <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofMonthlyPayment" aria-describedby="roofMonthlyPayment" >
+                                    <input type="text" class="form-control text-end bg-dark bg-opacity-75 text-center fs-4 currency" 
+                                      id="roofMonthlyPayment" aria-describedby="roofMonthlyPayment" readonly  >
                                     <label for="roofMonthlyPayment" class="form-label fs-6">Monthly Payment</label>
                                   </div>
                                   <div class="form-floating mb-3 col-md-12">
-                                    <input type="text" value=0 class="form-control text-end bg-dark text-center fs-4 currency" id="roofMonthlyPaymentWAdders" aria-describedby="roofMonthlyPaymentWAdders" >
+                                    <input type="text" class="form-control text-end bg-dark bg-opacity-75 text-center fs-4 currency" 
+                                      id="roofMonthlyPaymentWAdders" aria-describedby="roofMonthlyPaymentWAdders" readonly style="user-select: none;">
                                     <label for="roofMonthlyPaymentWAdders" class="form-label fs-6">Monthly Payment w/ Adders</label>
                                   </div>
                                   <div class="form-floating mb-3 col-md-12">
@@ -995,36 +1003,7 @@
   
 	<!-- End custom js for this page -->
   <script>
-    // Obtén el elemento del campo de entrada
-    const roofQuoteNumberInput = document.getElementById('roofQuoteNumber');
-    
-    let targetElement = document.querySelectorAll('.currency');
-    
-    targetElement.forEach(function(e) {
-      e.addEventListener('blur', function (item) {
-        let inputNumber = item.target.value
-        
-        let formattedNumber = isNaN(inputNumber) ? 0 : Number(inputNumber).toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD'
-        });
-        
-        let itemId = document.getElementById(item.target.id).value
-        document.getElementById(item.target.id).value = formattedNumber
-        
-      });
-      
-    });
-    
-  
-    // Función para formatear el número como moneda
-    function formatAsCurrency(number) {
-      // Utiliza el método toLocaleString para formatear el número en formato de moneda
-      return Number(number).toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      });
-    }
+
   </script>
 </body>
 </html>
