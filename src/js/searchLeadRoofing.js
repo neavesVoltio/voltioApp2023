@@ -3,6 +3,7 @@ import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
 import './signature_pad.js'
 import { showLoadingAlert } from './loadSweetAlert.js'
+import { calculateRoofCommissions } from './roofCalc.js'
 
 const db = getFirestore(app) 
 let voltioId 
@@ -153,6 +154,7 @@ onAuthStateChanged(auth, async(user) => {
   
                 ])
           })
+          clearRoofCalcData()
           searchLeadByInput()
           
         })
@@ -330,12 +332,13 @@ async function setDataToProfileView(voltioId){
       progressBar.style.width = value
       // THIS FUNCTIONS AREA USED TO COMPLETE DATA ON SOME SECTIONS
       // LIKE COMMENTS, CALCULATOR DATA AND CREDIT INFO, JUST IS PENDING CREDIT LINKS
-      
+       
 
     } else {
       // doc.data() will be undefined in this case
     }
-        
+    loadValuesFromRoofCalc(voltioId)
+       
 }
 
 let editLeadButtonToServer = document.getElementById('editLeadButtonToServer')
@@ -1130,4 +1133,50 @@ async function getCreditLinks(){
   } catch (error) {
     console.log("Error obteniendo los creditLinks:", error);
   }
+}
+
+async function loadValuesFromRoofCalc(voltioId){
+  console.log('loadValuesFromRoofCalc ' + voltioId);
+  try {
+      const docRef = doc(db, 'roofCalc', voltioId);
+      
+      const docSnapshot = await getDoc(docRef);
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data();
+        document.getElementById('roofDesignArea').value = data.areaValue
+        document.getElementById('roofMonths').value = data.months
+        document.getElementById('roofAdders').value = data.roofAdders
+        document.getElementById('roofAdders2').value = data.roofAdders2
+        document.getElementById('roofAdders3').value = data.roofAdders3
+        document.getElementById('roofCashback').value = data.roofCashback
+        document.getElementById('roofPrice').value = data.roofPrice
+        document.getElementById('roofFinancing').value = data.financing
+        document.getElementById('roofSquares').value = data.squares
+        console.log('Datos encontrados:', data);
+        calculateRoofCommissions()
+      } else {
+        console.log('No se encontraron datos con el ID especificado.');
+      }
+    } catch (error) {
+      console.error('Error al leer los datos:', error);
+    }
+}
+
+function clearRoofCalcData(){
+  document.getElementById('roofDesignArea').value = ''
+  document.getElementById('roofMonths').value = 0
+  document.getElementById('roofAdders').value = 0
+  document.getElementById('roofAdders2').value = 0
+  document.getElementById('roofAdders3').value = 0
+  document.getElementById('roofCashback').value = 0
+  document.getElementById('roofPrice').value = 0
+  document.getElementById('roofFinancing').value = ''
+  document.getElementById('roofSquares').value = 0
+  document.getElementById('roofCommissions').value = '';
+  document.getElementById('roofMonthsAmount').value = '';
+  document.getElementById('roofTotalAdders').value = '';
+  document.getElementById('roofMonthlyPayment').value = '';
+  document.getElementById('roofMonthlyPaymentWAdders').value = '';
+  document.getElementById('roofCommissions').value = '$0.00';
+  document.getElementById('roofPriceWAdders').value = '';
 }

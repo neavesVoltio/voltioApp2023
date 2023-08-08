@@ -514,7 +514,7 @@
                                     <div class="col-md-12 col-lg-6">
                                       
                                       <div class="form-floating mb-3 col-md-12">
-                                        <select class="form-select bg-dark shadow text-white  text-center" aria-label="roofDesignArea" id="roofDesignArea">
+                                        <select class="form-select bg-dark shadow text-white text-center calcEl" aria-label="roofDesignArea" id="roofDesignArea">
                                           <option></option>
                                           <option>San Jose</option>
                                           <option>Valley</option>
@@ -523,19 +523,23 @@
                                         <label for="roofDesignArea" class="form-label">AREA</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text"  class="form-control text-end bg-dark text-center fs-4 currency" id="roofPrice" aria-describedby="roofPrice" placeholder="$ ...">
+                                        <input type="text"  class="form-control text-end bg-dark text-center fs-4 calcEl" id="roofPrice" aria-describedby="roofPrice" placeholder="$ ...">
                                         <label for="roofPrice" class="form-label fs-6">Roof Price</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="number" class="form-control text-end bg-dark text-center fs-4" id="roofSquares" aria-describedby="roofSquares" placeholder="$ ...">
+                                        <input type="number" class="form-control text-end bg-dark text-center fs-4 calcEl" id="roofSquares" aria-describedby="roofSquares" placeholder="$ ...">
                                         <label for="roofSquares" class="form-label fs-6">SQUARES (Per 100ft)</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="number" class="form-control text-end bg-dark text-center fs-4" id="roofMonths" aria-describedby="roofMonths" >
-                                        <label for="roofMonths" class="form-label fs-6">Months</label>
+                                        <select class="form-select bg-dark shadow text-white  text-center calcEl" aria-label="roofMonths" id="roofMonths">
+                                          <option>0</option>
+                                          <option>4</option>
+                                          <option>6</option>
+                                        </select>
+                                        <label for="roofMonths" class="form-label">Months</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" class="form-control text-end bg-dark text-center fs-4 currency" id="roofCashback" aria-describedby="roofCashback" >
+                                        <input type="text" class="form-control text-end bg-dark text-center fs-4 calcEl" id="roofCashback" aria-describedby="roofCashback" value=0>
                                         <label for="roofCashback" class="form-label fs-6">Cashback</label>
                                       </div>
 
@@ -543,8 +547,16 @@
                                     </div>
                                     <div class="col-md-12 col-lg-6">
                                       <div class="form-floating mb-3 col-md-12">
-                                        <input type="text" class="form-control text-end bg-dark text-center fs-4 currency" id="roofAdders" aria-describedby="roofAdders" >
+                                        <input type="text" class="form-control text-end bg-dark text-center fs-4 calcEl" id="roofAdders" aria-describedby="roofAdders" value=0>
                                         <label for="roofAdders" class="form-label fs-6">Adders</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="text" class="form-control text-end bg-dark text-center fs-4 calcEl" id="roofAdders2" aria-describedby="roofAdders2" value=0>
+                                        <label for="roofAdders2" class="form-label fs-6">Adders 2</label>
+                                      </div>
+                                      <div class="form-floating mb-3 col-md-12">
+                                        <input type="text" class="form-control text-end bg-dark text-center fs-4 calcEl" id="roofAdders3" aria-describedby="roofAdders3" value=0>
+                                        <label for="roofAdders3" class="form-label fs-6">Adders 3</label>
                                       </div>
                                       <div class="form-floating mb-3 col-md-12">
                                         <input type="text" class="form-control text-end bg-dark bg-opacity-75 text-center fs-4 currency" 
@@ -567,7 +579,7 @@
                                 </div>
                                 <div class="col-md-12 col-lg-6">
                                   <div class="form-floating mb-3 col-md-12">
-                                    <select class="form-select bg-dark shadow text-white  text-center" aria-label="roofFinancing" id="roofFinancing">
+                                    <select class="form-select bg-dark shadow text-white  text-center calcEl" aria-label="roofFinancing" id="roofFinancing">
                                       <option></option>
                                       <option>(CA) Goodleap 5yr. 6.99%</option>
                                       <option>(CA) Goodleap 5yr. 7.99%</option>
