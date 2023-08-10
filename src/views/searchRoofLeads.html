@@ -640,7 +640,7 @@
                                     <label for="roofMonthlyPaymentWAdders" class="form-label fs-6">Monthly Payment w/ Adders</label>
                                   </div>
                                   <div class="form-floating mb-3 col-md-12">
-                                    <button type="button" class="btn btn-dark shadow btn-block w-100 h-25"><h2>All Financing Options</h2></button>
+                                    <button type="button" class="btn btn-dark shadow btn-block w-100 h-25" data-bs-toggle="modal" data-bs-target="#allFinancingOptionsModal" id="allFinancingOptionsBtn"><h2>All Financing Options</h2></button>
                                   </div>
                                 </div>
                               </div>
@@ -976,8 +976,40 @@
                 <!-- right wrapper end -->
                 </div>
               </div>
-            <!-- Modal -->
-            
+            <!-- start Modal -->
+            <div class="modal fade mt-5" id="allFinancingOptionsModal"   aria-labelledby="allFinancingOptionsModal" 
+     aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content bg-black text-light">
+                <div class="modal-header">
+                  <h5 class="modal-title" id=" ">Financing Options</h5>
+                </div>
+                <div class="modal-body">
+                  <div class="card rounded bg-dark bg-gradient border-info text-light mb-4">
+                    <div class="card-header">
+                      <input type="text" class="form-control bg-dark text-light mb-2" id="searchKey" placeholder="Search key..">
+                    </div>
+                    <div class="card-body">
+                      <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Financing Option</th>
+                                <th>Monthly Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financialTable">
+                            
+                        </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+          </div>
+            <!-- end modal-->
           </div>
         </section>
       </div>

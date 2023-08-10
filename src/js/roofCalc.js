@@ -225,3 +225,43 @@ async function saveAndEditValues(values) {
   
 
   // para leer los datos se requiere la funcion loadValuesFromRoofCalc(), esta funcion se encuentra en searchLeadRoofing
+
+  // La siguiente seccion calcula All Financing Options
+
+  const tableBody = document.getElementById('financialTable');
+  let allFinancingOptionsBtn = document.getElementById('allFinancingOptionsBtn');
+  allFinancingOptionsBtn.addEventListener('click', function (e) {
+    tableBody.innerHTML = ''
+    financialArray.forEach(function(row) {
+        const newRow = document.createElement('tr');
+        newRow.className = 'financingRow'
+        newRow.dataset.value = row[0]
+        newRow.setAttribute('data-bs-dismiss', 'modal');
+        const cell1 = document.createElement('td');
+        const cell2 = document.createElement('td');
+
+        cell1.textContent = row[0];
+        cell2.textContent = (row[3] * roofPrice.value).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }); ;
+
+        newRow.appendChild(cell1);
+        newRow.appendChild(cell2);
+
+        tableBody.appendChild(newRow);
+    });
+
+    let financingRow = document.querySelectorAll('.financingRow');
+    financingRow.forEach(function(item) {
+        item.addEventListener('click', function (e) {
+            // Obtén una referencia al modal por su id
+            const modal = new bootstrap.Modal(document.getElementById('allFinancingOptionsModal'));
+            // Cierra el modal
+            modal.hide();
+            roofFinancing.value = item.dataset.value
+            calculateRoofCommissions()
+        });
+    });
+  });
+        
