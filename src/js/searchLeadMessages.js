@@ -417,7 +417,7 @@ async function setDataToProfileView(voltioId){
       ['Final Documents', '95%'],
       ['Job completed', '100%']]
       let cons = progressValues.map( r => r[0])
-      const posIndex = cons.indexOf(docSnap.data().progress)
+      const posIndex = !docSnap.data().progress ? 0 : cons.indexOf(docSnap.data().progress)
       const value = progressValues[posIndex][1]
       progressBar.style.width = value
       // THIS FUNCTIONS AREA USED TO COMPLETE DATA ON SOME SECTIONS

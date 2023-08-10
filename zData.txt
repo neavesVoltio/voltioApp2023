@@ -13,7 +13,8 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.09
+v2.2.09.02
+/* 2.09.02 se repara la linea const posIndex = !docSnap.data().progress ? 0 : cons.indexOf(docSnap.data().progress) en searchLeadRoofing, searchLead and searchLeadMessages
 /* 2.09 Se completan los calculos de roof, se activa el clear, se guarda en firestore y lee desde firestore
 /* 2.08 Calculos correctos en roof, solo falta fix 2 y moneda 
 /* 2.07 Inician las formulas de la calculadora, se basa en la tabla de excel
