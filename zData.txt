@@ -13,7 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.10
+v2.2.12
+/* 2.12 Crear nuevo lead e pest control y subirlo a la bd ya se sube y se guarda como pestControl en project
+/* 2.11 Crear html de pest control y agregar el accesso al menu
 /* 2.10 Se crea Modal de financing y al dar click se calcula roofing
 /* 2.09.02 se repara la linea const posIndex = !docSnap.data().progress ? 0 : cons.indexOf(docSnap.data().progress) en searchLeadRoofing, searchLead and searchLeadMessages
 /* 2.09 Se completan los calculos de roof, se activa el clear, se guarda en firestore y lee desde firestore

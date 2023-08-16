@@ -8,8 +8,7 @@ let saveLeadButton = document.querySelector('#updateProfileButton')
 let leadData
 let addNewLeadViewSection = document.querySelectorAll('.addNewLeadViewSection')
 let customerPhoneNumber = document.getElementById('customerPhoneNumber')
-let profileCloser = document.getElementById('profileCloser');
-let profileSetter = document.getElementById('profileSetter');
+
 let leadSetter = document.getElementById('leadSetter'); 
 let leadCloser = document.getElementById('leadCloser');
 
@@ -50,7 +49,8 @@ saveLeadButton.addEventListener('click', (e) =>{
     let customerName= document.getElementById('customerName').value
     let inputZip= document.getElementById('inputZip').value
     let profileBirth= document.getElementById('profileBirth').value
-
+    let profileCloser = document.getElementById('profileCloser').value;
+    let profileSetter = document.getElementById('profileSetter').value;
     if(!customerName || !customerAddress || !inputCity || !inputZip || inputState.value === '' ){
         let required = document.querySelectorAll('.required')
         required.forEach((e) => {
@@ -95,6 +95,7 @@ saveLeadButton.addEventListener('click', (e) =>{
                     throw error;
                 }
                 // function to add new lead to the firestore database, added project
+                
                 await addDoc(collection(db, 'leadData'), {
                     customerLanguage: customerLanguage.toUpperCase() ,
                     customerPhoneNumber: customerPhoneNumber.toUpperCase(),
@@ -110,7 +111,7 @@ saveLeadButton.addEventListener('click', (e) =>{
                     voltioIdKey: 'V-'+newVoltioId,
                     status: 'lead',
                     creationDate: new Date(),
-                    project: saveLeadButton.dataset.id
+                    project: saveLeadButton.dataset.id // depende del valor de saveLeadButton
                 }).then( async() => {
                     Swal.fire({
                         position: 'top-end',
