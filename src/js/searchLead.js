@@ -344,6 +344,7 @@ let docId
 // FUNCTION TO READ ALL LEAD INFO FROM DB AND SET ON EACH FIELD
 async function setDataToProfileView(voltioId){
     getRepDropdown()
+    
     getFinancialDropdown()
     document.getElementById('titleOfEditLeadView').innerHTML = 'Lead'
     document.getElementById('searchProjectSection').style.display = 'none'
@@ -368,7 +369,7 @@ async function setDataToProfileView(voltioId){
             document.getElementById('leadBirth').value = doc.data().profileBirth
             docId = doc.id
         })
-
+ 
     // WE USE LEAD STATUS TO SET DATA ON STATUS VIEW SECTION
     const docRef = doc(db, "leadStatus", voltioId);
     const docSnap = await getDoc(docRef);
@@ -1604,35 +1605,6 @@ thumbnails.forEach((thumbnail) => container.appendChild(thumbnail));
 // END OF UPLOAD PROJECT IMAGE SECTION
 
 
-async function getRepDropdown() {
-  const db = getFirestore();
-
-  // const userProfileCollection = collection(db, 'userProfile');
-
-  // const userProfileSnapshot = await getDocs(userProfileCollection);
-  let userEmails = [];
-  const q = query(collection(db, "userProfile"), where("accessLevel", "!=", "Admin"));
-  const querySnapshot = await getDocs(q);
-  userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
-  leadCloser.innerHTML = ' '
-  leadCloser.appendChild(document.createElement('option'))
-  leadSetter.innerHTML = ' '
-  leadSetter.appendChild(document.createElement('option'))        
-  userEmails.forEach(function(item) {
-      let el = document.createElement('option');
-      el.innerHTML = item
-      leadSetter.appendChild(el)
-  });
-
-  userEmails.forEach(function(item) {
-      let el = document.createElement('option');
-      el.innerHTML = item
-      leadCloser.appendChild(el)
-  });
-
-  return userEmails;
-}
-
 async function getFinancialDropdown(){
   const db = getFirestore();
 
@@ -1782,3 +1754,36 @@ function generarTarjetas(linkData, linkName) {
                           
 }
 
+async function getRepDropdown() {
+  const db = getFirestore();
+
+  // const userProfileCollection = collection(db, 'userProfile');
+
+  // const userProfileSnapshot = await getDocs(userProfileCollection);
+  let userEmails = [];
+  const q = query(collection(db, "userProfile"));
+  const querySnapshot = await getDocs(q);
+  userEmails = querySnapshot.docs.map((doc) => doc.data().userEmail);
+  
+  /*
+  userProfileSnapshot.forEach((doc) => {
+    userEmails.push(doc.data().userEmail)
+  });
+  */
+  leadCloser.innerHTML = ' '
+  leadCloser.appendChild(document.createElement('option'))
+  leadSetter.innerHTML = ' '
+  leadSetter.appendChild(document.createElement('option'))
+  userEmails.forEach(function(item) {
+      let el = document.createElement('option');
+      el.innerHTML = item
+      leadCloser.appendChild(el)
+  });
+  userEmails.forEach(function(item) {
+      let el = document.createElement('option');
+      el.innerHTML = item
+      leadSetter.appendChild(el)
+  });
+
+  return userEmails;
+}
