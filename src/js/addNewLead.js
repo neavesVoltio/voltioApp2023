@@ -106,8 +106,8 @@ saveLeadButton.addEventListener('click', (e) =>{
                     inputZip: inputZip,
                     profileBirth: profileBirth,
                     repName: rep,
-                    profileCloser: profileCloser.value,
-                    profileSetter: profileSetter.value,
+                    profileCloser: profileCloser,
+                    profileSetter: profileSetter,
                     voltioIdKey: 'V-'+newVoltioId,
                     status: 'lead',
                     creationDate: new Date(),
@@ -138,8 +138,8 @@ saveLeadButton.addEventListener('click', (e) =>{
                     document.getElementById('inputState').value = ''
                     document.getElementById('inputZip').value = ''
                     document.getElementById('profileBirth').value = ''
-                    profileCloser.value = ''
-                    profileSetter.value = ''
+                    profileCloser = ''
+                    profileSetter = ''
                     
                 }).catch((error) => {
                     console.log(error);
