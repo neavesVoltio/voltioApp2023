@@ -13,7 +13,45 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.12
+v2.2.13
+
+ ** aqui cuando puedas que el chat dga quien esta dentro de este chat porfavoir, cuales reps etc
+ ** quien esta dentro de cada conversacion mas bien
+ ** aqui debe salir el nombre del rep no el correo y estaria bien que se puedan poner dos setters si es possible porfavor, en la seccion de setter y closer de todos
+ ** que se puedan agregar dos setters
+ ** cambiar la letra a la izquierda
+
+ v2.2.13 (Proposals: Este espacio es para que nosotors subamos links, fotos y ese tipo de cosas. Por el momento puedes quitar lo de generar la propuesta.
+ Status que este arriba de customer info
+
+ Ya en Projects... ya no tenemos proposals... necesitamos que sea project information, ahi va a ir todo lo relacionado con el project, tamano, precio, instaladora, financiamento
+ De igual forma es status arriba.)
+
+ Y aqui en projects estaria bien que estuviera la opcion de mandar mensaje al rep directamente de ese projecto
+
+
+ aqui que salgan las notificaciones de los nuevos mensajes y que puedas accede el chat desde esta pantalla
+ en todas las secciones
+
+ en esta pantalla en vez de tener tres secciones de leads que mejor salgan todas las leads y projectos en una sola pantalla,
+ que sigan separados projects y leads pero que salgan todos revueltos nomas un filtro si quieres roofing solar etc
+ @Javier Neaves  puedes quitar los botones gigantes de  view projects y nomas dejar en la barra de la izquierda leads y projects
+
+ lo mas importante es que podamos ingresar los leads y que nos salga toda la info y que los reps nomas bean su propia info
+
+que se pueda seleccionar quien es manager de quien  
+jerarquia:
+admin ven todo
+Manager Ven los leads de los que esten abajo de ellos, los reps deben tener un espacio modificable para seleccionar cualquier usuarios como su manager
+Closer es igual que el manager pero su herarquia es abajo del manager nomas y no es obbligatorio
+y en vez de rep pon setter
+setters nomas ven tratos donde ellos esten involucrados
+
+@Javier Neaves  en una seccion donde se encuentren todos los miembros que se puedan filtrar por posicion rol y que tenga un search bar tambien porfavor
+
+debe de habber recursos de admins y recursos que nomas es para reps
+
+
 /* 2.12 Crear nuevo lead e pest control y subirlo a la bd ya se sube y se guarda como pestControl en project
 /* 2.11 Crear html de pest control y agregar el accesso al menu
 /* 2.10 Se crea Modal de financing y al dar click se calcula roofing
