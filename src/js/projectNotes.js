@@ -133,6 +133,7 @@ onAuthStateChanged(auth, async(user) => {
             let dateOfComment = document.createElement("p")
             
             for( var i=0;i <=dataNotes.length - 1; i++){
+                console.log(dataNotes);
                 let formDate = formattedDate(dataNotes[i][1])
                 let noteContainer = document.createElement("div")
                 let userNameTitle = document.createElement("strong")

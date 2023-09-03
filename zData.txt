@@ -13,8 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.13
+v2.2.14
 
+v2.2.14 Se limita a 10 las busquedas para trabjar en la paginacion, se suben los miembros
  ** aqui cuando puedas que el chat dga quien esta dentro de este chat porfavoir, cuales reps etc
  ** quien esta dentro de cada conversacion mas bien
  ** aqui debe salir el nombre del rep no el correo y estaria bien que se puedan poner dos setters si es possible porfavor, en la seccion de setter y closer de todos
