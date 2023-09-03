@@ -9,7 +9,7 @@ let datos = [
 console.log(datos[0]);
 
 //startMigration()
-/*
+
 function migrateLeadData(){
     datos.forEach(async function(item) {
         console.log("start migration");
@@ -36,22 +36,22 @@ function migrateLeadData(){
     });
     })
 }
-*/
+
 
 let updateBd = document.getElementById('updateBd');
 updateBd.addEventListener('click', function (e) {
+    migrateLeadData()
     //migrateProfileData()
 });
 
 function migrateProfileData(){
     datos.forEach(async function(item) {
         console.log(item);
+
         console.log("start migration");
-        //let userEmail = item.userEmail
-        //console.log(userEmail);
-        
-        //const docRef = doc(db, 'listOfCommentsAdmin');
-        await addDoc(collection(db, 'listOfCommentsAdmin'), item)
+        let userEmail = item.voltioId
+        console.log(userEmail);
+        await setDoc(doc(db, "leadStatus", userEmail), item)
         
     })
 }
