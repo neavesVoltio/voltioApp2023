@@ -165,7 +165,7 @@ onAuthStateChanged(auth, async(user) => {
         data = []
         if(!filter){
           let querySnapshoot
-          const projectInfo = query(collection(db, 'leadData'), limit(10), where('status', '==', status), where('project', '==', 'solar'));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'));
           querySnapshoot = await getDocs(projectInfo)
 
           const allData = querySnapshoot.forEach( async(doc) => {
