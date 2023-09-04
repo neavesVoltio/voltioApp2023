@@ -1286,121 +1286,145 @@
       </section>
       <!-- seccion de mensajes-->
       <section id="chatSection" style="display: none;">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- Contenido del primer div -->
-            <div class="col-12 col-sm-4 col-md-4 col-lg-4 d-sm-block personas sliding-div-personas" id="listMessagesSection">
-              <!-- Columna de personas -->
+        <div class="page-content bg-transparent bg-gradient">
+          <div class="container-fluid">
+            <div class="row">
+              <!-- Contenido del primer div -->
+              <div class="col-12 col-sm-4 col-md-4 col-lg-4 d-sm-block personas sliding-div-personas" id="listMessagesSection">
+                <!-- Columna de personas -->
 
-              <!-- Inicia botom de chat -->
-              <div class="container mb-2" id="newChatButton" style="display: none;">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="row align-items-center border-bottom py-2 newChat-button" >
-                      <span class="material-symbols-outlined col-2">
-                        add
-                      </span>
-                      <h3 class="col-10">New chat</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="container mb-2" id="searchChatButton" >
-                <div class="row">
-                  <div class="col-12">
-                    <div class="row align-items-center border-bottom py-2">
-                      <div class="col-2">
-                        <span class="material-symbols-outlined">search</span>
-                      </div>
-                      <div class="col-10">
-                        <input type="text" class="form-control taller-input border-info" placeholder="Search..." id="searchLeadText">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Termina Boton de chat -->
-              <div id="messagesListContainer"></div>
-              <!-- Inicia Mensaje 
-              <div class="container messageRow" data-id="12346">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="row align-items-center border-bottom py-2 custom-button" >
-                      <div class="col-2">
-                        <div class="circle">JN</div>
-                      </div>
-                      <div class="col-10">
-                        <h4 class="userName">Javier Neaves</h4>
-                        <p class="messagePreview">Último mensaje escrito</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              Termina Mensaje -->
-              
-            </div>
-            <!-- Contenido del segundo div -->
-            <div class="col-12 col-sm-8 col-md-8 col-lg-8 mensajes sliding-div" id="detailedMessagesSection" style="display: none;">
-              <!-- Columna de mensajes -->
-              <div class="container">
-                <div class="row">
+                <!-- Inicia botom de chat -->
+                <div class="container mb-2" id="newChatButton" style="display: none;">
                   <div class="row">
                     <div class="col-12">
-                      <div class="row align-items-center border-bottom py-2 mb-4 custom-button" >
-                        <div class="col-2">
-                          <div class="">
-                            <button class="btn btn-outline-info border-0" id="backToMessagesListBtn">
-                              <span class="material-symbols-outlined">
-                                arrow_back_ios
-                              </span>
-                            </button>
+                      <div class="row align-items-center border-bottom py-2 newChat-button" >
+                        <span class="material-symbols-outlined col-2">
+                          add
+                        </span>
+                        <h3 class="col-10">New chat</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="container ">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row align-items-center border-bottom py-2">
+                        <div class="col-6">
+                          View proyects:
+                        </div>
+                        <div class="col-6 align-items-center">
+                          <div class="container-switch align-items-center">
+                            <input type="checkbox" class="checkbox-switch" id="projectsCheckbox">
+                            <label class="switch-switch" for="projectsCheckbox">
+                              <span class="slider-switch"></span>
+                            </label>
                           </div>
                         </div>
-                        <div class="col-2">
-                          <div class="circle" id="chatTitleVoltioId"></div>
-                        </div>
-                        <div class="col-8">
-                          <h6 id="chatTitleLeadname" class="p-4 chatTitleText"></h6>
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="input-section mb-5">
-                      <div class="row align-items-center">
-                        <div class="col-10">
-                          <input type="text" class="form-control taller-input border-info" placeholder="Senda a message." id="textBox">
-                        </div>
-                        <button class="btn btn-outline-info col-2 btn-lg" id="sendMessageBotton">
-                          <span class="material-symbols-outlined ">
-                            send
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="messagesDetailContainer"></div>
-                <div id="goToLeadDetailFromMessage"></div>
-                <!-- Ejemplos de mensajes 
-                <div class="container mb-2 receiverMessageBox text-box col-10 chat">
+                <div class="container mb-2" id="searchChatButton" >
                   <div class="row">
                     <div class="col-12">
-                      <div class="">
-                        <h3 class="chat-title">Javier Neaves</h3>
-                        <p class="chat-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <p class="chat-date">01/01/2023 18:50</p>
+                      <div class="row align-items-center border-bottom py-2">
+                        <div class="col-2">
+                          <span class="material-symbols-outlined">search</span>
+                        </div>
+                        <div class="col-10">
+                          <input type="text" class="form-control taller-input border-info" placeholder="Search..." id="searchLeadText">
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <!-- Termina Boton de chat -->
+                <div id="messagesListContainer"></div>
+                <!-- Inicia Mensaje 
+                <div class="container messageRow" data-id="12346">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row align-items-center border-bottom py-2 custom-button" >
+                        <div class="col-2">
+                          <div class="circle">JN</div>
+                        </div>
+                        <div class="col-10">
+                          <h4 class="userName">Javier Neaves</h4>
+                          <p class="messagePreview">Último mensaje escrito</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                Termina Mensaje -->
                 
-                -->
               </div>
-              
+              <!-- Contenido del segundo div -->
+              <div class="col-12 col-sm-8 col-md-8 col-lg-8 mensajes sliding-div" id="detailedMessagesSection" style="display: none;">
+                <!-- Columna de mensajes -->
+                <div class="container">
+                  <div class="row">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row align-items-center border-bottom py-2 mb-4 custom-button" >
+                          <div class="col-2">
+                            <div class="">
+                              <button class="btn btn-outline-info border-0" id="backToMessagesListBtn">
+                                <span class="material-symbols-outlined">
+                                  arrow_back_ios
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-10" id="goToLeadDetailFromMessage">
+                            <div class="row align-items-center">
+                              <div class="col-3">
+                                <div class="circle" id="chatTitleVoltioId"></div>
+                              </div>
+                              <div class="col-9">
+                                <h6 id="chatTitleLeadname" class="p-4 chatTitleText"></h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="input-section mb-5">
+                        <div class="row align-items-center">
+                          <div class="col-10">
+                            <input type="text" class="form-control taller-input border-info" placeholder="Senda a message." id="textBox">
+                          </div>
+                          <button class="btn btn-outline-info col-2 btn-lg" id="sendMessageBotton">
+                            <span class="material-symbols-outlined ">
+                              send
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="messagesDetailContainer"></div>
+                  <!-- Ejemplos de mensajes 
+                  <div class="container mb-2 receiverMessageBox text-box col-10 chat">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="">
+                          <h3 class="chat-title">Javier Neaves</h3>
+                          <p class="chat-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                          <p class="chat-date">01/01/2023 18:50</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  -->
+                </div>
+                
+              </div>
             </div>
           </div>
         </div>
@@ -1439,6 +1463,7 @@
   
   <script type="module" src="../js/calculator.js"></script>
   <script type="module" src="../js/signature_pad.js"></script>
+  <script type="module" src="../js/messages.js"></script>
 	<!-- End custom js for this page -->
 
 </body>
