@@ -73,7 +73,7 @@ let projectType
 let limitSearch = document.getElementById('limitSearch');
 
 limitSearch.value = 10
-limitSearch.addEventListener('change', function(e){
+limitSearch.addEventListener('input', function(e){
   getLeadOrProjectData()
 })
 
