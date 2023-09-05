@@ -70,7 +70,11 @@ let refreshCreditLinksButton = document.getElementById('refreshCreditLinksButton
 let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
 let loading = document.getElementById('loading');
 let projectType
-
+let limitSearch = document.getElementById('limitSearch');
+limitSearch.value = 50
+limitSearch.addEventListener('change', function(e){
+  getLeadOrProjectData()
+})
 startLoading()
 
 function startLoading(){
@@ -165,7 +169,7 @@ onAuthStateChanged(auth, async(user) => {
         data = []
         if(!filter){
           let querySnapshoot
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'), limit(limitSearch.value);
           querySnapshoot = await getDocs(projectInfo)
 
           const allData = querySnapshoot.forEach( async(doc) => {
@@ -189,7 +193,7 @@ onAuthStateChanged(auth, async(user) => {
         } else {
           let querySnapshoot
           if(statusFilterData === ''){
-            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'));
+            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'), limit(limitSearch.value));
             querySnapshoot = await getDocs(projectInfo)
           } else if(!progressFilter){
             const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('projectStatus', '==', statusFilterData), where('project', '==', 'solar'));
@@ -230,7 +234,7 @@ onAuthStateChanged(auth, async(user) => {
           viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           //document.getElementById('imageCustomerGallery').innerHTML = ''
           document.getElementById('customerFilesUpload').value = ''
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), limit(limitSearch.value));
           const querySnapshoot = await getDocs(projectInfo)
           const allData = querySnapshoot.forEach( async(doc) => {
             let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
