@@ -171,7 +171,7 @@ onAuthStateChanged(auth, async(user) => {
         data = []
         if(!filter){
           let querySnapshoot
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'), limit(limitSearch.value));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'), limit(limitSearch.value), orderBy('voltioIdKey', 'desc'));
           querySnapshoot = await getDocs(projectInfo)
 
           const allData = querySnapshoot.forEach( async(doc) => {
@@ -195,7 +195,7 @@ onAuthStateChanged(auth, async(user) => {
         } else {
           let querySnapshoot
           if(statusFilterData === ''){
-            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'), limit(limitSearch.value));
+            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'), limit(limitSearch.value), orderBy('voltioIdKey', 'desc'));
             querySnapshoot = await getDocs(projectInfo)
           } else if(!progressFilter){
             const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('projectStatus', '==', statusFilterData), where('project', '==', 'solar'));
@@ -236,7 +236,7 @@ onAuthStateChanged(auth, async(user) => {
           viewProjectsButton.innerHTML = 'VIEW PROJECTS'
           //document.getElementById('imageCustomerGallery').innerHTML = ''
           document.getElementById('customerFilesUpload').value = ''
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), limit(limitSearch.value));
+          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), limit(limitSearch.value), orderBy('voltioIdKey', 'desc'));
           const querySnapshoot = await getDocs(projectInfo)
           const allData = querySnapshoot.forEach( async(doc) => {
             let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
