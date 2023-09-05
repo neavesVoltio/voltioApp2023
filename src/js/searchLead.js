@@ -71,10 +71,12 @@ let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
 let loading = document.getElementById('loading');
 let projectType
 let limitSearch = document.getElementById('limitSearch');
-limitSearch.value = 50
+
+limitSearch.value = 10
 limitSearch.addEventListener('change', function(e){
   getLeadOrProjectData()
 })
+
 startLoading()
 
 function startLoading(){
