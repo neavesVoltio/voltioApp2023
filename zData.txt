@@ -13,9 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.15
+v2.2.16
 
-v2.2.16 Trabajar en la paginacion.
+v2.2.16 se cambian el searchLead para que guarde la variable, sigue en progreso
 */ v2.2.15 Cambios menores en search leads, nombre de las notas de customer y de chat. Se actualiizan todos los projects en bd y 1000 leads
 */ v2.2.14 Se limita a 10 las busquedas para trabjar en la paginacion, se suben los miembros
  ** aqui cuando puedas que el chat dga quien esta dentro de este chat porfavoir, cuales reps etc

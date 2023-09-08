@@ -70,12 +70,8 @@ let refreshCreditLinksButton = document.getElementById('refreshCreditLinksButton
 let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
 let loading = document.getElementById('loading');
 let projectType
-let limitSearch = document.getElementById('limitSearch');
-
-limitSearch.value = 10
-limitSearch.addEventListener('input', function(e){
-  getLeadOrProjectData()
-})
+let dataLead = [] // se agrega aqui la variable global data, esta no va cambiar mientras no se salga de la pantalla Solar
+let dataProject = []
 
 startLoading()
 
@@ -133,154 +129,191 @@ navProposalsMenu.addEventListener('click', function (e) {
 
 
 onAuthStateChanged(auth, async(user) => {
-    if(user){
-      viewProjectsButton.addEventListener('click', (e) => {
-        if(viewProjectsButton.dataset.status === 'Project'){
-          status = 'Project'
-          getLeadOrProjectData()
-          viewProjectsButton.dataset.status = 'lead'
-          viewProjectsButton.innerHTML = 'VIEW LEADS'
-          inputBox.value = ''
-          viewProjectsButton.value = ''
-          statusFilter.value = ''
-          document.getElementById('creationDate').innerHTML = 'CONTRACT DATE';
-        } else {
-          viewProjectsButton.dataset.status = 'Project'
-          status = 'lead'
-          getLeadOrProjectData()
-          viewProjectsButton.innerHTML = 'VIEW PROJECTS'
-          inputBox.value = ''
-          viewProjectsButton.value = ''
-          statusFilter.value = ''
-          document.getElementById('creationDate').innerHTML = 'CREATED DATE';
-        }
-        
-      })
 
+  if(user){
+    // al cargar la pagina debe ejecutar esta funciion, no se vuelve a ejecutar al menos que salgas de la view
+    // esta funcion hace el query de firestore y lo guarda en su constante global
+    getLeadPreLoaded()
+    getProjectPreLoaded()
 
-      //getFirestoreDataToPagination()
-      getLeadOrProjectData()
+    // *** se debe hacer que el boton cambie el dataset entre preLoad y load para que solo llame a la query una sola vez
 
-      statusFilter.addEventListener('change', function (e) {
-        statusFilterData = e.target.value
-        getLeadOrProjectData(statusFilterData)
-      });
-
-      async function getLeadOrProjectData(filter){
-        console.log(status);
-        data = []
-        if(!filter){
-          let querySnapshoot
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'), limit(limitSearch.value), orderBy('voltioIdKey', 'desc'));
-          querySnapshoot = await getDocs(projectInfo)
-
-          const allData = querySnapshoot.forEach( async(doc) => {
-            let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
-            let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
-            let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
-            let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
-                data.push([
-                  doc.data().voltioIdKey,
-                  doc.data().customerName,
-                  doc.data().progress,
-                  doc.data().projectStatus,
-                  profileCloser,
-                  profileSetter,
-                  systemSize,
-                  chartDate,
-                ])
-          })
-        
-          searchLeadByInput()
-        } else {
-          let querySnapshoot
-          if(statusFilterData === ''){
-            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('project', '==', 'solar'), limit(limitSearch.value), orderBy('voltioIdKey', 'desc'));
-            querySnapshoot = await getDocs(projectInfo)
-          } else if(!progressFilter){
-            const projectInfo = query(collection(db, 'leadData'), where('status', '==', status), where('projectStatus', '==', statusFilterData), where('project', '==', 'solar'));
-            querySnapshoot = await getDocs(projectInfo)
-          }  
-
-          const allData = querySnapshoot.forEach( async(doc) => {
-            let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
-            let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
-            let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
-                data.push([
-                  doc.data().voltioIdKey,
-                  doc.data().customerName,
-                  doc.data().progress,
-                  doc.data().projectStatus,
-                  profileCloser,
-                  profileSetter,
-                  systemSize,
-                  doc.data().creationDate,
-  
-                ])
-          })
-        
-          searchLeadByInput()
-
-        }
-          
+    viewProjectsButton.addEventListener('click', (e) => {
+      if(viewProjectsButton.dataset.status === 'Project'){
+        status = 'Project'
+        getLeadOrProjectData()
+        viewProjectsButton.dataset.status = 'lead'
+        viewProjectsButton.innerHTML = 'VIEW LEADS'
+        inputBox.value = ''
+        viewProjectsButton.value = ''
+        statusFilter.value = ''
+        document.getElementById('creationDate').innerHTML = 'CONTRACT DATE';
+      } else {
+        viewProjectsButton.dataset.status = 'Project'
+        status = 'lead'
+        getLeadOrProjectData()
+        viewProjectsButton.innerHTML = 'VIEW PROJECTS'
+        inputBox.value = ''
+        viewProjectsButton.value = ''
+        statusFilter.value = ''
+        document.getElementById('creationDate').innerHTML = 'CREATED DATE';
       }
+      
+    })
+    
+   // si en cada que entro guardo toda la base en una variable, ya no tengo que hacer el query, solo un filtro del array.
+   // En caso de que el array cambiese deben traer todos los datos nuevamente....
+   // Que campios deben cambiar para que vuelva a hacer una query
+    // Primero hacemos un preload de la base de datos completa de projects
 
-      searchLeadViewSection.forEach( (e) => { 
-        // se ejecuta despues de dar click al boton .searchLeadViewSection para que refresque la info en caso de algun cambio
-        e.addEventListener('click', async (e) => {
-          data = []  
-          document.querySelector('#addNewLeadSection').style.display = 'none'
-          document.querySelector('#searchProjectSection').style.display = 'block'
-          document.querySelector('#profileViewSection').style.display = 'none'
-          document.querySelector('#chatSection').style.display = 'none'
-          viewProjectsButton.innerHTML = 'VIEW PROJECTS'
-          //document.getElementById('imageCustomerGallery').innerHTML = ''
-          document.getElementById('customerFilesUpload').value = ''
-          const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), limit(limitSearch.value), orderBy('voltioIdKey', 'desc'));
-          const querySnapshoot = await getDocs(projectInfo)
-          const allData = querySnapshoot.forEach( async(doc) => {
-            let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
-            let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
-            let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
-                data.push([
-                  doc.data().voltioIdKey,
-                  doc.data().customerName,
-                  doc.data().progress,
-                  doc.data().projectStatus,
-                  profileCloser,
-                  profileSetter,
-                  systemSize,
-                  doc.data().creationDate,
-  
-                ])
-          })
-          clearProjectInfo()
-          searchLeadByInput()
-          
+    async function getLeadPreLoaded(){
+      // debemos tener las variable globales 'status', 'limitSearch.value'
+      
+      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), limit(20), orderBy('voltioIdKey', 'desc'));
+        let querySnapshoot = await getDocs(projectInfo)
+
+        const allData = querySnapshoot.forEach( async(doc) => {
+          let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+          let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+          let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+          let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
+          dataLead.push([
+                doc.data().voltioIdKey,
+                doc.data().customerName,
+                doc.data().progress,
+                doc.data().projectStatus,
+                profileCloser,
+                profileSetter,
+                systemSize,
+                chartDate,
+              ])
         })
-
-      })
-        
-    } else {
+        searchLeadByInput()
     }
+
+    async function getProjectPreLoaded(){
+      // debemos tener las variable globales 'status', 'limitSearch.value'
+      
+      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'Project'), where('project', '==', 'solar'), limit(20), orderBy('voltioIdKey', 'desc'));
+        let querySnapshoot = await getDocs(projectInfo)
+
+        const allData = querySnapshoot.forEach( async(doc) => {
+          let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+          let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+          let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+          let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
+          dataProject.push([
+                doc.data().voltioIdKey,
+                doc.data().customerName,
+                doc.data().progress,
+                doc.data().projectStatus,
+                profileCloser,
+                profileSetter,
+                systemSize,
+                chartDate,
+              ])
+        })
+        searchLeadByInput()
+    }
+        
+    // se ejecuta al cambiar el valor del estatusFilter
+    statusFilter.addEventListener('change', function (e) {
+      statusFilterData = e.target.value
+      getLeadOrProjectData(statusFilterData)
+    });
+
+    async function getLeadOrProjectData(filter){
+      console.log(filter);
+      console.log(status);
+      // se quita de aqui la variable data = [] y se convierte en global
+      searchLeadByInput(filter)
+      if(!filter){
+        // se remueve la query de firestore y se lleva a la funcion getLeadOrProjectPreLoaded()
+        // la searchLeadByInput() es quien muestra los valores en la tabla
+        console.log('no filter');
+        searchLeadByInput()
+      } else {
+        console.log(filter);
+        searchLeadByInput(filter)
+      }
+        
+    }
+
+    // se ejecuta despues de dar click al boton .searchLeadViewSection para que refresque la info en caso de algun cambio
+    searchLeadViewSection.forEach( (e) => { 
+      e.addEventListener('click', async (e) => {
+        data = []  
+        document.querySelector('#addNewLeadSection').style.display = 'none'
+        document.querySelector('#searchProjectSection').style.display = 'block'
+        document.querySelector('#profileViewSection').style.display = 'none'
+        document.querySelector('#chatSection').style.display = 'none'
+        viewProjectsButton.innerHTML = 'VIEW PROJECTS'
+        //document.getElementById('imageCustomerGallery').innerHTML = ''
+        document.getElementById('customerFilesUpload').value = ''
+        const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), limit(limitSearch.value), orderBy('voltioIdKey', 'desc'));
+        const querySnapshoot = await getDocs(projectInfo)
+        const allData = querySnapshoot.forEach( async(doc) => {
+          let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+          let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+          let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+              data.push([
+                doc.data().voltioIdKey,
+                doc.data().customerName,
+                doc.data().progress,
+                doc.data().projectStatus,
+                profileCloser,
+                profileSetter,
+                systemSize,
+                doc.data().creationDate,
+
+              ])
+        })
+        clearProjectInfo()
+        searchLeadByInput()
+        
+      })
+
+    })
+      
+  } else {
+    console.log('no user logged');
+  }
 })
 
 inputBox.addEventListener('input', () => {
-  searchLeadByInput()})
 
-function searchLeadByInput(){
+  searchLeadByInput()
+})
 
+function searchLeadByInput(filter){
+  console.log(dataLead);  
+  console.log(dataProject); 
+  console.log(filter);
+  let resultsArray
   let searchInput = document.getElementById("searchLeadInput").value.toString().toLowerCase().trim()
   let searchWords = searchInput.split(/\w^/)
-
-  let resultsArray = searchInput === "" ? data : data.filter(function(r){
-    return searchWords.every(function(word){
-      return [1].some(function(colIndex){
-        return r[colIndex].toString().toLowerCase().indexOf(word) !== -1
+  // Aqui se agregan todos los filtros a aplicar
+  // Este filtro es para el input
+  if(!filter){
+    resultsArray = searchInput === "" ? dataLead : dataLead.filter(function(r){
+      return searchWords.every(function(word){
+        return [0,1,4,5].some(function(colIndex){
+          return r[colIndex].toString().toLowerCase().indexOf(word) !== -1
+        })
       })
     })
-  })
-
+  } else {
+    resultsArray = searchInput === "" ? dataLead.filter(function(r){
+        return r[3] === filter
+    }) : dataLead.filter(function(r){
+      return (searchWords.every(function(word){
+        return [0,1,4,5].some(function(colIndex){
+          return r[colIndex].toString().toLowerCase().indexOf(word) !== -1
+        })
+      }) && r[3] === filter)
+    })
+  }
+  console.log(resultsArray);
   let searchResultsBox = document.getElementById("searchResults")
   let templateBox = document.getElementById("rowTemplate")
   let template = templateBox.content
@@ -329,6 +362,7 @@ function searchLeadByInput(){
     })
   })
   endLoading()
+
   let messageRow = document.querySelectorAll('.messageRow');
     messageRow.forEach(function(item) {
         item.addEventListener('click', function (e) {
