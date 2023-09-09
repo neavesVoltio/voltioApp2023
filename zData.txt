@@ -13,8 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.17
+v2.2.18
 UNA VENTANA NUEVA 
+v2.2.18 se agrega el limite para que solo muestre 50 resultados en la tabla
 v2.2.17 Cambia el dise;o de search leads para que sea vea en 2 columnas, se quita el limite de las query, ya se guarda el searchLead data en una variable
 CONTRACT AMOUNT - ADDERS - COMISION - (REDLINE + SYSTEM SIZE) 
 v2.2.16 se cambian el searchLead para que guarde la variable, sigue en progreso

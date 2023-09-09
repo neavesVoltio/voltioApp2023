@@ -314,37 +314,44 @@ function searchLeadByInput(filter){
   let template = templateBox.content
 
   searchResultsBox.innerHTML = ""
+  let countOfRows = 0
   resultsArray.forEach(function(r){
-    let tr = template.cloneNode(true)
-    let messageRow = tr.querySelector(".messageRow")
-    let leadId = tr.querySelector(".leadId");
-    let leadProgress = tr.querySelector(".leadProgress");
-    let leadStage = tr.querySelector(".leadStage");
-    let editButton = tr.querySelector(".editLeadButton"); // BUTTON THAT CONTAINS CUSTOMER NAME
-    let profileSetter = tr.querySelector('.profileSetter');
-    let profileCloser = tr.querySelector('.profileCloser');
-    let systemSize = tr.querySelector('.systemSize');
-    let leadCreatedDate = tr.querySelector('.leadCreatedDate');
-    //const timestamp =  r[7] ;
-    //console.log(r);
-    //const dateNew = new Date(timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000));
-    //const date = new Date (r[7] * 1000)    
-    //let month = dateNew.getMonth() < 10 ? '0'+ (dateNew.getMonth() + 1): (dateNew.getMonth()+ 1)
-    //let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
-    //const formattedDate = `${month}/${day}/${dateNew.getFullYear()}`;
-    messageRow.dataset.voltioId = r[0]
-    leadId.textContent = r[0]
-    editButton.textContent = r[1]
-    leadProgress.textContent = r[2]
-    leadStage.textContent = r[3]
-    profileSetter.textContent = r[5]
-    profileCloser.textContent = r[4]
-    systemSize.textContent = r[6]
-    //leadCreatedDate.textContent = formattedDate
-    
-    editButton.dataset.leadVoltioId = r[0]; 
-    
-    searchResultsBox.appendChild(tr)
+    if(countOfRows === 50){
+      endLoading()
+      return
+    } else {
+      let tr = template.cloneNode(true)
+      let messageRow = tr.querySelector(".messageRow")
+      let leadId = tr.querySelector(".leadId");
+      let leadProgress = tr.querySelector(".leadProgress");
+      let leadStage = tr.querySelector(".leadStage");
+      let editButton = tr.querySelector(".editLeadButton"); // BUTTON THAT CONTAINS CUSTOMER NAME
+      let profileSetter = tr.querySelector('.profileSetter');
+      let profileCloser = tr.querySelector('.profileCloser');
+      let systemSize = tr.querySelector('.systemSize');
+      let leadCreatedDate = tr.querySelector('.leadCreatedDate');
+      //const timestamp =  r[7] ;
+      //console.log(r);
+      //const dateNew = new Date(timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000));
+      //const date = new Date (r[7] * 1000)    
+      //let month = dateNew.getMonth() < 10 ? '0'+ (dateNew.getMonth() + 1): (dateNew.getMonth()+ 1)
+      //let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
+      //const formattedDate = `${month}/${day}/${dateNew.getFullYear()}`;
+      messageRow.dataset.voltioId = r[0]
+      leadId.textContent = r[0]
+      editButton.textContent = r[1]
+      leadProgress.textContent = r[2]
+      leadStage.textContent = r[3]
+      profileSetter.textContent = r[5]
+      profileCloser.textContent = r[4]
+      systemSize.textContent = r[6]
+      //leadCreatedDate.textContent = formattedDate
+      
+      editButton.dataset.leadVoltioId = r[0]; 
+      
+      searchResultsBox.appendChild(tr)
+      countOfRows ++
+    }
     
   })
 
