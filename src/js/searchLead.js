@@ -57,7 +57,7 @@ let navTabPricingContainer = document.getElementById('navTabPricingContainer');
 let navTabDetailsContainer = document.getElementById('navTabDetailsContainer');
 let navProposalsMenu = document.getElementById('navProposalsMenu');
 let proposalViewsAccordionItem = document.getElementById('proposalViewsAccordionItem');
-let status = 'lead'
+let status = 'Project'
 let statusFilter = document.getElementById('statusFilter');
 let statusFilterData = 'In-Progress 🚀'
 let progressFilter
@@ -69,9 +69,18 @@ let creditLinks = document.getElementById('creditLinks');
 let refreshCreditLinksButton = document.getElementById('refreshCreditLinksButton');
 let saveCreditLinksButton = document.getElementById('saveCreditLinksButton');
 let loading = document.getElementById('loading');
+let projectLeadTitle = document.getElementById('projectLeadTitle');
 let projectType
 let dataLead = [] // se agrega aqui la variable global data, esta no va cambiar mientras no se salga de la pantalla Solar
 let dataProject = []
+let voltioIdText = document.getElementById('voltioIdText');
+let leadNameText = document.getElementById('leadNameText');
+let fullAddressText = document.getElementById('fullAddressText');
+let mailText = document.getElementById('mailText');
+let phonetext = document.getElementById('phonetext');
+let closerText = document.getElementById('closerText');
+let setterText = document.getElementById('setterText');
+
 
 startLoading()
 
@@ -140,22 +149,24 @@ onAuthStateChanged(auth, async(user) => {
 
     viewProjectsButton.addEventListener('click', (e) => {
       if(viewProjectsButton.dataset.status === 'Project'){
-        status = 'Project'
+        status = 'Lead'
         getLeadOrProjectData()
         viewProjectsButton.dataset.status = 'lead'
-        viewProjectsButton.innerHTML = 'VIEW LEADS'
-        inputBox.value = ''
-        viewProjectsButton.value = ''
-        statusFilter.value = ''
-        document.getElementById('creationDate').innerHTML = 'CONTRACT DATE';
-      } else {
-        viewProjectsButton.dataset.status = 'Project'
-        status = 'lead'
-        getLeadOrProjectData()
         viewProjectsButton.innerHTML = 'VIEW PROJECTS'
         inputBox.value = ''
         viewProjectsButton.value = ''
         statusFilter.value = ''
+        projectLeadTitle.innerHTML = 'Leads'
+        document.getElementById('creationDate').innerHTML = 'CONTRACT DATE';
+      } else {
+        viewProjectsButton.dataset.status = 'Project'
+        status = 'Project'
+        getLeadOrProjectData()
+        viewProjectsButton.innerHTML = 'VIEW LEADS'
+        inputBox.value = ''
+        viewProjectsButton.value = ''
+        statusFilter.value = ''
+        projectLeadTitle.innerHTML = 'Project'
         document.getElementById('creationDate').innerHTML = 'CREATED DATE';
       }
       
@@ -169,7 +180,7 @@ onAuthStateChanged(auth, async(user) => {
     async function getLeadPreLoaded(){
       // debemos tener las variable globales 'status', 'limitSearch.value'
       
-      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), limit(20), orderBy('voltioIdKey', 'desc'));
+      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc'));
         let querySnapshoot = await getDocs(projectInfo)
 
         const allData = querySnapshoot.forEach( async(doc) => {
@@ -188,13 +199,13 @@ onAuthStateChanged(auth, async(user) => {
                 chartDate,
               ])
         })
-        searchLeadByInput()
+       // searchLeadByInput()
     }
 
     async function getProjectPreLoaded(){
       // debemos tener las variable globales 'status', 'limitSearch.value'
       
-      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'Project'), where('project', '==', 'solar'), limit(20), orderBy('voltioIdKey', 'desc'));
+      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'Project'), where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc'));
         let querySnapshoot = await getDocs(projectInfo)
 
         const allData = querySnapshoot.forEach( async(doc) => {
@@ -229,7 +240,6 @@ onAuthStateChanged(auth, async(user) => {
       searchLeadByInput(filter)
       if(!filter){
         // se remueve la query de firestore y se lleva a la funcion getLeadOrProjectPreLoaded()
-        // la searchLeadByInput() es quien muestra los valores en la tabla
         console.log('no filter');
         searchLeadByInput()
       } else {
@@ -247,27 +257,10 @@ onAuthStateChanged(auth, async(user) => {
         document.querySelector('#searchProjectSection').style.display = 'block'
         document.querySelector('#profileViewSection').style.display = 'none'
         document.querySelector('#chatSection').style.display = 'none'
-        viewProjectsButton.innerHTML = 'VIEW PROJECTS'
+        viewProjectsButton.innerHTML = 'VIEW PROJECT'
         //document.getElementById('imageCustomerGallery').innerHTML = ''
         document.getElementById('customerFilesUpload').value = ''
-        const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), limit(limitSearch.value), orderBy('voltioIdKey', 'desc'));
-        const querySnapshoot = await getDocs(projectInfo)
-        const allData = querySnapshoot.forEach( async(doc) => {
-          let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
-          let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
-          let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
-              data.push([
-                doc.data().voltioIdKey,
-                doc.data().customerName,
-                doc.data().progress,
-                doc.data().projectStatus,
-                profileCloser,
-                profileSetter,
-                systemSize,
-                doc.data().creationDate,
-
-              ])
-        })
+        
         clearProjectInfo()
         searchLeadByInput()
         
@@ -281,7 +274,6 @@ onAuthStateChanged(auth, async(user) => {
 })
 
 inputBox.addEventListener('input', () => {
-
   searchLeadByInput()
 })
 
@@ -289,13 +281,15 @@ function searchLeadByInput(filter){
   console.log(dataLead);  
   console.log(dataProject); 
   console.log(filter);
+  let datasetStatus = viewProjectsButton.dataset.status === 'Project' ? dataProject : dataLead
+  
   let resultsArray
   let searchInput = document.getElementById("searchLeadInput").value.toString().toLowerCase().trim()
   let searchWords = searchInput.split(/\w^/)
   // Aqui se agregan todos los filtros a aplicar
   // Este filtro es para el input
   if(!filter){
-    resultsArray = searchInput === "" ? dataLead : dataLead.filter(function(r){
+    resultsArray = searchInput === "" ? datasetStatus : datasetStatus.filter(function(r){
       return searchWords.every(function(word){
         return [0,1,4,5].some(function(colIndex){
           return r[colIndex].toString().toLowerCase().indexOf(word) !== -1
@@ -303,9 +297,9 @@ function searchLeadByInput(filter){
       })
     })
   } else {
-    resultsArray = searchInput === "" ? dataLead.filter(function(r){
+    resultsArray = searchInput === "" ? datasetStatus.filter(function(r){
         return r[3] === filter
-    }) : dataLead.filter(function(r){
+    }) : datasetStatus.filter(function(r){
       return (searchWords.every(function(word){
         return [0,1,4,5].some(function(colIndex){
           return r[colIndex].toString().toLowerCase().indexOf(word) !== -1
@@ -313,6 +307,7 @@ function searchLeadByInput(filter){
       }) && r[3] === filter)
     })
   }
+
   console.log(resultsArray);
   let searchResultsBox = document.getElementById("searchResults")
   let templateBox = document.getElementById("rowTemplate")
@@ -392,10 +387,11 @@ async function setDataToProfileView(voltioId){
     document.getElementById('searchProjectSection').style.display = 'none'
     document.getElementById('profileViewSection').style.display = 'block'
     let progressBar = document.getElementById('progressBar')
-    // THIS QUERY GET LEAD PROFILE DATA
+    // Esta query obtiene la info de firestore desde la coleccion leadData y llena los campos del modal profile, y tambien de la seccion de resumen de datos del lead
     const projectInfo = query(collection(db, 'leadData'), where('voltioIdKey', '==', voltioId));
         const querySnapshoot = await getDocs(projectInfo)
         const allData = querySnapshoot.forEach( async(doc) => {
+            // Se usa para completar los datos en el modal
             customerNameOnTop.innerHTML = doc.data().voltioIdKey.toUpperCase() + ' - ' + doc.data().customerName.toUpperCase()
             document.getElementById('leadVoltioId').value = doc.data().voltioIdKey.toUpperCase()
             document.getElementById('leadName').value = doc.data().customerName.toUpperCase()
@@ -410,9 +406,19 @@ async function setDataToProfileView(voltioId){
             document.getElementById('leadSetter').value = doc.data().profileSetter
             document.getElementById('leadBirth').value = doc.data().profileBirth
             docId = doc.id
+            // se usa para completar los datos en la vista principal
+            voltioIdText.innerHTML = doc.data().voltioIdKey.toUpperCase()
+            mailText.innerHTML = !document.getElementById('leadEmail').value ? '' : document.getElementById('leadEmail').value
+            mailText.href = !document.getElementById('leadEmail').value ? '' : 'mailto:' + document.getElementById('leadEmail').value
+            leadNameText.innerHTML = document.getElementById('leadName').value
+            phonetext.innerHTML = !document.getElementById('leadPhone').value ? '' : document.getElementById('leadPhone').value
+            phonetext.href = !document.getElementById('leadPhone').value ? '' : 'tel:' + document.getElementById('leadPhone').value
+            closerText.innerHTML = !document.getElementById('leadCloser').value? '' : 'Closer: ' + document.getElementById('leadCloser').value
+            setterText.innerHTML = !document.getElementById('setterText').value? '' : 'Setter: ' + document.getElementById('leadSetter').value
+            fullAddressText.innerHTML = doc.data().customerAddress.toUpperCase() +', ' + doc.data().inputCity.toUpperCase()+', '+doc.data().inputState.toUpperCase() + ', ' +doc.data().inputZip
         })
  
-    // WE USE LEAD STATUS TO SET DATA ON STATUS VIEW SECTION
+    // WE USE leadStatus from firestore TO SET DATA ON STATUS VIEW SECTION
     const docRef = doc(db, "leadStatus", voltioId);
     const docSnap = await getDoc(docRef);
 
@@ -480,10 +486,6 @@ async function setDataToProfileView(voltioId){
     }
         
 }
-
-projectPanelsNumber.addEventListener('blur', function (e) {
-  calculations()
-});
 
 let editLeadButtonToServer = document.getElementById('editLeadButtonToServer')
 
@@ -571,6 +573,10 @@ async function getComments(){
   }
   
 }
+
+projectPanelsNumber.addEventListener('blur', function (e) {
+  calculations()
+});
 
 projectCmsModInput.addEventListener('change', (e) => {
   projectCmsModLabel.innerHTML = 'CMS MOD ' + projectCmsModInput.value + '%'

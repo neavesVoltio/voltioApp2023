@@ -13,8 +13,10 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.16
-
+v2.2.17
+UNA VENTANA NUEVA 
+v2.2.17 Cambia el dise;o de search leads para que sea vea en 2 columnas, se quita el limite de las query, ya se guarda el searchLead data en una variable
+CONTRACT AMOUNT - ADDERS - COMISION - (REDLINE + SYSTEM SIZE) 
 v2.2.16 se cambian el searchLead para que guarde la variable, sigue en progreso
 */ v2.2.15 Cambios menores en search leads, nombre de las notas de customer y de chat. Se actualiizan todos los projects en bd y 1000 leads
 */ v2.2.14 Se limita a 10 las busquedas para trabjar en la paginacion, se suben los miembros
