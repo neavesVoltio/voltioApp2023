@@ -6,11 +6,12 @@ import { app, auth } from '../firebase/config.js'
 import { onAuthStateChanged, updateProfile } from '../firebase/firebaseAuth.js';
 import { getApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
 const db = getFirestore(app) 
-
+console.log("access to projectNotes.js section");
 let accordionFlushExample = document.getElementById('accordionFlushExample')
 
 onAuthStateChanged(auth, async(user) => {
     if(user){
+      
         let name = user.displayName;
         let userId = user.uid
         accordionFlushExample.addEventListener('click', (e) => {
@@ -44,6 +45,8 @@ onAuthStateChanged(auth, async(user) => {
             }
         })
         
+        
+
         accordionFlushExample.addEventListener('click', (e) => {
             if(e.target.matches('#refreshCustomerCommentButton')){ //
                 let textBox = document.getElementById("customerComment").value
@@ -118,6 +121,7 @@ onAuthStateChanged(auth, async(user) => {
         async function createCustomerCommentsList(textBox, commentsBd){
             let voltioId = document.getElementById("leadVoltioId").value
             let dataNotes = []
+            console.log(commentsBd);
             const voltioIds = query(collection(db, commentsBd), where('voltioId', '==', voltioId), orderBy("date", 'desc'))
                 const voltioIdsSnapshot = await getDocs(voltioIds)
                 voltioIdsSnapshot.forEach((e) => {
@@ -160,6 +164,21 @@ onAuthStateChanged(auth, async(user) => {
             }
         }
 
+        let messageRow = document.querySelectorAll('.messageRow');
+
+        messageRow.forEach(function(item) {
+          item.addEventListener('click', function (e) {
+            console.log(e);
+            if (e.target.closest('.messageRow')) {
+              voltioId = item.dataset.id
+              leadName = item.dataset.name
+              let commentsBd = 'listOfCommentsAdmin'
+              createPreviewNotes(commentsBd)             
+            }
+          });
+        });
+
+        
 
     } else {
         console.log('no user logged');
@@ -179,3 +198,4 @@ function formattedDate(date){
     const formattedDate = `${month}/${day}/${dateNew.getFullYear()} ${hours}:${minutes}:${seconds}`;
     return formattedDate
 }
+

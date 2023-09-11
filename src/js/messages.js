@@ -55,6 +55,7 @@ let subscriptionJson
 let goToLeadDetailFromMessage = document.getElementById('goToLeadDetailFromMessage');
 let projectsCheckbox = document.getElementById('projectsCheckbox');
 
+
 projectsCheckbox.addEventListener('change', function (e) {
     if(e.target.checked){
         console.log('checked');
@@ -77,11 +78,11 @@ function endLoading(){
 onAuthStateChanged(auth, async(user) => {
     if (user) {
         // El usuario está autenticado
-
         currentUserName = user.displayName;
         userId = user.uid
         currentUserEmail = user.email
-        getMessagesList('lead')
+        console.log("getMessagesList('Project')");
+        getMessagesList('Project')
       } else {
         // El usuario no está autenticado
         console.log('No hay usuario autenticado');
@@ -90,6 +91,7 @@ onAuthStateChanged(auth, async(user) => {
 
  
 async function getMessagesList(project){
+    console.log(project);
     latestLeadNotes = []
     // Crear una consulta para obtener los documentos ordenados por voltioId y fecha descendente
     const q = query(collection(db, 'leadData'), orderBy('voltioIdKey'), where('status', '==', project), where('project', '==', 'roofing'));
@@ -147,7 +149,7 @@ function createListOfMessages(latestLeadNotesArray){
     endLoading()
 
     let messageRow = document.querySelectorAll('.messageRow');
-    
+    /*
     messageRow.forEach(function(item) {
         item.addEventListener('click', function (e) {
             if (e.target.closest('.messageRow')) {
@@ -159,7 +161,7 @@ function createListOfMessages(latestLeadNotesArray){
               }
         });
     });
-    
+    */
     truncateWords()
     
 }

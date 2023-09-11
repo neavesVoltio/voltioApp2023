@@ -13,7 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.18
+v2.2.19
+
+v2.2.19 Se agregan notas debajo de la info del lead
 UNA VENTANA NUEVA 
 v2.2.18 se agrega el limite para que solo muestre 50 resultados en la tabla
 v2.2.17 Cambia el dise;o de search leads para que sea vea en 2 columnas, se quita el limite de las query, ya se guarda el searchLead data en una variable

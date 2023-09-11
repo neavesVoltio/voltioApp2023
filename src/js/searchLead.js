@@ -144,7 +144,7 @@ onAuthStateChanged(auth, async(user) => {
     // esta funcion hace el query de firestore y lo guarda en su constante global
     getLeadPreLoaded()
     getProjectPreLoaded()
-
+    console.log(user.mail);
     // *** se debe hacer que el boton cambie el dataset entre preLoad y load para que solo llame a la query una sola vez
 
     viewProjectsButton.addEventListener('click', (e) => {
@@ -180,7 +180,7 @@ onAuthStateChanged(auth, async(user) => {
     async function getLeadPreLoaded(){
       // debemos tener las variable globales 'status', 'limitSearch.value'
       
-      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'), where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc'));
+      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'),where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc'));
         let querySnapshoot = await getDocs(projectInfo)
 
         const allData = querySnapshoot.forEach( async(doc) => {
@@ -373,7 +373,8 @@ function searchLeadByInput(filter){
                 voltioId = e.target.closest('.messageRow').dataset.voltioId
                 clearInputs()
                 setDataToProfileView(voltioId) 
-                
+                let commentsBd = "listOfCommentsAdmin"
+                createPreviewNotes(commentsBd)
               }
         });
     });
@@ -1841,4 +1842,60 @@ async function getRepDropdown() {
   });
 
   return userEmails;
+}
+
+async function createPreviewNotes(commentsBd){
+  //let voltioId = document.getElementById("leadVoltioId").value
+  let dataNotesPreview = []
+  
+  const voltioIds = query(collection(db, commentsBd), where('voltioId', '==', voltioId), orderBy("date", 'desc'))
+      const voltioIdsSnapshot = await getDocs(voltioIds)
+      voltioIdsSnapshot.forEach((e) => {
+        dataNotesPreview.push([e.data().customerComment, e.data().date, e.data().userName])
+      })
+
+  document.getElementById("previewNotesContainer").innerHTML = ""
+  
+  let mainDiv = document.getElementById("previewNotesContainer")
+  
+  for( var i=0;i <=dataNotesPreview.length - 1; i++){
+      console.log(dataNotesPreview);
+      let formDate = formattedDate(dataNotesPreview[i][1])
+      let noteContainer = document.createElement("div")
+      let userNameTitle = document.createElement("strong")
+      let textOfComment = document.createElement("p")
+      let dateContainer = document.createElement("div")
+      let dateOfComment = document.createElement("p")    
+      noteContainer.className = "row border-bottom border-info-subtle p-2"
+      //noteContainer.classList.add("mb-2")
+      dateContainer.classList.add("row")
+      dateOfComment.classList.add("text-end")
+      dateOfComment.classList.add("fs-6")
+      dateOfComment.classList.add("fw-light")
+      textOfComment.classList.add("text-light")
+      userNameTitle.classList.add("text-light")
+      dateOfComment.classList.add("text-light")
+      userNameTitle.innerHTML = dataNotesPreview[i][2]
+      textOfComment.innerHTML = dataNotesPreview[i][0]
+      dateOfComment.innerHTML = formDate
+      mainDiv.appendChild(noteContainer)
+      noteContainer.append(userNameTitle)
+      noteContainer.append(textOfComment)
+      noteContainer.append(dateContainer)
+      dateContainer.append(dateOfComment)
+  }
+}
+
+function formattedDate(date){
+  const timestamp =  date ;
+  const dateNew = new Date(timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000));
+  
+  let month = dateNew.getMonth() < 10 ? '0'+ (dateNew.getMonth() + 1): (dateNew.getMonth()+ 1)
+  let day = dateNew.getDate() < 10 ? '0' + dateNew.getDate() : dateNew.getDate()
+  let hours = dateNew.getHours() < 10 ? '0' + dateNew.getHours() : dateNew.getHours();
+  let minutes = dateNew.getMinutes() < 10 ? '0' + dateNew.getMinutes() : dateNew.getMinutes();
+  let seconds = dateNew.getSeconds() < 10 ? '0' + dateNew.getSeconds() : dateNew.getSeconds();
+
+  const formattedDate = `${month}/${day}/${dateNew.getFullYear()} ${hours}:${minutes}:${seconds}`;
+  return formattedDate
 }
