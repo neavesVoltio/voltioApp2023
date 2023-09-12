@@ -13,7 +13,9 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.19
+v2.2.20
+
+v2.2.20 Se agrega filtro para reps, manager o admin, cada quien puede ver solo sus clientes
 
 v2.2.19 Se agregan notas debajo de la info del lead
 UNA VENTANA NUEVA 

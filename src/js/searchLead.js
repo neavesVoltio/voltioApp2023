@@ -7,6 +7,9 @@ import { showLoadingAlert } from '../js/loadSweetAlert.js'
 
 const db = getFirestore(app) 
 let voltioId 
+let accessLevel
+let manager 
+let repName
 let installer
 let sumOfAdders
 let solarPanelLocation
@@ -45,7 +48,7 @@ let saveCurrentProjectButton =document.getElementById('saveCurrentProjectButton'
 let targetCommission = document.getElementById('targetCommission');
 let projectCost = document.getElementById('projectCost');
 let viewProjectsButton = document.getElementById('viewProjectsButton');
-viewProjectsButton.dataset.status = 'Project'
+   // viewProjectsButton.dataset.status = 'Project'
 let navTabUtility = document.getElementById('navTabUtility');
 let navTabDesign = document.getElementById('navTabDesign');
 let navTabPricing = document.getElementById('navTabPricing');
@@ -140,11 +143,22 @@ navProposalsMenu.addEventListener('click', function (e) {
 onAuthStateChanged(auth, async(user) => {
 
   if(user){
+    // codigo para obtener el access level de acuerdo al user.email
+    let userEmail =  'guillermo@voltio.us' //user.email
+    const docRef = doc(db, "userProfile", userEmail);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      accessLevel = docSnap.data().accessLevel
+      repName = docSnap.data().name
+      console.log("Document data:", docSnap.data().accessLevel);
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
     // al cargar la pagina debe ejecutar esta funciion, no se vuelve a ejecutar al menos que salgas de la view
     // esta funcion hace el query de firestore y lo guarda en su constante global
     getLeadPreLoaded()
     getProjectPreLoaded()
-    console.log(user.mail);
     // *** se debe hacer que el boton cambie el dataset entre preLoad y load para que solo llame a la query una sola vez
 
     viewProjectsButton.addEventListener('click', (e) => {
@@ -179,52 +193,126 @@ onAuthStateChanged(auth, async(user) => {
 
     async function getLeadPreLoaded(){
       // debemos tener las variable globales 'status', 'limitSearch.value'
+      let projectInfo
       
-      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'lead'),where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc'));
-        let querySnapshoot = await getDocs(projectInfo)
+      projectInfo = accessLevel === 'Admin' ? 
+                                    query(collection(db, 'leadData'), where('status', '==', 'lead'),where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc')): 
+                    accessLevel === 'Rep' ? query(collection(db, 'leadData'),where('status', '==', 'lead'),where('project', '==', 'solar'), where('repName', '==', userEmail), orderBy('voltioIdKey', 'desc')) :
+                    accessLevel === 'Manger' || 'Elite' ? getDataByRank() : ''
 
-        const allData = querySnapshoot.forEach( async(doc) => {
-          let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
-          let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
-          let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
-          let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
-          dataLead.push([
-                doc.data().voltioIdKey,
-                doc.data().customerName,
-                doc.data().progress,
-                doc.data().projectStatus,
-                profileCloser,
-                profileSetter,
-                systemSize,
-                chartDate,
-              ])
-        })
+              async function getDataByRank() {
+                      let queryInfo = query(collection(db, 'userProfile'), where('manager', '==', repName))
+                      let snapshoot = await getDocs(queryInfo)
+                      const allData = snapshoot.forEach( async (doc) => {
+                        console.log(doc.data().name);
+                        let name = doc.data().userEmail
+                        let queryInfo = query(collection(db, 'leadData'),where('status', '==', 'lead'),where('project', '==', 'solar'), where('repName', '==', name), orderBy('voltioIdKey', 'desc'))
+                        let querySnapshoot = await getDocs(queryInfo)
+                        const allData = querySnapshoot.forEach(async(doc) => {
+                          let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+                          let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+                          let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+                          let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
+                          dataLead.push([
+                            doc.data().voltioIdKey,
+                            doc.data().customerName,
+                            doc.data().progress,
+                            doc.data().projectStatus,
+                            profileCloser,
+                            profileSetter,
+                            systemSize,
+                            chartDate,
+                          ])
+                        });
+                        
+                      })
+                      console.log(dataLead);
+                      return
+                    }
+
+                    let querySnapshoot = await getDocs(projectInfo)
+                    
+                    const allData = querySnapshoot.forEach( async(doc) => {
+                      let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+                      let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+                      let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+                      let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
+                      dataLead.push([
+                        doc.data().voltioIdKey,
+                        doc.data().customerName,
+                        doc.data().progress,
+                        doc.data().projectStatus,
+                        profileCloser,
+                        profileSetter,
+                        systemSize,
+                        chartDate,
+                      ])
+                    })
+                    
+                    console.log(dataLead);
        // searchLeadByInput()
     }
 
     async function getProjectPreLoaded(){
       // debemos tener las variable globales 'status', 'limitSearch.value'
+      let projectInfo
       
-      const projectInfo = query(collection(db, 'leadData'), where('status', '==', 'Project'), where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc'));
-        let querySnapshoot = await getDocs(projectInfo)
+      projectInfo = accessLevel === 'Admin' ? 
+                                    query(collection(db, 'leadData'), where('status', '==', 'Project'),where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc')): 
+                    accessLevel === 'Rep' ? query(collection(db, 'leadData'),where('status', '==', 'Project'),where('project', '==', 'solar'), where('repName', '==', userEmail), orderBy('voltioIdKey', 'desc')) :
+                    accessLevel === 'Manger' || 'Elite' ? getDataByRank() : ''
 
-        const allData = querySnapshoot.forEach( async(doc) => {
-          let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
-          let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
-          let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
-          let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
-          dataProject.push([
-                doc.data().voltioIdKey,
-                doc.data().customerName,
-                doc.data().progress,
-                doc.data().projectStatus,
-                profileCloser,
-                profileSetter,
-                systemSize,
-                chartDate,
-              ])
-        })
-        searchLeadByInput()
+              async function getDataByRank() {
+                      let queryInfo = query(collection(db, 'userProfile'), where('manager', '==', repName))
+                      let snapshoot = await getDocs(queryInfo)
+                      const allData = snapshoot.forEach( async (doc) => {
+                        console.log(doc.data().name);
+                        let name = doc.data().userEmail
+                        let queryInfo = query(collection(db, 'leadData'),where('status', '==', 'Project'),where('project', '==', 'solar'), where('repName', '==', name), orderBy('voltioIdKey', 'desc'))
+                        let querySnapshoot = await getDocs(queryInfo)
+                        const allData = querySnapshoot.forEach(async(doc) => {
+                          let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+                          let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+                          let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+                          let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
+                          dataProject.push([
+                            doc.data().voltioIdKey,
+                            doc.data().customerName,
+                            doc.data().progress,
+                            doc.data().projectStatus,
+                            profileCloser,
+                            profileSetter,
+                            systemSize,
+                            chartDate,
+                          ])
+                        });
+                        
+                      })
+                      searchLeadByInput()
+                    }
+
+                    let querySnapshoot = await getDocs(projectInfo)
+                    
+                    const allData = querySnapshoot.forEach( async(doc) => {
+                      let profileCloser =   !doc.data().profileCloser ? '' : doc.data().profileCloser
+                      let profileSetter = ! doc.data().profileSetter ? '' : doc.data().profileSetter
+                      let systemSize = !doc.data().systemSize ? '' : doc.data().systemSize
+                      let chartDate = status === 'lead' ? doc.data().creationDate : doc.data().contractDate
+                      dataProject.push([
+                        doc.data().voltioIdKey,
+                        doc.data().customerName,
+                        doc.data().progress,
+                        doc.data().projectStatus,
+                        profileCloser,
+                        profileSetter,
+                        systemSize,
+                        chartDate,
+                      ])
+                    })
+                    
+                    console.log(dataProject);
+       searchLeadByInput()
+      
     }
         
     // se ejecuta al cambiar el valor del estatusFilter
@@ -278,11 +366,8 @@ inputBox.addEventListener('input', () => {
 })
 
 function searchLeadByInput(filter){
-  console.log(dataLead);  
-  console.log(dataProject); 
-  console.log(filter);
-  let datasetStatus = viewProjectsButton.dataset.status === 'Project' ? dataProject : dataLead
-  
+  let datasetStatus = status === 'Project' ? dataProject : dataLead
+  console.log(datasetStatus);
   let resultsArray
   let searchInput = document.getElementById("searchLeadInput").value.toString().toLowerCase().trim()
   let searchWords = searchInput.split(/\w^/)
@@ -316,6 +401,7 @@ function searchLeadByInput(filter){
   searchResultsBox.innerHTML = ""
   let countOfRows = 0
   resultsArray.forEach(function(r){
+    console.log(countOfRows);
     if(countOfRows === 50){
       endLoading()
       return
