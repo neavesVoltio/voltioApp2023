@@ -13,8 +13,8 @@ roofingMaterial
 projectElectricPanelBrand
 
 Sig pasos:
-v2.2.20
-
+v2.2.21
+v2.2.21 Se arregla para que carguen los leads al dar click al boton view leads la primera vez, la segunda ya los toma del array
 v2.2.20 Se agrega filtro para reps, manager o admin, cada quien puede ver solo sus clientes
 
 v2.2.19 Se agregan notas debajo de la info del lead

@@ -144,7 +144,7 @@ onAuthStateChanged(auth, async(user) => {
 
   if(user){
     // codigo para obtener el access level de acuerdo al user.email
-    let userEmail =  'guillermo@voltio.us' //user.email
+    let userEmail  = user.email
     const docRef = doc(db, "userProfile", userEmail);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -157,13 +157,14 @@ onAuthStateChanged(auth, async(user) => {
     }
     // al cargar la pagina debe ejecutar esta funciion, no se vuelve a ejecutar al menos que salgas de la view
     // esta funcion hace el query de firestore y lo guarda en su constante global
-    getLeadPreLoaded()
+    
     getProjectPreLoaded()
     // *** se debe hacer que el boton cambie el dataset entre preLoad y load para que solo llame a la query una sola vez
 
     viewProjectsButton.addEventListener('click', (e) => {
       if(viewProjectsButton.dataset.status === 'Project'){
         status = 'Lead'
+        getLeadPreLoaded()
         getLeadOrProjectData()
         viewProjectsButton.dataset.status = 'lead'
         viewProjectsButton.innerHTML = 'VIEW PROJECTS'
@@ -193,7 +194,12 @@ onAuthStateChanged(auth, async(user) => {
 
     async function getLeadPreLoaded(){
       // debemos tener las variable globales 'status', 'limitSearch.value'
-      let projectInfo
+      if(dataLead.length>0){
+        console.log('data lead es mayor a cero');
+        getLeadOrProjectData()
+      } else {
+        console.log('data lead no es mayor a 0');
+        let projectInfo
       
       projectInfo = accessLevel === 'Admin' ? 
                                     query(collection(db, 'leadData'), where('status', '==', 'lead'),where('project', '==', 'solar'), orderBy('voltioIdKey', 'desc')): 
@@ -250,7 +256,10 @@ onAuthStateChanged(auth, async(user) => {
                     })
                     
                     console.log(dataLead);
+                    getLeadOrProjectData()
        // searchLeadByInput()
+      }
+      
     }
 
     async function getProjectPreLoaded(){
